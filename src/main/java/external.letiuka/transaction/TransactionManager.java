@@ -15,15 +15,15 @@ public class TransactionManager {
     }
 
     private static void beginTransaction(boolean autoCommit) throws TransactionException {
-        WrappedConnection con = connection.get();
-        if (con != null) {
+        WrappedConnection wrapped = connection.get();
+        if (wrapped != null) {
             throw new TransactionException();
         }
         try {
-            Connection connection = ConnectionPool.getInstance().getConnection();
-            connection.setAutoCommit(autoCommit);
-            con = new WrappedConnection(connection, autoCommit);
-            TransactionManager.connection.set(con);
+            Connection cn = ConnectionPool.getInstance().getConnection();
+            cn.setAutoCommit(autoCommit);
+            wrapped = new WrappedConnection(cn, autoCommit);
+            connection.set(wrapped);
         } catch (NamingException e) {
             throw new TransactionException(e);
         } catch (SQLException e) {
@@ -36,12 +36,12 @@ public class TransactionManager {
     }
 
     private static void endTransaction() throws TransactionException {
-        WrappedConnection con = connection.get();
-        if (con != null) {
+        WrappedConnection wrapped = connection.get();
+        if (wrapped != null) {
             throw new TransactionException();
         }
         try {
-            con.close();
+            wrapped.close();
         } catch (SQLException e) {
             throw new TransactionException(e);
         }
@@ -50,12 +50,12 @@ public class TransactionManager {
     }
 
     public static void commit() throws TransactionException {
-        WrappedConnection con = connection.get();
-        if (con != null) {
+        WrappedConnection wrapped = connection.get();
+        if (wrapped != null) {
             throw new TransactionException();
         }
         try {
-            con.commit();
+            wrapped.commit();
         } catch (SQLException e) {
             throw new TransactionException(e);
         } finally {
@@ -64,12 +64,12 @@ public class TransactionManager {
     }
 
     public static void rollback() throws TransactionException {
-        WrappedConnection con = connection.get();
-        if (con != null) {
+        WrappedConnection wrapped = connection.get();
+        if (wrapped != null) {
             throw new TransactionException();
         }
         try {
-            con.rollback();
+            wrapped.rollback();
         } catch (SQLException e) {
             throw new TransactionException(e);
         } finally {
@@ -78,14 +78,14 @@ public class TransactionManager {
     }
 
     public static WrappedConnection getConnection() throws TransactionException {
-        WrappedConnection con = connection.get();
-        if (con == null)
+        WrappedConnection wrapped = connection.get();
+        if (wrapped == null)
             beginTransaction(true);
-        return con;
+        return wrapped;
     }
 
     public static void returnConnection() throws TransactionException {
-        WrappedConnection con = connection.get();
-        if (con.getAutoCommit()) endTransaction();
+        WrappedConnection wrapped = connection.get();
+        if (wrapped.getAutoCommit()) endTransaction();
     }
 }
