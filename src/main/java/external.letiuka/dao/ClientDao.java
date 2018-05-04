@@ -11,7 +11,6 @@ import java.sql.SQLException;
 
 public class ClientDao {
 
-
     public void insertClient(ClientDto client) throws DAOException, TransactionException {
         WrappedConnection con = TransactionManager.getConnection();
         try {

@@ -8,27 +8,26 @@ import java.sql.Connection;
 import java.sql.SQLException;
 
 public class TransactionManager {
-    private static final ThreadLocal<WrappedConnection> connection = new ThreadLocal<>();
+    private static final ThreadLocal<Connection> connection = new ThreadLocal<>();
 
     private TransactionManager() {
         throw new UnsupportedOperationException("Cannot create an instance of TransactionManager");
     }
 
     private static void beginTransaction(boolean autoCommit) throws TransactionException {
-        WrappedConnection wrapped = connection.get();
-        if (wrapped != null) {
+        Connection cn = connection.get();
+        if (cn != null) {
             throw new TransactionException();
         }
         try {
-            Connection cn = ConnectionPool.getInstance().getConnection();
+            cn = ConnectionPool.getInstance().getConnection();
             cn.setAutoCommit(autoCommit);
-            wrapped = new WrappedConnection(cn, autoCommit);
-            connection.set(wrapped);
         } catch (NamingException e) {
             throw new TransactionException(e);
         } catch (SQLException e) {
             throw new TransactionException(e);
         }
+        connection.set(cn);
     }
 
     public static void beginTransaction() throws TransactionException {
@@ -36,12 +35,12 @@ public class TransactionManager {
     }
 
     private static void endTransaction() throws TransactionException {
-        WrappedConnection wrapped = connection.get();
-        if (wrapped != null) {
+        Connection cn = connection.get();
+        if (cn != null) {
             throw new TransactionException();
         }
         try {
-            wrapped.close();
+            cn.close();
         } catch (SQLException e) {
             throw new TransactionException(e);
         }
@@ -50,12 +49,12 @@ public class TransactionManager {
     }
 
     public static void commit() throws TransactionException {
-        WrappedConnection wrapped = connection.get();
-        if (wrapped != null) {
+       Connection cn = connection.get();
+        if (cn != null) {
             throw new TransactionException();
         }
         try {
-            wrapped.commit();
+            cn.commit();
         } catch (SQLException e) {
             throw new TransactionException(e);
         } finally {
@@ -64,12 +63,12 @@ public class TransactionManager {
     }
 
     public static void rollback() throws TransactionException {
-        WrappedConnection wrapped = connection.get();
-        if (wrapped != null) {
+        Connection cn = connection.get();
+        if (cn != null) {
             throw new TransactionException();
         }
         try {
-            wrapped.rollback();
+            cn.rollback();
         } catch (SQLException e) {
             throw new TransactionException(e);
         } finally {
@@ -77,15 +76,19 @@ public class TransactionManager {
         }
     }
 
-    public static WrappedConnection getConnection() throws TransactionException {
-        WrappedConnection wrapped = connection.get();
-        if (wrapped == null)
+    public static Connection getConnection() throws TransactionException {
+        Connection cn = connection.get();
+        if (cn == null)
             beginTransaction(true);
-        return wrapped;
+        return cn;
     }
 
     public static void returnConnection() throws TransactionException {
-        WrappedConnection wrapped = connection.get();
-        if (wrapped.getAutoCommit()) endTransaction();
+        Connection cn = connection.get();
+        try {
+            if (cn.getAutoCommit()) endTransaction();
+        } catch (SQLException e) {
+            throw new TransactionException(e);
+        }
     }
 }
