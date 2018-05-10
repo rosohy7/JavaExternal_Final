@@ -1,16 +1,7 @@
 package external.letiuka.service;
 
-public class ServiceFactory {
-    private final static ServiceFactory serviceFactory = new ServiceFactory();
-    private final MyService myService =new MyService();
+import external.letiuka.persistence.dal.dao.UserDAO;
 
-    public static ServiceFactory getInstatice(){
-        return serviceFactory;
-    }
-
-    public MyService getMyService(){
-        return myService;
-    }
-
-
+public interface ServiceFactory {
+    DefaultAuthenticationService getAuthentificationService(UserDAO userDAO);
 }
