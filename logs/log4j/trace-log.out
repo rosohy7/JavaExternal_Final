@@ -1,0 +1,71 @@
+2018-05-15 14:49:15 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 14:49:24 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 14:49:32 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 14:49:32 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 14:49:32 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-15 14:49:32 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8384742759747924
+2018-05-15 14:49:32 TRACE DefaultBankAccountService:68 - Getting current date
+2018-05-15 14:49:32 TRACE DefaultBankAccountService:70 - Got current date
+2018-05-15 14:49:32 TRACE DefaultBankAccountService:73 - Inserting new bank account into database
+2018-05-15 14:49:32 WARN  DefaultBankAccountDAO:77 - Failed to add entity to database
+2018-05-15 14:55:22 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 14:55:30 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 14:55:36 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 14:55:36 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 14:55:36 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-15 14:55:36 INFO  RandomAccountNumberGenerator:40 - Generated new card number 0492857891214830
+2018-05-15 14:55:36 TRACE DefaultBankAccountService:68 - Getting current date
+2018-05-15 14:55:36 TRACE DefaultBankAccountService:70 - Got current date
+2018-05-15 14:55:36 TRACE DefaultBankAccountService:73 - Inserting new bank account into database
+2018-05-15 14:55:36 WARN  DefaultBankAccountDAO:77 - Failed to add entity to database
+2018-05-15 14:59:54 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 15:01:00 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 15:01:01 DEBUG LogInController:71 - User failed to log in due to failed input validation. Sent message to user: Wrong login or password
+2018-05-15 15:01:23 TRACE FrontController:39 - Received a request with action = sign-up
+2018-05-15 15:01:23 TRACE SignUpController:27 - Attempting to register user
+2018-05-15 15:01:23 INFO  SignUpController:51 - john has signed up.
+2018-05-15 15:01:27 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 15:01:44 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 15:01:44 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 15:01:44 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-15 15:01:44 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1350882686913600
+2018-05-15 15:01:44 TRACE DefaultBankAccountService:68 - Getting current date
+2018-05-15 15:01:44 TRACE DefaultBankAccountService:70 - Got current date
+2018-05-15 15:01:44 TRACE DefaultBankAccountService:73 - Inserting new bank account into database
+2018-05-15 15:01:44 WARN  DefaultBankAccountDAO:77 - Failed to add entity to database
+2018-05-15 15:25:57 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 15:26:28 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 15:26:42 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 15:26:42 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 15:26:42 TRACE DefaultBankAccountService:45 - Trying to register bank account
+2018-05-15 15:26:42 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1176021960730662
+2018-05-15 15:31:37 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 15:31:45 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 15:31:50 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 15:31:50 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 15:31:50 TRACE DefaultBankAccountService:45 - Trying to register bank account
+2018-05-15 15:31:50 INFO  RandomAccountNumberGenerator:40 - Generated new card number 0786132186782623
+2018-05-15 15:33:49 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 15:33:58 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 15:34:06 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 15:34:06 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 15:34:06 TRACE DefaultBankAccountService:45 - Trying to register bank account
+2018-05-15 15:34:06 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3349677391791806
+2018-05-15 15:34:06 TRACE DefaultBankAccountService:70 - Inserting new bank account into database
+2018-05-15 15:34:10 TRACE DefaultBankAccountService:84 - Successfully inserted new bank account into database
+2018-05-15 15:37:41 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 15:37:59 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 15:38:04 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 15:38:04 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 15:38:04 TRACE DefaultBankAccountService:45 - Trying to register bank account
+2018-05-15 15:38:04 INFO  RandomAccountNumberGenerator:40 - Generated new card number 9596267431230880
+2018-05-15 15:38:04 TRACE DefaultBankAccountService:70 - Inserting new bank account into database
+2018-05-15 15:38:04 TRACE DefaultBankAccountService:85 - Successfully inserted new bank account into database
+2018-05-15 16:20:44 INFO  ContextInitListener:17 - Deployed web application
+2018-05-15 16:21:43 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-15 16:21:53 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-15 16:21:53 TRACE RegisterBankAccountController:27 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-15 16:21:53 TRACE DefaultBankAccountService:45 - Trying to register bank account
+2018-05-15 16:21:53 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1690334680930067
+2018-05-15 16:21:53 TRACE DefaultBankAccountService:70 - Inserting new bank account into database
+2018-05-15 16:21:53 TRACE DefaultBankAccountService:85 - Successfully inserted new bank account into database

@@ -1,5 +1,8 @@
 package external.letiuka.init;
 
+import org.apache.log4j.Level;
+import org.apache.log4j.Logger;
+
 import javax.servlet.ServletContextEvent;
 import javax.servlet.ServletContextListener;
 import javax.servlet.annotation.WebListener;
@@ -7,11 +10,13 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public final class ContextInitListener implements ServletContextListener {
 
+    private static Logger logger = Logger.getLogger(ContextInitListener.class);
+
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {
-        ApplicationBuilder builder = new PlainJavaApplicationBuilder(
-                servletContextEvent.getServletContext());
-        builder.build();
+        logger.log(Level.INFO,"Deployed web application");
+        new PlainJavaApplicationBuilder( servletContextEvent.getServletContext())
+                .build();
     }
 
     @Override

@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.Map;
 import java.util.Set;
 
-public class ActionMapAuthorizationManager implements AuthorizationManager {
+public final class ActionMapAuthorizationManager implements AuthorizationManager {
     Map<String,? extends Set<Role>> actionRoleTable;
 
     public ActionMapAuthorizationManager(Map<String, ? extends Set<Role>> actionRoleTable) {

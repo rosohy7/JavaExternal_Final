@@ -45,8 +45,9 @@ public class DefaultTransactionManager implements TransactionManager {
             cn.close();
         } catch (SQLException e) {
             throw new TransactionException(e);
+        } finally {
+            transaction.remove();
         }
-        transaction.remove();
 
     }
 
@@ -94,7 +95,7 @@ public class DefaultTransactionManager implements TransactionManager {
     public void returnConnection(boolean successful) throws TransactionException {
         Transaction tr = transaction.get();
         if (!tr.isExplicit()) {
-            if(successful) commit();
+            if (successful) commit();
             else rollback();
         }
     }
