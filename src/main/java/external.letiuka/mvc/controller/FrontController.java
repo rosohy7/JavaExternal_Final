@@ -46,32 +46,37 @@ public final class FrontController extends HttpServlet {
         }
 
         HttpSession session = req.getSession();
+        Role role;
+        try {
+            role = Role.valueOf((String) session.getAttribute("role"));
+        } catch (NullPointerException e) {
+            role = Role.GUEST;
+        }
 
-        Role role = (Role) session.getAttribute("role");
-        if (role == null) role = Role.GUEST;
-
-        HttpController targetController=null;
+        HttpController targetController = null;
         if (authorizationManager.authorize(action, role)) {
-            try{
-                targetController= controllerMapper.getController(action, method);
-            } catch(NullPointerException e) {
-                HttpMethod antimethod =
-                        (method == HttpMethod.GET) ? HttpMethod.POST : HttpMethod.GET;
-                if (controllerMapper.getController(action, antimethod) != null)
-                    resp.sendError(405, "Request used "
-                            + antimethod.toString() + " method instead of " + method.toString());
-                else resp.sendError(404,"There is no such action");
+
+            targetController = controllerMapper.getController(action, method);
+
+            if (targetController != null)
+                targetController.invoke(req, resp);
+            else {
+
+                resp.sendError(405, "Request used wrote http method");
+
             }
-            if(targetController!=null) targetController.invoke(req,resp);
+
         } else {
             HttpMethod antimethod =
                     (method == HttpMethod.GET) ? HttpMethod.POST : HttpMethod.GET;
             if (controllerMapper.getController(action, method) != null) {
                 if (role == Role.GUEST)
-                    resp.sendError(401,"Log in to complete this request");
+                    resp.sendError(401, "Log in to complete this request");
                 else
-                    resp.sendError(403,"You are not authorized for this request");
-            }
+                    resp.sendError(403, "You are not authorized for this request");
+            } else
+                resp.sendError(404, "There is no such action");
+
         }
     }
 

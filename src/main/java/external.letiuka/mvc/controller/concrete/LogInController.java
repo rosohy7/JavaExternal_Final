@@ -45,7 +45,7 @@ public class LogInController implements HttpController {
             return;
         }
         HttpSession session = req.getSession();
-        session.setAttribute("role",role);
+        session.setAttribute("role",role.toString());
         session.setAttribute("login",login);
         try {
             resp.sendRedirect("/bankapp/main/home.jsp");

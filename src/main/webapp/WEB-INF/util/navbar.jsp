@@ -3,7 +3,13 @@
 <c:set var="context" value="${pageContext.request.contextPath}"/>
 <table border="1px">
     <tr>
-
+        <c:if test="${sessionScope.role=='USER'}">
+            <td>
+                <form action="${context}/main/register-credit-account.jsp" method="GET">
+                    <input type="submit" value="Register Account" />
+                </form>
+            </td>
+        </c:if>
         <c:if test="${empty sessionScope.role}">
             <td>
                 <form action="${context}/auth/log-in.jsp" method="GET">
@@ -11,13 +17,7 @@
                 </form>
             </td>
         </c:if>
-       <c:if test="${not empty sessionScope.role}">
-           <td>
-               <form action="${context}/main/register-credit-account.jsp" method="GET">
-                   <input type="submit" value="Register Account" />
-               </form>
-           </td>
-       </c:if>
+
         <c:if test="${not empty sessionScope.role}">
             <td>
                 <form action="${context}/dispatcher" method="POST">

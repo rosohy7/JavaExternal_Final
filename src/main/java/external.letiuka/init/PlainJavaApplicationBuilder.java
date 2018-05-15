@@ -7,6 +7,7 @@ import external.letiuka.mvc.controller.concrete.RegisterBankAccountController;
 import external.letiuka.mvc.controller.mapping.ControllerMapper;
 import external.letiuka.mvc.controller.mapping.DefaultControllerMapper;
 import external.letiuka.persistence.dal.dao.BankAccountDAO;
+import external.letiuka.persistence.dal.dao.ScheduledDAO;
 import external.letiuka.persistence.dal.dao.TransactionDAO;
 import external.letiuka.security.PasswordHasher;
 import external.letiuka.security.SHA256HexApacheHasher;
@@ -24,12 +25,20 @@ import external.letiuka.persistence.dal.dao.UserDAO;
 import external.letiuka.persistence.transaction.TransactionManager;
 import external.letiuka.persistence.transaction.DefaultTransactionManager;
 import external.letiuka.service.*;
+import external.letiuka.service.scheduled.DailyInterestAccumulation;
+import external.letiuka.service.scheduled.MonthlyInterestFlush;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.quartz.*;
+import org.quartz.impl.StdSchedulerFactory;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
 import java.util.*;
+
+import static org.quartz.CronScheduleBuilder.cronSchedule;
+import static org.quartz.JobBuilder.newJob;
+import static org.quartz.TriggerBuilder.newTrigger;
 
 public class PlainJavaApplicationBuilder implements ApplicationBuilder {
     private static Logger logger = Logger.getLogger(PlainJavaApplicationBuilder.class);
@@ -43,6 +52,7 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
     private UserDAO userDAO;
     private BankAccountDAO accountDAO;
     private TransactionDAO transactionDAO;
+    private ScheduledDAO scheduledDAO;
 
     private AuthenticationService authService;
     private BankAccountService accountService;
@@ -81,6 +91,7 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
             controllerMapper = buildControllerMapper();
             authorizationManager = buildAuthorizationManager();
             createFrontController();
+            setupScheduled();
         } catch (Exception e) {
             String message = "Failed to build application object graph.";
             logger.log(Level.FATAL,message);
@@ -99,6 +110,7 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
         userDAO = daoFac.getUserDAO();
         accountDAO=daoFac.getBankAccountDAO();
         transactionDAO = daoFac.getTransactionDAO();
+        scheduledDAO = daoFac.getScheduledDAO();
     }
     protected void createHttpControllers(){
         signUpController = new SignUpController(authService);
@@ -164,5 +176,41 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
                 servletContext.addServlet("dispatcher", frontController);
         regDyn.addMapping("/dispatcher");
         regDyn.setLoadOnStartup(1);
+    }
+    private void setupScheduled() throws SchedulerException {
+
+
+        SchedulerFactory sf = new StdSchedulerFactory();
+        Scheduler scheduler = sf.getScheduler();
+        scheduler.getContext().put("ScheduledDAO",scheduledDAO);
+        JobDetail accumulationJob = newJob(DailyInterestAccumulation.class)
+                .withIdentity("DailyInterestAccumulation", "group1")
+                .build();
+
+
+        Trigger daily = newTrigger()
+                .withIdentity("daily", "group1")
+                .withSchedule(cronSchedule("0 0 1 1/1 * ? *")// Daily 1:00 a. m. "0 0 1 1/1 * ? *"
+                        .withMisfireHandlingInstructionFireAndProceed())  // Every minute "0 0/1 * 1/1 * ? *"
+                .forJob(accumulationJob)
+                .build();
+
+        JobDetail flushJob = newJob(MonthlyInterestFlush.class)
+                .withIdentity("MonthlyInterestFlush", "group1")
+                .build();
+
+
+        Trigger monthly = newTrigger()
+                .withIdentity("monthly", "group1")
+                .withSchedule(cronSchedule("0 0 2 1 1/1 ? *")// Monthly, first day, 2:00 a. m. "0 0 2 1 1/1 ? *"
+                        .withMisfireHandlingInstructionFireAndProceed())  //Every 5 minutes, "0 0/5 * 1/1 * ? *"
+                .forJob(flushJob)
+                .build();
+
+        scheduler.start();
+        scheduler.scheduleJob(accumulationJob, daily);
+
+        scheduler.scheduleJob(flushJob, monthly);
+
     }
 }
