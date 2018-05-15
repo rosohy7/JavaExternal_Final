@@ -24,4 +24,9 @@ public class DefaultDAOFactory implements DAOFactory {
     public TransactionDAO getTransactionDAO() {
         return new DefaultTransactionDAO(manager);
     }
+
+    @Override
+    public ScheduledDAO getScheduledDAO() {
+        return new DefaultScheduledDAO(manager);
+    }
 }

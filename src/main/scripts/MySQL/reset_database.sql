@@ -97,4 +97,40 @@ CREATE TABLE IF NOT EXISTS `payment_transaction`(
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 #SELECT * FROM `user`;
+SELECT * FROM `bank_account` INNER JOIN `credit_bank_account` 
+ON `bank_account`.`bank_account_id` = `credit_bank_account`.`bank_account_id`;
+
+UPDATE `bank_account` SET `balance` = -1000 WHERE `bank_account_id` > 0;
 SELECT * FROM `credit_bank_account`;
+SELECT * FROM `bank_account`;
+
+UPDATE `bank_account` INNER JOIN `credit_bank_account`
+	ON `bank_account`.`bank_account_id` = `credit_bank_account`.`bank_account_id`    
+    SET `credit_bank_account`.`accrued_interest` = 
+    IF(`bank_account`.`balance`>0,
+    `credit_bank_account`.`accrued_interest`,
+    `credit_bank_account`.`accrued_interest` + 
+    `bank_account`.`balance`*`credit_bank_account`.`interest_rate`/(100.0*365))
+WHERE `bank_account`.`bank_account_id` > 0;
+
+UPDATE `bank_account` INNER JOIN `deposit_bank_account`
+	ON `bank_account`.`bank_account_id` = `deposit_bank_account`.`bank_account_id`    
+    SET `deposit_bank_account`.`accrued_interest` = 
+    `deposit_bank_account`.`accrued_interest` + 
+    `bank_account`.`balance`*`deposit_bank_account`.`interest_rate`/(100.0*365)
+WHERE `bank_account`.`bank_account_id` > 0;
+
+
+UPDATE `bank_account` INNER JOIN `credit_bank_account`
+	ON `bank_account`.`bank_account_id` = `credit_bank_account`.`bank_account_id`    
+    SET `bank_account`.`balance` = 
+    `bank_account`.`balance`+`credit_bank_account`.`accrued_interest`,
+    `credit_bank_account`.`accrued_interest` = 0
+WHERE `bank_account`.`bank_account_id` > 0;
+
+UPDATE `bank_account` INNER JOIN `deposit_bank_account`
+	ON `bank_account`.`bank_account_id` = `deposit_bank_account`.`bank_account_id`    
+    SET `bank_account`.`balance` = 
+    `bank_account`.`balance`+`deposit_bank_account`.`accrued_interest`,
+    `deposit_bank_account`.`accrued_interest` = 0
+WHERE `bank_account`.`bank_account_id` > 0;
