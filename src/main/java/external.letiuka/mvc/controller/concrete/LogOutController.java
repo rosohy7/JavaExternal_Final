@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class LogOutController  implements HttpController {
-    private static Logger logger = Logger.getLogger(LogOutController.class);
+    private static final Logger logger = Logger.getLogger(LogOutController.class);
 
     @Override
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {

@@ -6,7 +6,7 @@ import external.letiuka.persistence.transaction.TransactionManager;
 import external.letiuka.security.PasswordHasher;
 
 public class DefaultServiceFactory implements ServiceFactory {
-    TransactionManager manager;
+    private final TransactionManager manager;
 
     public DefaultServiceFactory(TransactionManager manager) {
         this.manager = manager;

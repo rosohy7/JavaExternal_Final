@@ -11011,3 +11011,58 @@
 2018-05-15 22:14:00 INFO  DailyInterestAccumulation:17 - Starting daily interest accumulation job
 2018-05-15 22:15:00 INFO  DailyInterestAccumulation:17 - Starting daily interest accumulation job
 2018-05-15 22:15:00 INFO  MonthlyInterestFlush:17 - Starting monthly interest flush job
+2018-05-15 23:19:40 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:31:47 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:34:28 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:34:46 ERROR ListUnconfirmedController:45 - Could not redirect to home page
+2018-05-16 19:38:43 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:39:27 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:42:50 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:43:47 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:50:26 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:50:51 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:54:10 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:55:12 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:58:08 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:58:30 ERROR ListUnconfirmedController:47 - Could not redirect to home page
+2018-05-16 20:00:59 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:01:20 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:04:31 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:05:56 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:07:17 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:08:35 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:10:43 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:15:46 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6051824905152175
+2018-05-16 20:16:10 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6825173124576789
+2018-05-16 20:19:09 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:19:45 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6783226322513726
+2018-05-16 20:20:55 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:21:30 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3678499928503393
+2018-05-16 20:24:57 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:25:11 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3937984970136002
+2018-05-16 20:25:24 INFO  RandomAccountNumberGenerator:40 - Generated new card number 9479261970157517
+2018-05-16 20:25:30 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1460422774185349
+2018-05-16 20:25:34 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1699708595432742
+2018-05-16 20:25:37 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2095899715480295
+2018-05-16 20:28:19 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:54:54 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6182452198355844
+2018-05-16 20:54:58 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3079931263859456
+2018-05-16 20:55:02 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8971123003761093
+2018-05-16 20:55:07 INFO  RandomAccountNumberGenerator:40 - Generated new card number 0176951181886680
+2018-05-16 20:55:11 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3931672163152188
+2018-05-16 20:55:13 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1507740204181369
+2018-05-16 20:55:16 INFO  RandomAccountNumberGenerator:40 - Generated new card number 9799782294683772
+2018-05-16 20:55:20 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2683371556833237
+2018-05-16 20:55:23 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8219496883866788
+2018-05-16 20:55:27 INFO  RandomAccountNumberGenerator:40 - Generated new card number 7053099354031880
+2018-05-16 20:55:31 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2066649529292817
+2018-05-16 20:55:35 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1339798854697188
+2018-05-16 20:55:38 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2538222020884593
+2018-05-16 20:55:41 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8921470795794723
+2018-05-16 20:55:46 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8724204742562806
+2018-05-16 20:55:50 WARN  DefaultBankAccountDAO:405 - Failed to read entity from database
+2018-05-16 20:56:30 INFO  RandomAccountNumberGenerator:40 - Generated new card number 9881808755161254
+2018-05-16 20:56:36 INFO  RandomAccountNumberGenerator:40 - Generated new card number 4988235988670144
+2018-05-16 21:07:44 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 21:08:33 INFO  RandomAccountNumberGenerator:40 - Generated new card number 4752407565925342
+2018-05-16 21:10:53 INFO  ContextInitListener:17 - Deployed web application

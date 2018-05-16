@@ -165,3 +165,460 @@
 2018-05-15 22:15:00 INFO  DailyInterestAccumulation:17 - Starting daily interest accumulation job
 2018-05-15 22:15:00 DEBUG DefaultScheduledDAO:23 - Sending interest accumulation query
 2018-05-15 22:15:00 INFO  MonthlyInterestFlush:17 - Starting monthly interest flush job
+2018-05-15 23:19:40 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:31:47 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:32:14 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 19:32:19 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:34:28 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:34:40 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 19:34:43 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:34:46 ERROR ListUnconfirmedController:45 - Could not redirect to home page
+2018-05-16 19:38:43 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:39:24 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 19:39:27 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:39:27 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:42:50 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:43:43 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 19:43:47 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:43:47 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:50:26 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:50:45 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 19:50:48 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:50:51 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:54:10 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:54:10 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:55:12 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:55:12 ERROR ListUnconfirmedController:46 - Could not redirect to home page
+2018-05-16 19:58:08 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 19:58:26 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 19:58:29 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 19:58:30 ERROR ListUnconfirmedController:47 - Could not redirect to home page
+2018-05-16 20:00:59 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:01:17 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 20:01:20 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:01:20 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@1a0c55e9
+2018-05-16 20:01:20 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@70bdaa6f
+2018-05-16 20:01:20 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@568bdb4e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7f575244, external.letiuka.mvc.model.dto.CreditBankAccountDTO@78ce35a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1affdf16, external.letiuka.mvc.model.dto.DepositBankAccountDTO@122636ac]
+2018-05-16 20:01:20 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:04:28 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:04:29 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@63e6b598
+2018-05-16 20:04:29 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@98cb0bd
+2018-05-16 20:04:29 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@6e4de9d4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6fee716e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3972437e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@551705b5, external.letiuka.mvc.model.dto.DepositBankAccountDTO@5415558a]
+2018-05-16 20:04:31 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:05:56 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:07:17 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:08:09 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 20:08:12 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:08:12 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@eda7308
+2018-05-16 20:08:12 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@576a0613
+2018-05-16 20:08:12 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@1d8dfb6a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@496b1dc3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@14f465d5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1329b3c6, external.letiuka.mvc.model.dto.DepositBankAccountDTO@618d4c62]
+2018-05-16 20:08:34 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:08:34 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@29b92054
+2018-05-16 20:08:34 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@4ec28216
+2018-05-16 20:08:34 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@7007debf, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2f13d0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@60742801, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3a7cd42b, external.letiuka.mvc.model.dto.DepositBankAccountDTO@74c007fd]
+2018-05-16 20:08:35 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:10:01 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:10:01 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@3626d671
+2018-05-16 20:10:01 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@30f3af6b
+2018-05-16 20:10:01 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@790e23be, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3392d1ee, external.letiuka.mvc.model.dto.CreditBankAccountDTO@33070cb3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1ea2654f, external.letiuka.mvc.model.dto.DepositBankAccountDTO@1639b6f6]
+2018-05-16 20:10:43 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:10:43 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@2009c9ad
+2018-05-16 20:10:43 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@5a040e0c
+2018-05-16 20:10:43 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@1d1cc395, external.letiuka.mvc.model.dto.CreditBankAccountDTO@733141ed, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1d9bba87, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6715a356, external.letiuka.mvc.model.dto.DepositBankAccountDTO@1ceed44a]
+2018-05-16 20:10:43 ERROR ListUnconfirmedController:50 - Could not redirect to home page
+2018-05-16 20:11:28 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:11:28 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@17333e75
+2018-05-16 20:11:28 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@174b2ed2
+2018-05-16 20:11:28 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@3df58e7a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3b628e60, external.letiuka.mvc.model.dto.CreditBankAccountDTO@35accfef, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7bdf5a36, external.letiuka.mvc.model.dto.DepositBankAccountDTO@6a489d69]
+2018-05-16 20:13:19 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:13:19 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@5dccaed
+2018-05-16 20:13:19 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@1af73b59
+2018-05-16 20:13:19 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@7b0ba50f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3480d41f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@57e8fbc0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@74663f97, external.letiuka.mvc.model.dto.DepositBankAccountDTO@52e3cfc9]
+2018-05-16 20:15:46 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:15:46 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:15:46 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:15:46 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6051824905152175
+2018-05-16 20:15:46 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:15:46 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:16:10 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:16:10 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:16:10 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:16:10 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6825173124576789
+2018-05-16 20:16:10 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:16:10 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:19:09 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:19:30 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 20:19:45 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:19:45 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:19:45 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:19:45 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6783226322513726
+2018-05-16 20:19:45 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:19:45 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:20:55 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:21:19 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 20:21:23 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:21:23 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@3cc25841
+2018-05-16 20:21:23 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@1c6dcc7b
+2018-05-16 20:21:23 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@32c15fec, external.letiuka.mvc.model.dto.CreditBankAccountDTO@58b104a1, external.letiuka.mvc.model.dto.CreditBankAccountDTO@769f5fa6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4634b1a, external.letiuka.mvc.model.dto.DepositBankAccountDTO@3ce55a45, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6ca1c574, external.letiuka.mvc.model.dto.CreditBankAccountDTO@604fd529, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7eea79a1]
+2018-05-16 20:21:30 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:21:30 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:21:30 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:21:30 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3678499928503393
+2018-05-16 20:21:30 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:21:30 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:24:57 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:25:03 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 20:25:11 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:25:11 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:25:11 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:25:11 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3937984970136002
+2018-05-16 20:25:11 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:25:11 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:25:24 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:25:24 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:25:24 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:25:24 INFO  RandomAccountNumberGenerator:40 - Generated new card number 9479261970157517
+2018-05-16 20:25:24 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:25:24 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:25:30 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:25:30 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:25:30 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:25:30 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1460422774185349
+2018-05-16 20:25:30 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:25:30 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:25:34 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:25:34 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:25:34 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:25:34 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1699708595432742
+2018-05-16 20:25:34 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:25:34 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:25:37 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:25:37 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:25:37 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:25:37 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2095899715480295
+2018-05-16 20:25:37 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:25:37 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:25:47 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:25:47 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@55e98f7
+2018-05-16 20:25:47 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@2cdecd9d
+2018-05-16 20:25:47 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@521e709b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@19c8f404, external.letiuka.mvc.model.dto.CreditBankAccountDTO@68a04eea, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3248c446, external.letiuka.mvc.model.dto.DepositBankAccountDTO@1373e03c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4d455e82, external.letiuka.mvc.model.dto.CreditBankAccountDTO@27789ede, external.letiuka.mvc.model.dto.CreditBankAccountDTO@53e61483, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5f186cc3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@38ce88ec]
+2018-05-16 20:25:56 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:25:56 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@42867b69
+2018-05-16 20:25:56 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@6b6585ac
+2018-05-16 20:25:56 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@e499cb9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1597c367, external.letiuka.mvc.model.dto.CreditBankAccountDTO@643bbf8f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@23341e41, external.letiuka.mvc.model.dto.DepositBankAccountDTO@61dae2ca, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4a7d996d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7303906a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@70465e5d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@463c2e2d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@602c7176]
+2018-05-16 20:25:59 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:25:59 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@42e384a7
+2018-05-16 20:25:59 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@2616eee2
+2018-05-16 20:25:59 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@2bdbaff7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2045104e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7e5d7e5d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6fadee8a, external.letiuka.mvc.model.dto.DepositBankAccountDTO@197f409f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1130f49e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@40acf73, external.letiuka.mvc.model.dto.CreditBankAccountDTO@453b8c6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@674b7b6b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7149e718]
+2018-05-16 20:26:03 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:26:03 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@182cc1c9
+2018-05-16 20:26:03 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@57db1306
+2018-05-16 20:26:03 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@290e1b9e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@630321a6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1d5f9686, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1293e508, external.letiuka.mvc.model.dto.DepositBankAccountDTO@4b98de2f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@316cd8eb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@50e693e6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5dd08757, external.letiuka.mvc.model.dto.CreditBankAccountDTO@50b45364, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7486219]
+2018-05-16 20:26:06 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:26:06 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@5c727744
+2018-05-16 20:26:06 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@1139f54e
+2018-05-16 20:26:06 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@605e97b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5a12373e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1515b36f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4b58a706, external.letiuka.mvc.model.dto.DepositBankAccountDTO@62bfc127, external.letiuka.mvc.model.dto.CreditBankAccountDTO@295fa189, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1169e106, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1f0704ba, external.letiuka.mvc.model.dto.CreditBankAccountDTO@32d5884, external.letiuka.mvc.model.dto.CreditBankAccountDTO@57aae281]
+2018-05-16 20:26:09 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:26:09 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@63f028b2
+2018-05-16 20:26:09 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@534f7f46
+2018-05-16 20:26:09 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@2c99e62c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6087b27f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@250a365, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2acd4926, external.letiuka.mvc.model.dto.DepositBankAccountDTO@498672d5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@144f25d0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1303f7b7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@53471888, external.letiuka.mvc.model.dto.CreditBankAccountDTO@292dd8ef, external.letiuka.mvc.model.dto.CreditBankAccountDTO@44a119bf]
+2018-05-16 20:26:12 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:26:12 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@2d21f45c
+2018-05-16 20:26:12 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@787de0c6
+2018-05-16 20:26:12 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@225047d4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@e17ed27, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2cb66bad, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3b5ad52d, external.letiuka.mvc.model.dto.DepositBankAccountDTO@1b145b75, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2a5bf3e5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@35af1e00, external.letiuka.mvc.model.dto.CreditBankAccountDTO@58b15625, external.letiuka.mvc.model.dto.CreditBankAccountDTO@61c771b5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@14f662b3]
+2018-05-16 20:27:03 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:27:03 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@73901519
+2018-05-16 20:27:03 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@7b331160
+2018-05-16 20:27:03 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@6937d96d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@242e0d88, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5765ecc9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@343e4f54, external.letiuka.mvc.model.dto.DepositBankAccountDTO@6395140f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@378307b8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4ff8b625, external.letiuka.mvc.model.dto.CreditBankAccountDTO@9fa0461, external.letiuka.mvc.model.dto.CreditBankAccountDTO@42844c3d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6d952d12]
+2018-05-16 20:27:30 TRACE FrontController:39 - Received a request with action = log-out
+2018-05-16 20:27:35 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 20:27:37 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:27:37 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@1ef3cc85
+2018-05-16 20:27:37 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@50e9d005
+2018-05-16 20:27:37 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@465e567, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5efb3cb2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5eec440c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@401bce2c, external.letiuka.mvc.model.dto.DepositBankAccountDTO@6bfe5595, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6c67faf4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@50171f50, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4ee3c1d0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@57a86764, external.letiuka.mvc.model.dto.CreditBankAccountDTO@44b873f]
+2018-05-16 20:27:40 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:27:40 DEBUG ListUnconfirmedController:41 - external.letiuka.mvc.model.dto.AccountListDTO@31b0d454
+2018-05-16 20:27:40 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.LongPaginationDTO@46d80213
+2018-05-16 20:27:40 DEBUG ListUnconfirmedController:43 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@76179cf, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5441944a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@63e4f8e2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@65aab617, external.letiuka.mvc.model.dto.DepositBankAccountDTO@6909146c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@31b23ec3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7555f3ff, external.letiuka.mvc.model.dto.CreditBankAccountDTO@457ff94c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@64f43ffb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@44104180]
+2018-05-16 20:28:19 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 20:29:03 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 20:29:08 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:29:08 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@60627f91
+2018-05-16 20:29:08 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@52441b51
+2018-05-16 20:29:08 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@ad39813, external.letiuka.mvc.model.dto.CreditBankAccountDTO@72e6e24f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@10b8575, external.letiuka.mvc.model.dto.CreditBankAccountDTO@73e78896, external.letiuka.mvc.model.dto.DepositBankAccountDTO@656295f9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@20d3e780, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7daefec2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@32427ad9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@437efc35, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7caefc3d]
+2018-05-16 20:29:11 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:29:11 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@5757169c
+2018-05-16 20:29:11 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@66d4fb25
+2018-05-16 20:29:11 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@7372670d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1fc319e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6ef034cb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2f3ce7e3]
+2018-05-16 20:34:33 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:34:33 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@554dfb7f
+2018-05-16 20:34:33 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@e5e94cc
+2018-05-16 20:34:33 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@285c7cd8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@709c9b3e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4a301051, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3032052f, external.letiuka.mvc.model.dto.DepositBankAccountDTO@7bc3054d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6f922460, external.letiuka.mvc.model.dto.CreditBankAccountDTO@256a035b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5d161a4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@665bf53e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@18147cb1]
+2018-05-16 20:34:46 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:34:46 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@1dbac056
+2018-05-16 20:34:46 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@69e573c1
+2018-05-16 20:34:46 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@5f0ae981, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7b4e1acb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@ae5ce3a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@485cdfdc, external.letiuka.mvc.model.dto.DepositBankAccountDTO@401271b7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4b01a33c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6f313078, external.letiuka.mvc.model.dto.CreditBankAccountDTO@413da07d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1271ee24, external.letiuka.mvc.model.dto.CreditBankAccountDTO@54afb715]
+2018-05-16 20:34:47 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:34:47 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@40d7595c
+2018-05-16 20:34:47 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@43de5e52
+2018-05-16 20:34:47 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@b334332, external.letiuka.mvc.model.dto.CreditBankAccountDTO@31c46518, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4b23c7c5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7a3e3c3d, external.letiuka.mvc.model.dto.DepositBankAccountDTO@6b85da9b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@797b9e56, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2cb36353, external.letiuka.mvc.model.dto.CreditBankAccountDTO@27677d2c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@62733a59, external.letiuka.mvc.model.dto.CreditBankAccountDTO@475f816f]
+2018-05-16 20:34:52 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:34:52 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@6000d56e
+2018-05-16 20:34:52 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@5c201ae0
+2018-05-16 20:34:52 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@4ee37d35, external.letiuka.mvc.model.dto.CreditBankAccountDTO@fcd5606, external.letiuka.mvc.model.dto.CreditBankAccountDTO@69005934, external.letiuka.mvc.model.dto.CreditBankAccountDTO@35abb9ee, external.letiuka.mvc.model.dto.DepositBankAccountDTO@607460bb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@56c67d5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6ece47b5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6c2f74b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@45f02e90, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2344ab34]
+2018-05-16 20:34:54 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:34:55 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@236fb696
+2018-05-16 20:34:55 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@5404c38f
+2018-05-16 20:34:55 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@5a41d851, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1ae1f85c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@44643690, external.letiuka.mvc.model.dto.CreditBankAccountDTO@360e8d28, external.letiuka.mvc.model.dto.DepositBankAccountDTO@625948e8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@77ef7fe7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@12da073c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@507faf82, external.letiuka.mvc.model.dto.CreditBankAccountDTO@78c9a36d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7455fbd4]
+2018-05-16 20:34:58 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:34:58 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@2447322f
+2018-05-16 20:34:58 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@52fc9b3f
+2018-05-16 20:34:58 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@3e4fb1c1, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3f3bae10, external.letiuka.mvc.model.dto.CreditBankAccountDTO@22f02592, external.letiuka.mvc.model.dto.CreditBankAccountDTO@14e37790, external.letiuka.mvc.model.dto.DepositBankAccountDTO@57611d74, external.letiuka.mvc.model.dto.CreditBankAccountDTO@354862a6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@16b71d28, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1967a799, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4632937c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3099844e]
+2018-05-16 20:35:10 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:35:10 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@2bde31a9
+2018-05-16 20:35:10 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@2c7ce06f
+2018-05-16 20:35:10 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@4b4b348f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@ae07eb7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@50e9453b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1bddb8d1, external.letiuka.mvc.model.dto.DepositBankAccountDTO@9a00869, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3cda2c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1a66978d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6c0bbf20, external.letiuka.mvc.model.dto.CreditBankAccountDTO@65e11188, external.letiuka.mvc.model.dto.CreditBankAccountDTO@36a4aa2]
+2018-05-16 20:50:51 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:50:51 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@1f1aa17f
+2018-05-16 20:50:51 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@65f4d2f6
+2018-05-16 20:50:51 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@7567018a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6fcbd6d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4c27e594, external.letiuka.mvc.model.dto.CreditBankAccountDTO@f07ed84, external.letiuka.mvc.model.dto.DepositBankAccountDTO@4221d6bf, external.letiuka.mvc.model.dto.CreditBankAccountDTO@21551c43, external.letiuka.mvc.model.dto.CreditBankAccountDTO@522d56b8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6276fab4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2eae4c6b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2790faf9]
+2018-05-16 20:50:54 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:50:54 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@4bbdb63b
+2018-05-16 20:50:54 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@69eb2da2
+2018-05-16 20:50:54 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@7abe8711, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6dca588c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4be03760, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7b568583, external.letiuka.mvc.model.dto.DepositBankAccountDTO@75de03f7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4aef3bf8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@fe5ef2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4f4bb9f3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4a0fda56, external.letiuka.mvc.model.dto.CreditBankAccountDTO@790c1814]
+2018-05-16 20:51:00 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:51:00 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@76606647
+2018-05-16 20:51:00 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@3a098696
+2018-05-16 20:51:00 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@48e3a6f0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2bc770d8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5ee069b9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@28ab79c5, external.letiuka.mvc.model.dto.DepositBankAccountDTO@7daa9e06, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6d7b60db, external.letiuka.mvc.model.dto.CreditBankAccountDTO@300b716c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@439d43f9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6aeeaf22, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5ca5771c]
+2018-05-16 20:51:01 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:51:01 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@41ddb5b7
+2018-05-16 20:51:01 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@381162ad
+2018-05-16 20:51:01 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@11751041, external.letiuka.mvc.model.dto.CreditBankAccountDTO@34f148d4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@18ad33f0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2b1a3e42, external.letiuka.mvc.model.dto.DepositBankAccountDTO@12d4c478, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2cdd891e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5d9e0dc6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@270cc019, external.letiuka.mvc.model.dto.CreditBankAccountDTO@13cf3784, external.letiuka.mvc.model.dto.CreditBankAccountDTO@539ad99a]
+2018-05-16 20:51:20 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:51:20 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@78b008d2
+2018-05-16 20:51:20 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@52bea803
+2018-05-16 20:51:20 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@766f0bfc, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6e431c71, external.letiuka.mvc.model.dto.CreditBankAccountDTO@164d6ff3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@31942389]
+2018-05-16 20:51:23 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:51:23 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@3665fcb7
+2018-05-16 20:51:23 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@2f68b921
+2018-05-16 20:51:23 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@44b6a16c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@22f12550, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3be8e5fd, external.letiuka.mvc.model.dto.CreditBankAccountDTO@51a3e210, external.letiuka.mvc.model.dto.DepositBankAccountDTO@206f9489, external.letiuka.mvc.model.dto.CreditBankAccountDTO@b1fee71, external.letiuka.mvc.model.dto.CreditBankAccountDTO@772435e2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@39d9ea74, external.letiuka.mvc.model.dto.CreditBankAccountDTO@654efa1a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1156fca4]
+2018-05-16 20:52:20 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:52:20 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@38026a1f
+2018-05-16 20:52:20 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@27b6849e
+2018-05-16 20:52:20 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@34b24b84, external.letiuka.mvc.model.dto.CreditBankAccountDTO@672a2192, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4c53fdfa, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5fd2029a, external.letiuka.mvc.model.dto.DepositBankAccountDTO@791a9c8f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4f8a148f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1c658ca9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@53ec9b6d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7e3f8b7b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@610ec65f]
+2018-05-16 20:53:28 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:53:28 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@76ca01ae
+2018-05-16 20:53:28 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@37bd262
+2018-05-16 20:53:28 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@389e5f92, external.letiuka.mvc.model.dto.CreditBankAccountDTO@60cba085, external.letiuka.mvc.model.dto.CreditBankAccountDTO@46aa0a43, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1b9f2836, external.letiuka.mvc.model.dto.DepositBankAccountDTO@51b79618, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6cc5cb23, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7a2b2cea, external.letiuka.mvc.model.dto.CreditBankAccountDTO@18976501, external.letiuka.mvc.model.dto.CreditBankAccountDTO@75fd375d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@37237612]
+2018-05-16 20:54:45 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:54:45 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@1cc064a0
+2018-05-16 20:54:45 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@3682121
+2018-05-16 20:54:45 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@63ccc43a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@41b1f8d7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5e4b7125, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1c6832e4, external.letiuka.mvc.model.dto.DepositBankAccountDTO@1980c847, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5739fce0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@52fe7d7b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@f5c8ad2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1081a98e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@8479982]
+2018-05-16 20:54:47 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:54:47 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@3a5c6dd7
+2018-05-16 20:54:47 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@37198ff2
+2018-05-16 20:54:47 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@67027e16, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4ac35b9e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@13a8a5c4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@68b5ce5c]
+2018-05-16 20:54:49 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:54:49 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@cf5b1a1
+2018-05-16 20:54:49 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@51441b26
+2018-05-16 20:54:49 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@22a7dc89, external.letiuka.mvc.model.dto.CreditBankAccountDTO@90254a3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@285b949b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5937279d, external.letiuka.mvc.model.dto.DepositBankAccountDTO@45e8eba6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5e5408f4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2a5fb0e9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4a3461f0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@488316cb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@366eb487]
+2018-05-16 20:54:54 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:54:54 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:54:54 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:54:54 INFO  RandomAccountNumberGenerator:40 - Generated new card number 6182452198355844
+2018-05-16 20:54:55 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:54:55 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:54:58 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:54:58 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:54:58 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:54:58 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3079931263859456
+2018-05-16 20:54:58 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:54:58 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:02 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:02 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:02 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:02 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8971123003761093
+2018-05-16 20:55:02 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:02 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:07 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:07 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:07 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:07 INFO  RandomAccountNumberGenerator:40 - Generated new card number 0176951181886680
+2018-05-16 20:55:07 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:07 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:11 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:11 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:11 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:11 INFO  RandomAccountNumberGenerator:40 - Generated new card number 3931672163152188
+2018-05-16 20:55:11 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:11 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:13 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:13 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:13 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:13 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1507740204181369
+2018-05-16 20:55:13 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:13 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:16 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:16 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:16 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:16 INFO  RandomAccountNumberGenerator:40 - Generated new card number 9799782294683772
+2018-05-16 20:55:16 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:16 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:20 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:20 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:20 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:20 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2683371556833237
+2018-05-16 20:55:20 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:20 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:23 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:23 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:23 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:23 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8219496883866788
+2018-05-16 20:55:23 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:23 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:27 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:27 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:27 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:27 INFO  RandomAccountNumberGenerator:40 - Generated new card number 7053099354031880
+2018-05-16 20:55:27 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:27 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:31 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:31 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:31 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:31 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2066649529292817
+2018-05-16 20:55:31 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:31 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:35 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:35 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:35 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:35 INFO  RandomAccountNumberGenerator:40 - Generated new card number 1339798854697188
+2018-05-16 20:55:35 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:35 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:38 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:38 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:38 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:38 INFO  RandomAccountNumberGenerator:40 - Generated new card number 2538222020884593
+2018-05-16 20:55:38 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:38 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:41 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:41 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:41 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:41 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8921470795794723
+2018-05-16 20:55:41 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:41 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:46 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:55:46 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:55:46 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:55:46 INFO  RandomAccountNumberGenerator:40 - Generated new card number 8724204742562806
+2018-05-16 20:55:46 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:55:46 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:55:47 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:55:47 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@3f2e416f
+2018-05-16 20:55:47 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@57bf2117
+2018-05-16 20:55:47 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@2743a523, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4c56ad, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4da44af2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@63bd7dc8, external.letiuka.mvc.model.dto.DepositBankAccountDTO@596da621, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3bf67a9f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@54ea44c9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5c3120a1, external.letiuka.mvc.model.dto.CreditBankAccountDTO@68d9c9a8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@60f364ae]
+2018-05-16 20:55:50 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:55:50 WARN  DefaultBankAccountDAO:405 - Failed to read entity from database
+2018-05-16 20:56:23 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:23 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@1836ac58
+2018-05-16 20:56:23 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@4684320f
+2018-05-16 20:56:23 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@14efc93e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@79a3d95c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@54dafe5c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@33a9ba82, external.letiuka.mvc.model.dto.DepositBankAccountDTO@596533f0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3eeb78b9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3dc04926, external.letiuka.mvc.model.dto.CreditBankAccountDTO@434399b6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3349c89d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@560250fd]
+2018-05-16 20:56:25 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:25 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@2e5985de
+2018-05-16 20:56:25 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@795993a4
+2018-05-16 20:56:25 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@71649f52, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7a71ba08, external.letiuka.mvc.model.dto.CreditBankAccountDTO@18e4b7ed, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2d95d3e6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@785e4709, external.letiuka.mvc.model.dto.CreditBankAccountDTO@f0813f0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@32ee8623, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3167697b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3b8b1651, external.letiuka.mvc.model.dto.CreditBankAccountDTO@74d31543]
+2018-05-16 20:56:26 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:26 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@6a80f132
+2018-05-16 20:56:26 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@4cc54db4
+2018-05-16 20:56:26 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@38ea03c8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@32967464, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5f720a65, external.letiuka.mvc.model.dto.CreditBankAccountDTO@39bc44d2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@51a0f46e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@50948f6a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1f7a963f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@443bdbd6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@12ee44bb]
+2018-05-16 20:56:30 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:56:30 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:56:30 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:56:30 INFO  RandomAccountNumberGenerator:40 - Generated new card number 9881808755161254
+2018-05-16 20:56:30 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:56:30 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:56:31 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:31 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@51580ad1
+2018-05-16 20:56:31 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@135423d8
+2018-05-16 20:56:31 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@37d68666, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1c7b7f88, external.letiuka.mvc.model.dto.CreditBankAccountDTO@d64e054, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3f9c58c3, external.letiuka.mvc.model.dto.DepositBankAccountDTO@3cfa0ce0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7b3aa3c8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@51f69abb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@c718a06, external.letiuka.mvc.model.dto.CreditBankAccountDTO@60800a64, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4e8ad15f]
+2018-05-16 20:56:32 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:32 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@7d879304
+2018-05-16 20:56:32 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@71a47110
+2018-05-16 20:56:32 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@67c06cf5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5f3b6ef6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1e65d9a6, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4c9b178b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@28587d29, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2c10ea0a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1c08aec7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@8bbd582, external.letiuka.mvc.model.dto.CreditBankAccountDTO@63e15089, external.letiuka.mvc.model.dto.CreditBankAccountDTO@480ab645]
+2018-05-16 20:56:36 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 20:56:36 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 20:56:36 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 20:56:36 INFO  RandomAccountNumberGenerator:40 - Generated new card number 4988235988670144
+2018-05-16 20:56:36 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 20:56:36 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 20:56:37 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:37 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@67bbccde
+2018-05-16 20:56:37 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@16074010
+2018-05-16 20:56:37 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@16a5991, external.letiuka.mvc.model.dto.CreditBankAccountDTO@9cd6e89, external.letiuka.mvc.model.dto.CreditBankAccountDTO@30299e52, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1c024f87, external.letiuka.mvc.model.dto.DepositBankAccountDTO@4f772b47, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2d2cbd06, external.letiuka.mvc.model.dto.CreditBankAccountDTO@510b7dff, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5ffb7e2e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@29205b85, external.letiuka.mvc.model.dto.CreditBankAccountDTO@612c172a]
+2018-05-16 20:56:40 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:40 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@554059e1
+2018-05-16 20:56:40 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@2b3a2e44
+2018-05-16 20:56:40 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@19506028, external.letiuka.mvc.model.dto.CreditBankAccountDTO@42d1fff9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@15893913, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6fbb7de8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@75f00117, external.letiuka.mvc.model.dto.CreditBankAccountDTO@38931667, external.letiuka.mvc.model.dto.CreditBankAccountDTO@648ef1c7, external.letiuka.mvc.model.dto.CreditBankAccountDTO@506e9483, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2563cf20, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5e3c5c5]
+2018-05-16 20:56:41 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:41 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@71fa44cd
+2018-05-16 20:56:41 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@1b9b3737
+2018-05-16 20:56:41 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@1b9c3387, external.letiuka.mvc.model.dto.CreditBankAccountDTO@42f4def9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@610b2646, external.letiuka.mvc.model.dto.CreditBankAccountDTO@236b87df, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5991883e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3d7686e3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@577ae1d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7a5d8413, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2fd8231e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2610f998]
+2018-05-16 20:56:41 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:56:41 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@aa7666f
+2018-05-16 20:56:41 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@3a9d4119
+2018-05-16 20:56:41 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@44df5f8d]
+2018-05-16 20:59:53 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:59:53 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@30e4f46a
+2018-05-16 20:59:53 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@34c2cc41
+2018-05-16 20:59:53 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@69ba2171]
+2018-05-16 20:59:56 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 20:59:56 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@36d880a2
+2018-05-16 20:59:56 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@3bd435c
+2018-05-16 20:59:56 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@1b0a71fe, external.letiuka.mvc.model.dto.CreditBankAccountDTO@69df5d3e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1b700d37, external.letiuka.mvc.model.dto.CreditBankAccountDTO@723e1aa6, external.letiuka.mvc.model.dto.DepositBankAccountDTO@3af3109e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@29d68c53, external.letiuka.mvc.model.dto.CreditBankAccountDTO@32d425eb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@30bde23d, external.letiuka.mvc.model.dto.CreditBankAccountDTO@12686354, external.letiuka.mvc.model.dto.CreditBankAccountDTO@f41c15e]
+2018-05-16 21:07:44 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 21:08:05 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:08:18 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 21:08:22 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:08:22 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@67a053cd
+2018-05-16 21:08:22 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@1fa46826
+2018-05-16 21:08:22 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@823eec5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4058f1f8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2503ec05, external.letiuka.mvc.model.dto.CreditBankAccountDTO@195a45db, external.letiuka.mvc.model.dto.DepositBankAccountDTO@e98d5f3, external.letiuka.mvc.model.dto.CreditBankAccountDTO@94822e9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@33919401, external.letiuka.mvc.model.dto.CreditBankAccountDTO@782e7b35, external.letiuka.mvc.model.dto.CreditBankAccountDTO@30511e8e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@78c63d07]
+2018-05-16 21:08:28 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:08:28 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@6afabf69
+2018-05-16 21:08:28 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@7b6d905a
+2018-05-16 21:08:28 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@6bad2f74]
+2018-05-16 21:08:33 TRACE FrontController:39 - Received a request with action = register-account
+2018-05-16 21:08:33 TRACE RegisterBankAccountController:28 - Entered external.letiuka.mvc.controller.concrete.RegisterBankAccountController
+2018-05-16 21:08:33 TRACE DefaultBankAccountService:46 - Trying to register bank account
+2018-05-16 21:08:33 INFO  RandomAccountNumberGenerator:40 - Generated new card number 4752407565925342
+2018-05-16 21:08:33 TRACE DefaultBankAccountService:71 - Inserting new bank account into database
+2018-05-16 21:08:33 TRACE DefaultBankAccountService:87 - Successfully inserted new bank account into database
+2018-05-16 21:08:34 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:08:34 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@562f4a32
+2018-05-16 21:08:34 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@41a6532a
+2018-05-16 21:08:34 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@57443338, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6a2dddbd, external.letiuka.mvc.model.dto.CreditBankAccountDTO@467f6410, external.letiuka.mvc.model.dto.CreditBankAccountDTO@35b340f6, external.letiuka.mvc.model.dto.DepositBankAccountDTO@4318688b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@475c9560, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7a3e367f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@55256d3e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@55f90b21, external.letiuka.mvc.model.dto.CreditBankAccountDTO@762d736b]
+2018-05-16 21:08:36 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:08:36 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@be995d2
+2018-05-16 21:08:36 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@4f21b5b9
+2018-05-16 21:08:36 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@26c3c23c, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5496eaee]
+2018-05-16 21:08:46 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:08:46 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@46bf7770
+2018-05-16 21:08:46 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@14590d57
+2018-05-16 21:08:46 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@28a1a0a8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1cf23d29, external.letiuka.mvc.model.dto.CreditBankAccountDTO@214bcd30, external.letiuka.mvc.model.dto.CreditBankAccountDTO@7da45ffb, external.letiuka.mvc.model.dto.DepositBankAccountDTO@58a51407, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5533614f, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2aee0494, external.letiuka.mvc.model.dto.CreditBankAccountDTO@75eacdb5, external.letiuka.mvc.model.dto.CreditBankAccountDTO@51ffa23, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4be8dad6]
+2018-05-16 21:09:10 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:09:10 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@425492c6
+2018-05-16 21:09:10 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@459807c1
+2018-05-16 21:09:10 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@68ddda55, external.letiuka.mvc.model.dto.CreditBankAccountDTO@71a7682b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1703167b, external.letiuka.mvc.model.dto.CreditBankAccountDTO@12a0ad55, external.letiuka.mvc.model.dto.DepositBankAccountDTO@14a9c226, external.letiuka.mvc.model.dto.CreditBankAccountDTO@5e8506a8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@51ba73cd, external.letiuka.mvc.model.dto.CreditBankAccountDTO@46e7a6aa, external.letiuka.mvc.model.dto.CreditBankAccountDTO@1c85e4a2, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6a4301dc]
+2018-05-16 21:10:53 INFO  ContextInitListener:17 - Deployed web application
+2018-05-16 21:10:53 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:11:12 TRACE FrontController:39 - Received a request with action = log-in
+2018-05-16 21:11:15 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:11:15 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@647ea22b
+2018-05-16 21:11:15 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@2fb8b696
+2018-05-16 21:11:15 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.DepositBankAccountDTO@335669d9, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3b080b44, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2a7689f4, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4090962a, external.letiuka.mvc.model.dto.DepositBankAccountDTO@40882740, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3b21563e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@25065187, external.letiuka.mvc.model.dto.CreditBankAccountDTO@61e3a2cb, external.letiuka.mvc.model.dto.CreditBankAccountDTO@60503b90, external.letiuka.mvc.model.dto.CreditBankAccountDTO@51710102]
+2018-05-16 21:22:57 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:22:57 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@7f1fa3e1
+2018-05-16 21:22:57 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@c8079eb
+2018-05-16 21:22:57 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@348598ff, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2a74202a, external.letiuka.mvc.model.dto.CreditBankAccountDTO@28f69e2e, external.letiuka.mvc.model.dto.CreditBankAccountDTO@2736f5fa, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3fecc383, external.letiuka.mvc.model.dto.CreditBankAccountDTO@3492c124, external.letiuka.mvc.model.dto.CreditBankAccountDTO@28092e76, external.letiuka.mvc.model.dto.CreditBankAccountDTO@388087a8, external.letiuka.mvc.model.dto.CreditBankAccountDTO@6129bbe0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@4310dd00]
+2018-05-16 21:22:59 TRACE FrontController:39 - Received a request with action = list-unconfirmed
+2018-05-16 21:22:59 DEBUG ListUnconfirmedController:42 - external.letiuka.mvc.model.dto.AccountListDTO@6ae514ae
+2018-05-16 21:22:59 DEBUG ListUnconfirmedController:43 - external.letiuka.mvc.model.dto.LongPaginationDTO@7cc25b77
+2018-05-16 21:22:59 DEBUG ListUnconfirmedController:44 - [external.letiuka.mvc.model.dto.CreditBankAccountDTO@5e71bc0, external.letiuka.mvc.model.dto.CreditBankAccountDTO@526a169c]

@@ -1,9 +1,7 @@
 package external.letiuka.init;
 
 import external.letiuka.mvc.controller.HttpMethod;
-import external.letiuka.mvc.controller.concrete.LogInController;
-import external.letiuka.mvc.controller.concrete.LogOutController;
-import external.letiuka.mvc.controller.concrete.RegisterBankAccountController;
+import external.letiuka.mvc.controller.concrete.*;
 import external.letiuka.mvc.controller.mapping.ControllerMapper;
 import external.letiuka.mvc.controller.mapping.DefaultControllerMapper;
 import external.letiuka.persistence.dal.dao.BankAccountDAO;
@@ -15,7 +13,6 @@ import external.letiuka.security.authorization.AuthorizationManager;
 import external.letiuka.security.authorization.ActionMapAuthorizationManager;
 import external.letiuka.mvc.controller.FrontController;
 import external.letiuka.mvc.controller.HttpController;
-import external.letiuka.mvc.controller.concrete.SignUpController;
 import external.letiuka.security.Role;
 import external.letiuka.persistence.connectionpool.ConnectionPool;
 import external.letiuka.persistence.connectionpool.TomcatConnectionPool;
@@ -41,33 +38,34 @@ import static org.quartz.JobBuilder.newJob;
 import static org.quartz.TriggerBuilder.newTrigger;
 
 public class PlainJavaApplicationBuilder implements ApplicationBuilder {
-    private static Logger logger = Logger.getLogger(PlainJavaApplicationBuilder.class);
+    private static final Logger logger = Logger.getLogger(PlainJavaApplicationBuilder.class);
 
     ConnectionPool pool = new TomcatConnectionPool();
     TransactionManager transactionManager = new DefaultTransactionManager(pool);
 
-    private DAOFactory daoFac;
-    private ServiceFactory serviceFac;
+    protected DAOFactory daoFac;
+    protected ServiceFactory serviceFac;
 
-    private UserDAO userDAO;
-    private BankAccountDAO accountDAO;
-    private TransactionDAO transactionDAO;
-    private ScheduledDAO scheduledDAO;
+    protected UserDAO userDAO;
+    protected BankAccountDAO accountDAO;
+    protected TransactionDAO transactionDAO;
+    protected ScheduledDAO scheduledDAO;
 
-    private AuthenticationService authService;
-    private BankAccountService accountService;
+    protected AuthenticationService authService;
+    protected BankAccountService accountService;
 
-    private PasswordHasher passwordHasher = new SHA256HexApacheHasher();
-    private TimeProvider timeProvider = new RealTimeProvider();
-    private InterestRateProvider rateProvider = new ConstantInterestRateProvider(25,15);
-    private AccountNumberGenerator numberGenerator;
+    protected PasswordHasher passwordHasher = new SHA256HexApacheHasher();
+    protected TimeProvider timeProvider = new RealTimeProvider();
+    protected InterestRateProvider rateProvider = new ConstantInterestRateProvider(25,15);
+    protected AccountNumberGenerator numberGenerator;
 
-    private SignUpController signUpController;
-    private LogInController logInController;
-    private LogOutController logOutController;
-    private RegisterBankAccountController registerBankAccountController;
+    protected SignUpController signUpController;
+    protected LogInController logInController;
+    protected LogOutController logOutController;
+    protected RegisterBankAccountController registerBankAccountController;
+    protected ListUnconfirmedController listUnconfirmedController;
 
-    private ServletContext servletContext;
+    protected ServletContext servletContext;
     private ControllerMapper controllerMapper;
     private AuthorizationManager authorizationManager;
     private FrontController frontController;
@@ -117,9 +115,10 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
         logInController = new LogInController(authService);
         logOutController = new LogOutController();
         registerBankAccountController  = new RegisterBankAccountController(accountService);
+        listUnconfirmedController= new ListUnconfirmedController(accountService);
     }
 
-    protected AuthorizationManager buildAuthorizationManager() {
+    private final AuthorizationManager buildAuthorizationManager() {
         HashMap<String, HashSet<Role>> actionRoleTable = new HashMap<>();
         HashSet<Role> signUpRoles;
 
@@ -138,12 +137,17 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
 
         signUpRoles = new HashSet<>();
         signUpRoles.add(Role.USER);
+        signUpRoles.add(Role.ADMIN);
+        actionRoleTable.put("list-unconfirmed", signUpRoles);
+
+        signUpRoles = new HashSet<>();
+        signUpRoles.add(Role.USER);
         actionRoleTable.put("register-account", signUpRoles);
 
         return new ActionMapAuthorizationManager(actionRoleTable);
     }
 
-    protected ControllerMapper buildControllerMapper() {
+    private final ControllerMapper buildControllerMapper() {
         HashMap<String, HashMap<HttpMethod, HttpController>> actionRoleTable = new HashMap<>();
         HashMap<HttpMethod, HttpController> methodMap;
 
@@ -163,10 +167,14 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
         methodMap.put(HttpMethod.POST, registerBankAccountController);
         actionRoleTable.put("register-account", methodMap);
 
+        methodMap = new HashMap<>();
+        methodMap.put(HttpMethod.GET, listUnconfirmedController);
+        actionRoleTable.put("list-unconfirmed", methodMap);
+
         return new DefaultControllerMapper(actionRoleTable);
     }
 
-    protected void createFrontController() {
+    private final void createFrontController() {
 
         frontController = new FrontController(
                 controllerMapper,
@@ -177,7 +185,7 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
         regDyn.addMapping("/dispatcher");
         regDyn.setLoadOnStartup(1);
     }
-    private void setupScheduled() throws SchedulerException {
+    protected void setupScheduled() throws SchedulerException {
 
 
         SchedulerFactory sf = new StdSchedulerFactory();

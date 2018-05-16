@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 
 public final class ActionMapAuthorizationManager implements AuthorizationManager {
-    Map<String,? extends Set<Role>> actionRoleTable;
+    private final Map<String,? extends Set<Role>> actionRoleTable;
 
     public ActionMapAuthorizationManager(Map<String, ? extends Set<Role>> actionRoleTable) {
         this.actionRoleTable = Collections.unmodifiableMap(actionRoleTable);

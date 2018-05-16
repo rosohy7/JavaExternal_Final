@@ -14,8 +14,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class SignUpController implements HttpController {
-    private AuthenticationService authService;
-    private static Logger logger = Logger.getLogger(SignUpController.class);
+    private final AuthenticationService authService;
+    private static final Logger logger = Logger.getLogger(SignUpController.class);
 
     public SignUpController(AuthenticationService authService) {
         this.authService = authService;

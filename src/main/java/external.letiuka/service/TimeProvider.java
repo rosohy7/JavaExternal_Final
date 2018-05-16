@@ -7,5 +7,5 @@ public interface TimeProvider {
 
     Timestamp getCurrentTimestamp();
 
-    long getMillisDaysLater(int years);
+    long getMillisDaysLater(int days);
 }

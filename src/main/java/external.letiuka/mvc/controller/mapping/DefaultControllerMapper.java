@@ -8,7 +8,7 @@ import java.util.Collections;
 import java.util.Map;
 
 public class DefaultControllerMapper implements ControllerMapper {
-    Map<String, ? extends Map<HttpMethod, HttpController>> controllerMap;
+    private final Map<String, ? extends Map<HttpMethod, HttpController>> controllerMap;
 
     public DefaultControllerMapper(Map<String, ? extends Map<HttpMethod, HttpController>> controllerMap) {
         this.controllerMap = Collections.unmodifiableMap(controllerMap);

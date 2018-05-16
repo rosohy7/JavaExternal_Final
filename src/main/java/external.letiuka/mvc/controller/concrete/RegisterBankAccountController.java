@@ -16,8 +16,8 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 public class RegisterBankAccountController implements HttpController {
-    private static Logger logger = Logger.getLogger(RegisterBankAccountController.class);
-    BankAccountService accountService;
+    private static final Logger logger = Logger.getLogger(RegisterBankAccountController.class);
+    private final BankAccountService accountService;
 
     public RegisterBankAccountController(BankAccountService accountService) {
         this.accountService = accountService;
@@ -27,22 +27,23 @@ public class RegisterBankAccountController implements HttpController {
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {
         logger.log(Level.TRACE, "Entered " + this.getClass().getName());
 
-        AccountType type = null;
+        String type = null;
         try {
-            type = AccountType.valueOf(req.getParameter("type"));
+            type = req.getParameter("type");
         } catch (IllegalArgumentException e) {
             try {
                 resp.sendError(404);
-            } catch (IOException io) {
+            } finally {
                 return;
             }
+
         }
 
         switch (type) {
-            case CREDIT:
+            case "CREDIT":
                 registerCredit(req, resp);
                 break;
-            case DEPOSIT:
+            case "DEPOSIT":
                 registerDeposit(req, resp);
                 break;
         }
@@ -60,7 +61,7 @@ public class RegisterBankAccountController implements HttpController {
         } catch (NumberFormatException e) {
             try {
                 resp.sendError(404);
-            } catch (IOException io) {
+            } finally {
                 return;
             }
         }
@@ -68,16 +69,15 @@ public class RegisterBankAccountController implements HttpController {
         CreditBankAccountDTO accountDTO = new CreditBankAccountDTO();
         accountDTO.setHolder((String) session.getAttribute("login"));
         accountDTO.setCreditLimit(limit);
-        accountDTO.setType(AccountType.CREDIT);
+        accountDTO.setType("CREDIT");
         try {
             accountService.registerBankAccount(accountDTO);
         } catch (ServiceException e) {
             try {
                 resp.sendError(404);
-            } catch (IOException io) {
+            } finally {
                 return;
             }
-            e.printStackTrace();
         }
     }
 
@@ -85,16 +85,15 @@ public class RegisterBankAccountController implements HttpController {
         HttpSession session = req.getSession();
         DepositBankAccountDTO accountDTO = new DepositBankAccountDTO();
         accountDTO.setHolder((String) session.getAttribute("login"));
-        accountDTO.setType(AccountType.DEPOSIT);
+        accountDTO.setType("DEPOSIT");
         try {
             accountService.registerBankAccount(accountDTO);
         } catch (ServiceException e) {
             try {
                 resp.sendError(404);
-            } catch (IOException io) {
+            } finally {
                 return;
             }
-            e.printStackTrace();
         }
     }
 }

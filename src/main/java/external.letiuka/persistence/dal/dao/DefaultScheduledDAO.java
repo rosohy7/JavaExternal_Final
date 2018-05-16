@@ -11,7 +11,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public class DefaultScheduledDAO implements ScheduledDAO {
-    private TransactionManager manager;
+    private final TransactionManager manager;
     private static final Logger logger = Logger.getLogger(DefaultScheduledDAO.class);
 
     public DefaultScheduledDAO(TransactionManager manager) {

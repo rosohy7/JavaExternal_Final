@@ -13,9 +13,9 @@ import org.apache.log4j.Logger;
 
 
 public class DefaultAuthenticationService implements AuthenticationService {
-    private TransactionManager manager;
-    private UserDAO userDAO;
-    private PasswordHasher hasher;
+    private final TransactionManager manager;
+    private final UserDAO userDAO;
+    private final PasswordHasher hasher;
     private static final Logger logger = Logger.getLogger(DefaultAuthenticationService.class);
 
     public DefaultAuthenticationService(TransactionManager manager, UserDAO userDAO, PasswordHasher hasher) {

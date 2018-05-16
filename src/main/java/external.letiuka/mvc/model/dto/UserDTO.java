@@ -2,7 +2,9 @@ package external.letiuka.mvc.model.dto;
 
 import external.letiuka.security.Role;
 
-public class UserDTO {
+import java.io.Serializable;
+
+public class UserDTO implements Serializable {
     private String login;
     private String password;
     private Role role;

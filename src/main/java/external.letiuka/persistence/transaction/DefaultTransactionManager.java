@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public class DefaultTransactionManager implements TransactionManager {
     private final ThreadLocal<Transaction> transaction = new ThreadLocal<>();
-    private ConnectionPool pool;
+    private final ConnectionPool pool;
 
     public DefaultTransactionManager(ConnectionPool pool) {
         this.pool = pool;

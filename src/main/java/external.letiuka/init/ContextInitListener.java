@@ -10,7 +10,7 @@ import javax.servlet.annotation.WebListener;
 @WebListener
 public final class ContextInitListener implements ServletContextListener {
 
-    private static Logger logger = Logger.getLogger(ContextInitListener.class);
+    private static final Logger logger = Logger.getLogger(ContextInitListener.class);
 
     @Override
     public void contextInitialized(ServletContextEvent servletContextEvent) {

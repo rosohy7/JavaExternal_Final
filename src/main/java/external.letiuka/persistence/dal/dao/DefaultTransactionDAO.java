@@ -14,7 +14,7 @@ import org.apache.log4j.Logger;
 import java.sql.*;
 
 public class DefaultTransactionDAO implements TransactionDAO {
-    private TransactionManager manager;
+    private final TransactionManager manager;
     private static final Logger logger = Logger.getLogger(DefaultTransactionDAO.class);
 
     public DefaultTransactionDAO(TransactionManager manager) {

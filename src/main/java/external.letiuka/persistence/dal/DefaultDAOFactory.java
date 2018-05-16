@@ -4,7 +4,7 @@ import external.letiuka.persistence.dal.dao.*;
 import external.letiuka.persistence.transaction.TransactionManager;
 
 public class DefaultDAOFactory implements DAOFactory {
-    private TransactionManager manager;
+    private final TransactionManager manager;
 
     public DefaultDAOFactory(TransactionManager manager) {
         this.manager = manager;

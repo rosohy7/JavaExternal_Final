@@ -8,7 +8,7 @@ import java.sql.Date;
 public abstract class BankAccountDTO implements Serializable {
     protected Date expires;
     protected String accountNumber;
-    protected AccountType type;
+    protected String type;
     protected double accountBalance;
     protected boolean confirmed;
     protected Date latestUpdate;
@@ -33,11 +33,11 @@ public abstract class BankAccountDTO implements Serializable {
         this.accountNumber = accountNumber;
     }
 
-    public AccountType getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(AccountType type) {
+    public void setType(String type) {
         this.type = type;
     }
 

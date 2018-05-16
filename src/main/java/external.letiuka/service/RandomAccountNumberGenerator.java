@@ -7,8 +7,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 public class RandomAccountNumberGenerator implements AccountNumberGenerator {
-    private static Logger logger = Logger.getLogger(RandomAccountNumberGenerator.class);
-    private BankAccountDAO accountDAO;
+    private static final Logger logger = Logger.getLogger(RandomAccountNumberGenerator.class);
+    private final BankAccountDAO accountDAO;
 
     public RandomAccountNumberGenerator(BankAccountDAO accountDAO) {
         this.accountDAO = accountDAO;

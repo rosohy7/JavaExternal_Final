@@ -46,7 +46,7 @@ public abstract class BankAccountServiceTest {
 
         CreditBankAccountDTO accountDTO = new CreditBankAccountDTO();
         accountDTO.setCreditLimit(100.0);
-        accountDTO.setType(AccountType.CREDIT);
+        accountDTO.setType("CREDIT");
         accountDTO.setHolder("john");
         BankAccountService service = getBankAccountService();
         service.registerBankAccount(accountDTO);

@@ -16,8 +16,8 @@ public class RealTimeProvider implements TimeProvider {
     }
 
     @Override
-    public long getMillisDaysLater(int years) {
-        Instant later = Instant.now().plus(years,ChronoUnit.DAYS);
+    public long getMillisDaysLater(int days) {
+        Instant later = Instant.now().plus(days,ChronoUnit.DAYS);
         return Instant.ofEpochSecond(0).until(later, ChronoUnit.MILLIS);
     }
 

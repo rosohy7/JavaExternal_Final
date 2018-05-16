@@ -27,8 +27,15 @@
             </td>
         </c:if>
 
-
-
+        <c:if test="${not empty sessionScope.role}">
+            <td>
+                <form action="${context}/dispatcher" method="GET">
+                    <input type="hidden" name="action" value="list-unconfirmed"/>
+                    <input type="hidden" name="page" value="1"/>
+                    <input type="submit" value="See unconfirmed" />
+                </form>
+            </td>
+        </c:if>
 
     </tr>
 </table>

@@ -15,8 +15,8 @@ import java.io.IOException;
 
 
 public final class FrontController extends HttpServlet {
-    private ControllerMapper controllerMapper;
-    private AuthorizationManager authorizationManager;
+    private final ControllerMapper controllerMapper;
+    private final AuthorizationManager authorizationManager;
     private static final Logger logger = Logger.getLogger(FrontController.class);
 
     public FrontController(ControllerMapper controllerMapper, AuthorizationManager authorizationManager) {
@@ -74,8 +74,10 @@ public final class FrontController extends HttpServlet {
                     resp.sendError(401, "Log in to complete this request");
                 else
                     resp.sendError(403, "You are not authorized for this request");
+
             } else
                 resp.sendError(404, "There is no such action");
+
 
         }
     }
