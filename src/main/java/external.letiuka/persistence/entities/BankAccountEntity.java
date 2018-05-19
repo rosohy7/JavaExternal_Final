@@ -1,6 +1,6 @@
 package external.letiuka.persistence.entities;
 
-import external.letiuka.mvc.model.AccountType;
+import external.letiuka.modelviewcontroller.model.AccountType;
 
 import java.sql.Date;
 

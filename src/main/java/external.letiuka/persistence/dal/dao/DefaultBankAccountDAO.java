@@ -1,6 +1,6 @@
 package external.letiuka.persistence.dal.dao;
 
-import external.letiuka.mvc.model.AccountType;
+import external.letiuka.modelviewcontroller.model.AccountType;
 import external.letiuka.persistence.dal.DAOException;
 import external.letiuka.persistence.entities.BankAccountEntity;
 import external.letiuka.persistence.entities.CreditBankAccountEntity;
@@ -12,7 +12,6 @@ import org.apache.log4j.Logger;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 public class DefaultBankAccountDAO implements BankAccountDAO {
@@ -249,9 +248,9 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
     }
 
     @Override
-    public List<BankAccountEntity> readUserAccounts(long userId) throws DAOException {
+    public List<BankAccountEntity> readUserAccounts(long userId, long offset, long count) throws DAOException {
         List<BankAccountEntity> results = new ArrayList<BankAccountEntity>();
-        String sql = "SELECT * FROM `bank_account` WHERE `user_id` = ? ORDER BY `bank_account_id` ASC";
+        String sql = "SELECT * FROM `bank_account` WHERE `user_id` = ? ORDER BY `bank_account_id` ASC LIMIT ?,?";
         Connection cn;
         PreparedStatement ps;
         ResultSet rs, rsLeaf;
@@ -259,7 +258,94 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
         try {
             cn = manager.getConnection();
             ps = cn.prepareStatement(sql);
-            ps.setLong(1, userId);
+            ps.setLong(1,userId);
+            ps.setLong(2,offset);
+            ps.setLong(3,count);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                BankAccountEntity baseAccount;
+                AccountType type = AccountType.valueOf(rs.getString("account_type"));
+                long id=rs.getLong("bank_account_id");
+                switch (type) {
+                    case CREDIT:
+                        CreditBankAccountEntity credAccount = new CreditBankAccountEntity();
+                        baseAccount = credAccount;
+                        String sqlCredit = "SELECT * FROM `credit_bank_account`" +
+                                " WHERE `bank_account_id` = ?";
+                        ps = cn.prepareStatement(sqlCredit);
+                        ps.setLong(1, id);
+                        rsLeaf = ps.executeQuery();
+                        if (rsLeaf.next()) {
+                            credAccount.setCreditLimit(rsLeaf.getDouble("credit_limit"));
+                            credAccount.setInterestRate(rsLeaf.getDouble("interest_rate"));
+                            credAccount.setAccruedInterest(rsLeaf.getDouble("accrued_interest"));
+                        } else {
+                            logger.log(Level.ERROR, "No matching entity subtype for base entity");
+                            return null;
+                        }
+                        break;
+                    case DEPOSIT:
+                        baseAccount = new DepositBankAccountEntity();
+                        DepositBankAccountEntity depAccount = (DepositBankAccountEntity) baseAccount;
+                        String sqlDeposit = "SELECT * FROM `deposit_bank_account`" +
+                                " WHERE `bank_account_id` = ?";
+                        ps = cn.prepareStatement(sqlDeposit);
+                        ps.setLong(1, id);
+                        rsLeaf = ps.executeQuery();
+                        if (rsLeaf.next()) {
+                            depAccount.setInterestRate(rsLeaf.getDouble("interest_rate"));
+                            depAccount.setAccruedInterest(rsLeaf.getDouble("accrued_interest"));
+                        } else {
+                            logger.log(Level.ERROR, "No matching entity subtype for base entity");
+                            return null;
+                        }
+                        break;
+                    default:
+                        success=false;
+                        String message = "The DAO does not support the entity subtype";
+                        logger.log(Level.ERROR, message);
+                        throw new DAOException(message);
+                }
+                baseAccount.setId(id);
+                baseAccount.setType(type);
+                baseAccount.setExpires(rs.getDate("expires"));
+                baseAccount.setAccountNumber(rs.getString("account_number"));
+                baseAccount.setAccountBalance(rs.getDouble("balance"));
+                baseAccount.setConfirmed(rs.getBoolean("confirmed"));
+                baseAccount.setLatestUpdate(rs.getDate("latest_update"));
+                baseAccount.setUserId(rs.getLong("user_id"));
+                results.add(baseAccount);
+            }
+            return results;
+        } catch (SQLException | TransactionException e) {
+            logger.log(Level.WARN, "Failed to read entity from database");
+            success = false;
+            throw new DAOException(e);
+        } finally {
+            try {
+                manager.returnConnection(success);       // If not in a transaction then commit or rollback
+            } catch (Exception e) {
+                if (success) throw new DAOException(e);  // Do not override original exception if any
+            }
+        }
+    }
+    @Override
+    public List<BankAccountEntity> readUserAccounts(String login, long offset, long count) throws DAOException {
+        List<BankAccountEntity> results = new ArrayList<BankAccountEntity>();
+        String sql = "SELECT `bank_account`.* FROM `bank_account` INNER JOIN `user`" +
+                " ON `bank_account`.`user_id` =`user`.`user_id`" +
+                " WHERE `user`.`login` = ? AND `bank_account`.`confirmed` = TRUE" +
+                " ORDER BY `bank_account_id` ASC LIMIT ?,?";
+        Connection cn;
+        PreparedStatement ps;
+        ResultSet rs, rsLeaf;
+        boolean success = true;
+        try {
+            cn = manager.getConnection();
+            ps = cn.prepareStatement(sql);
+            ps.setString(1,login);
+            ps.setLong(2,offset);
+            ps.setLong(3,count);
             rs = ps.executeQuery();
             while (rs.next()) {
                 BankAccountEntity baseAccount;
@@ -430,7 +516,39 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
             }
             return 0;
         } catch (SQLException | TransactionException e) {
-            logger.log(Level.WARN, "Failed to read entity from database");
+            logger.log(Level.WARN, "Failed to read from database");
+            success = false;
+            throw new DAOException(e);
+        } finally {
+            try {
+                manager.returnConnection(success);       // If not in a transaction then commit or rollback
+            } catch (Exception e) {
+                if (success) throw new DAOException(e);  // Do not override original exception if any
+            }
+        }
+    }
+
+    @Override
+    public long getUserAccountCount(String login) throws DAOException {
+        String sql = "SELECT COUNT(*) AS total FROM `bank_account` INNER JOIN `user`" +
+                " ON `user`.`user_id` = `bank_account`.`user_id`" +
+                " WHERE `bank_account`.`confirmed` = TRUE" +
+                " AND `user`.`login` = ?";
+        Connection cn;
+        PreparedStatement ps;
+        ResultSet rs, rsLeaf;
+        boolean success = true;
+        try {
+            cn = manager.getConnection();
+            ps = cn.prepareStatement(sql);
+            ps.setString(1,login);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+            return 0;
+        } catch (SQLException | TransactionException e) {
+            logger.log(Level.WARN, "Failed to read from database");
             success = false;
             throw new DAOException(e);
         } finally {
@@ -446,7 +564,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
     public void updateAccount(BankAccountEntity account) throws DAOException {
         String sqlBase = "UPDATE `bank_account` SET `expires` = ?," +
                 "`account_number`=?, `balance`=?,`confirmed`=?," +
-                "`latest_update`=?,`user_id`=?) WHERE `bank_account_id` = ?";
+                "`latest_update`=?,`user_id`=? WHERE `bank_account_id` = ?";
         Connection cn;
         PreparedStatement ps;
         ResultSet generated;
@@ -466,7 +584,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
                 case CREDIT:
                     CreditBankAccountEntity credAccount = (CreditBankAccountEntity) account;
                     String sqlCredit = "UPDATE `credit_bank_account`" +
-                            " SET `credit_limit`=?,`interest_rate`=?,`accrued_interest`=?)" +
+                            " SET `credit_limit`=?,`interest_rate`=?,`accrued_interest`=?" +
                             " WHERE `bank_account_id` = ?";
                     ps = cn.prepareStatement(sqlCredit);
                     ps.setDouble(1, credAccount.getCreditLimit());
@@ -478,7 +596,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
                 case DEPOSIT:
                     DepositBankAccountEntity depAccount = (DepositBankAccountEntity) account;
                     String sqlDeposit = "UPDATE `deposit_bank_account`" +
-                            " SET `interest_rate`=?,`accrued_interest`=?)" +
+                            " SET `interest_rate`=?,`accrued_interest`=?" +
                             " WHERE `bank_account_id` = ?";
                     ps = cn.prepareStatement(sqlDeposit);
                     ps.setDouble(1, depAccount.getInterestRate());
@@ -494,6 +612,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
             }
         } catch (SQLException | TransactionException e) {
             logger.log(Level.WARN, "Failed to update entity in database");
+            logger.log(Level.DEBUG, e.getMessage());
             success = false;
             throw new DAOException(e);
         } finally {
@@ -508,7 +627,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
     @Override
     public void confirmAccount(String accountNumber, Date expires) throws DAOException {
         String sqlBase = "UPDATE `bank_account` SET `expires` = ?," +
-                ",`confirmed`=TRUE" +
+                " `confirmed`=TRUE" +
                 " WHERE `account_number` = ?";
         Connection cn;
         PreparedStatement ps;

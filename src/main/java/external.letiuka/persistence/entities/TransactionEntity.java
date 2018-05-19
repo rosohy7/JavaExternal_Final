@@ -1,6 +1,6 @@
 package external.letiuka.persistence.entities;
 
-import external.letiuka.mvc.model.TransactionType;
+import external.letiuka.modelviewcontroller.model.TransactionType;
 
 import java.sql.Timestamp;
 
@@ -55,7 +55,7 @@ public abstract class TransactionEntity extends BaseEntity {
         this.accountId = accountId;
     }
 
-    public long getPairId() {
+    public Long getPairId() {
         return pairId;
     }
 

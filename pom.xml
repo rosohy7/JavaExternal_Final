@@ -34,13 +34,15 @@
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-dbcp</artifactId>
-            <version>7.0.70</version>
+            <!--<version>7.0.70</version>-->
+            <version>8.0.23</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>org.apache.tomcat</groupId>
             <artifactId>tomcat-jdbc</artifactId>
-            <version>7.0.70</version>
+            <!--<version>7.0.70</version>-->
+            <version>8.0.21</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -71,6 +73,11 @@
             <version>1.9.5</version>
             <scope>test</scope>
         </dependency>
+            <dependency>
+                <groupId>mysql</groupId>
+                <artifactId>mysql-connector-java</artifactId>
+                <version>5.1.46</version>
+            </dependency>
     </dependencies>
 
 
@@ -83,18 +90,19 @@
                     <artifactId>tomcat7-maven-plugin</artifactId>
                     <version>2.2</version>
                     <configuration>
+                        <url>http://127.0.0.1:8080/manager/text</url>
+                        <username>admin</username>
+                        <password>admin</password>
+                        <server>TomcatServer</server>
+                        <path>/bankapp</path>
+                    </configuration>
+                    <!--<configuration>
                         <url>http://localhost:8088/manager/text</url>
                         <username>bankapp</username>
                         <password>bankapp</password>
                         <port>8089</port>
-                    </configuration>
-                    <dependencies>
-                        <dependency>
-                            <groupId>mysql</groupId>
-                            <artifactId>mysql-connector-java</artifactId>
-                            <version>5.1.46</version>
-                        </dependency>
-                    </dependencies>
+                    </configuration>-->
+
                 </plugin>
                 <!--<plugin>
 

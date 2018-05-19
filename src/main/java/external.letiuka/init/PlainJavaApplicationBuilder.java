@@ -1,9 +1,9 @@
 package external.letiuka.init;
 
-import external.letiuka.mvc.controller.HttpMethod;
-import external.letiuka.mvc.controller.concrete.*;
-import external.letiuka.mvc.controller.mapping.ControllerMapper;
-import external.letiuka.mvc.controller.mapping.DefaultControllerMapper;
+import external.letiuka.modelviewcontroller.controller.HttpMethod;
+import external.letiuka.modelviewcontroller.controller.concrete.*;
+import external.letiuka.modelviewcontroller.controller.mapping.ControllerMapper;
+import external.letiuka.modelviewcontroller.controller.mapping.DefaultControllerMapper;
 import external.letiuka.persistence.dal.dao.BankAccountDAO;
 import external.letiuka.persistence.dal.dao.ScheduledDAO;
 import external.letiuka.persistence.dal.dao.TransactionDAO;
@@ -11,8 +11,8 @@ import external.letiuka.security.PasswordHasher;
 import external.letiuka.security.SHA256HexApacheHasher;
 import external.letiuka.security.authorization.AuthorizationManager;
 import external.letiuka.security.authorization.ActionMapAuthorizationManager;
-import external.letiuka.mvc.controller.FrontController;
-import external.letiuka.mvc.controller.HttpController;
+import external.letiuka.modelviewcontroller.controller.FrontController;
+import external.letiuka.modelviewcontroller.controller.HttpController;
 import external.letiuka.security.Role;
 import external.letiuka.persistence.connectionpool.ConnectionPool;
 import external.letiuka.persistence.connectionpool.TomcatConnectionPool;
@@ -56,7 +56,10 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
 
     protected PasswordHasher passwordHasher = new SHA256HexApacheHasher();
     protected TimeProvider timeProvider = new RealTimeProvider();
-    protected InterestRateProvider rateProvider = new ConstantInterestRateProvider(25,15);
+    protected InterestRateProvider rateProvider =
+            new ConstantInterestRateProvider(25, 15);
+    protected TransactionFeeProvider feeProvider =
+            new ConstantTransactionFeeProvider(1.0, 2.0);
     protected AccountNumberGenerator numberGenerator;
 
     protected SignUpController signUpController;
@@ -64,6 +67,11 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
     protected LogOutController logOutController;
     protected RegisterBankAccountController registerBankAccountController;
     protected ListUnconfirmedController listUnconfirmedController;
+    protected ListUserAccountsController listUserAccountsController;
+    protected ConfirmAccountController confirmAccountController;
+    protected AccountInfoController accountInfoController;
+    protected TransferMoneyController transferMoneyController;
+    protected SetLanguageController setLanguageController;
 
     protected ServletContext servletContext;
     private ControllerMapper controllerMapper;
@@ -81,7 +89,7 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
             daoFac = new DefaultDAOFactory(transactionManager);
             createDAL(daoFac);
 
-            serviceFac = new DefaultServiceFactory(transactionManager);
+            serviceFac = new ServiceFactory(transactionManager);
             createServices(serviceFac);
 
             createHttpControllers();
@@ -92,30 +100,38 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
             setupScheduled();
         } catch (Exception e) {
             String message = "Failed to build application object graph.";
-            logger.log(Level.FATAL,message);
+            logger.log(Level.FATAL, message);
             throw new Error(message);
         }
     }
 
-    protected void createServices(ServiceFactory serFac){
-        numberGenerator=new RandomAccountNumberGenerator(accountDAO);
-        authService = serFac.getAuthentificationService(userDAO,passwordHasher);
-        accountService = serFac.getBankAccountService(
-                timeProvider, rateProvider,
-                numberGenerator, userDAO, accountDAO);
-    }
-    protected void createDAL(DAOFactory daoFac){
+    protected void createDAL(DAOFactory daoFac) {
         userDAO = daoFac.getUserDAO();
-        accountDAO=daoFac.getBankAccountDAO();
+        accountDAO = daoFac.getBankAccountDAO();
         transactionDAO = daoFac.getTransactionDAO();
         scheduledDAO = daoFac.getScheduledDAO();
     }
-    protected void createHttpControllers(){
+
+    protected void createServices(ServiceFactory serFac) {
+        numberGenerator = new RandomAccountNumberGenerator(accountDAO);
+        authService = serFac.getAuthentificationService(userDAO, passwordHasher);
+        accountService = serFac.getBankAccountService(
+                timeProvider, rateProvider,
+                feeProvider, numberGenerator,
+                userDAO, accountDAO, transactionDAO);
+    }
+
+    protected void createHttpControllers() {
         signUpController = new SignUpController(authService);
         logInController = new LogInController(authService);
         logOutController = new LogOutController();
-        registerBankAccountController  = new RegisterBankAccountController(accountService);
-        listUnconfirmedController= new ListUnconfirmedController(accountService);
+        registerBankAccountController = new RegisterBankAccountController(accountService);
+        listUnconfirmedController = new ListUnconfirmedController(accountService);
+        listUserAccountsController = new ListUserAccountsController(accountService);
+        confirmAccountController = new ConfirmAccountController(accountService);
+        accountInfoController = new AccountInfoController(accountService);
+        transferMoneyController = new TransferMoneyController(accountService);
+        setLanguageController =  new SetLanguageController();
     }
 
     private final AuthorizationManager buildAuthorizationManager() {
@@ -144,6 +160,31 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
         signUpRoles.add(Role.USER);
         actionRoleTable.put("register-account", signUpRoles);
 
+        signUpRoles = new HashSet<>();
+        signUpRoles.add(Role.USER);
+        signUpRoles.add(Role.ADMIN);
+        actionRoleTable.put("list-accounts", signUpRoles);
+
+        signUpRoles = new HashSet<>();
+        signUpRoles.add(Role.USER);
+        signUpRoles.add(Role.ADMIN);
+        actionRoleTable.put("confirm-account", signUpRoles);
+
+        signUpRoles = new HashSet<>();
+        signUpRoles.add(Role.USER);
+        signUpRoles.add(Role.ADMIN);
+        actionRoleTable.put("account-page", signUpRoles);
+
+        signUpRoles = new HashSet<>();
+        signUpRoles.add(Role.USER);
+        actionRoleTable.put("transfer-money", signUpRoles);
+
+        signUpRoles = new HashSet<>();
+        signUpRoles.add(Role.GUEST);
+        signUpRoles.add(Role.USER);
+        signUpRoles.add(Role.ADMIN);
+        actionRoleTable.put("set-language", signUpRoles);
+
         return new ActionMapAuthorizationManager(actionRoleTable);
     }
 
@@ -171,6 +212,26 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
         methodMap.put(HttpMethod.GET, listUnconfirmedController);
         actionRoleTable.put("list-unconfirmed", methodMap);
 
+        methodMap = new HashMap<>();
+        methodMap.put(HttpMethod.GET, listUserAccountsController);
+        actionRoleTable.put("list-accounts", methodMap);
+
+        methodMap = new HashMap<>();
+        methodMap.put(HttpMethod.POST, confirmAccountController);
+        actionRoleTable.put("confirm-account", methodMap);
+
+        methodMap = new HashMap<>();
+        methodMap.put(HttpMethod.GET, accountInfoController);
+        actionRoleTable.put("account-page", methodMap);
+
+        methodMap = new HashMap<>();
+        methodMap.put(HttpMethod.POST, transferMoneyController);
+        actionRoleTable.put("transfer-money", methodMap);
+
+        methodMap = new HashMap<>();
+        methodMap.put(HttpMethod.POST, setLanguageController);
+        actionRoleTable.put("set-language", methodMap);
+
         return new DefaultControllerMapper(actionRoleTable);
     }
 
@@ -185,12 +246,13 @@ public class PlainJavaApplicationBuilder implements ApplicationBuilder {
         regDyn.addMapping("/dispatcher");
         regDyn.setLoadOnStartup(1);
     }
+
     protected void setupScheduled() throws SchedulerException {
 
 
         SchedulerFactory sf = new StdSchedulerFactory();
         Scheduler scheduler = sf.getScheduler();
-        scheduler.getContext().put("ScheduledDAO",scheduledDAO);
+        scheduler.getContext().put("ScheduledDAO", scheduledDAO);
         JobDetail accumulationJob = newJob(DailyInterestAccumulation.class)
                 .withIdentity("DailyInterestAccumulation", "group1")
                 .build();

@@ -1,6 +1,6 @@
 package external.letiuka.service;
 
-import external.letiuka.mvc.model.dto.UserDTO;
+import external.letiuka.modelviewcontroller.model.dto.UserDTO;
 import external.letiuka.security.Role;
 
 public interface AuthenticationService {

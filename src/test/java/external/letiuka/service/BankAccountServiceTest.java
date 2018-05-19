@@ -1,9 +1,9 @@
 package external.letiuka.service;
 
-import external.letiuka.mvc.model.AccountType;
-import external.letiuka.mvc.model.dto.CreditBankAccountDTO;
+import external.letiuka.modelviewcontroller.model.dto.CreditBankAccountDTO;
 import external.letiuka.persistence.dal.DAOException;
 import external.letiuka.persistence.dal.dao.BankAccountDAO;
+import external.letiuka.persistence.dal.dao.TransactionDAO;
 import external.letiuka.persistence.dal.dao.UserDAO;
 import external.letiuka.persistence.entities.UserEntity;
 import external.letiuka.persistence.transaction.TransactionManager;
@@ -29,6 +29,10 @@ public abstract class BankAccountServiceTest {
     protected UserDAO userDAO;
     @Mock
     protected BankAccountDAO accountDAO;
+    @Mock
+    protected TransactionFeeProvider feeProvider;
+    @Mock
+    protected TransactionDAO transactionDAO;
 
     protected abstract BankAccountService getBankAccountService();
     @Before

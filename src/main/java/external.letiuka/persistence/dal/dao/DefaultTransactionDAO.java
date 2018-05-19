@@ -1,6 +1,6 @@
 package external.letiuka.persistence.dal.dao;
 
-import external.letiuka.mvc.model.TransactionType;
+import external.letiuka.modelviewcontroller.model.TransactionType;
 import external.letiuka.persistence.dal.DAOException;
 import external.letiuka.persistence.entities.FromTransactionEntity;
 import external.letiuka.persistence.entities.PaymentTransactionEntity;
@@ -12,6 +12,8 @@ import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class DefaultTransactionDAO implements TransactionDAO {
     private final TransactionManager manager;
@@ -24,7 +26,7 @@ public class DefaultTransactionDAO implements TransactionDAO {
     @Override
     public void insertTransaction(TransactionEntity transaction) throws DAOException {
         String sqlBase = "INSERT INTO `transaction`(`time_stamp`,`balance_change`,`bank_fee`," +
-                "`transacction_type`,`bank_account_id`,`pair_transaction_id`) VALUES(?,?,?,?,?,?)";
+                "`transaction_type`,`bank_account_id`,`pair_transaction_id`) VALUES(?,?,?,?,?,?)";
         Connection cn;
         PreparedStatement ps;
         ResultSet generated;
@@ -72,13 +74,14 @@ public class DefaultTransactionDAO implements TransactionDAO {
                     ps.executeUpdate();
                     break;
                 default:
-                    success=false;
+                    success = false;
                     String message = "The DAO does not support the entity subtype";
                     logger.log(Level.ERROR, message);
                     throw new DAOException(message);
             }
         } catch (SQLException | TransactionException e) {
             logger.log(Level.WARN, "Failed to add entity to database");
+            logger.log(Level.DEBUG,e.getMessage());
             success = false;
             throw new DAOException(e);
         } finally {
@@ -108,7 +111,7 @@ public class DefaultTransactionDAO implements TransactionDAO {
                 switch (type) {
                     case TRANSFER_TO:
                         ToTransactionEntity toTransaction = new ToTransactionEntity();
-                        baseTransaction=toTransaction;
+                        baseTransaction = toTransaction;
                         String sqlTo = "SELECT * FROM `transfer_to_transaction`" +
                                 " WHERE `transaction_id` = ?";
                         ps = cn.prepareStatement(sqlTo);
@@ -123,7 +126,7 @@ public class DefaultTransactionDAO implements TransactionDAO {
                         break;
                     case TRANSFER_FROM:
                         FromTransactionEntity fromTransaction = new FromTransactionEntity();
-                        baseTransaction=fromTransaction;
+                        baseTransaction = fromTransaction;
                         String sqlFrom = "SELECT * FROM `transfer_from_transaction`" +
                                 " WHERE `transaction_id` = ?";
                         ps = cn.prepareStatement(sqlFrom);
@@ -138,7 +141,7 @@ public class DefaultTransactionDAO implements TransactionDAO {
                         break;
                     case PAYMENT:
                         PaymentTransactionEntity paymentTransaction = new PaymentTransactionEntity();
-                        baseTransaction=paymentTransaction;
+                        baseTransaction = paymentTransaction;
                         String sqlPayment = "SELECT * FROM `payment_transaction`" +
                                 " WHERE `transaction_id` = ?";
                         ps = cn.prepareStatement(sqlPayment);
@@ -152,7 +155,7 @@ public class DefaultTransactionDAO implements TransactionDAO {
                         }
                         break;
                     default:
-                        success=false;
+                        success = false;
                         String message = "The DAO does not support the entity subtype";
                         logger.log(Level.ERROR, message);
                         throw new DAOException(message);
@@ -163,13 +166,15 @@ public class DefaultTransactionDAO implements TransactionDAO {
                 baseTransaction.setBalanceChange(rs.getDouble("balance_change"));
                 baseTransaction.setBankFee(rs.getDouble("bank_fee"));
                 baseTransaction.setAccountId(rs.getLong("bank_account_id"));
-                baseTransaction.setPairId(rs.getObject("pair_transaction_id",Long.class));;
+                baseTransaction.setPairId(rs.getObject("pair_transaction_id", Long.class));
+                ;
                 return baseTransaction;
             } else {
                 return null;
             }
         } catch (SQLException | TransactionException e) {
             logger.log(Level.WARN, "Failed to read entity from database");
+            logger.log(Level.DEBUG,e.getMessage());
             success = false;
             throw new DAOException(e);
         } finally {
@@ -210,6 +215,159 @@ public class DefaultTransactionDAO implements TransactionDAO {
 
         } catch (SQLException | TransactionException e) {
             logger.log(Level.WARN, "Failed to add entity to database");
+            success = false;
+            throw new DAOException(e);
+        } finally {
+            try {
+                manager.returnConnection(success);       // If not in a transaction then commit or rollback
+            } catch (Exception e) {
+                if (success) throw new DAOException(e);  // Do not override original exception if any
+            }
+        }
+    }
+
+    @Override
+    public void updatePairId(long id, Long pairId) throws DAOException {
+        String sql = "UPDATE `transaction` SET `pair_transaction_id` = ? WHERE `transaction_id` = ?";
+        Connection cn;
+        PreparedStatement ps;
+        boolean success = true;
+        try {
+            cn = manager.getConnection();
+            ps = cn.prepareStatement(sql);
+
+            ps.setObject(1, pairId, Types.BIGINT);
+            ps.setDouble(2, id);
+            ps.executeUpdate();
+        } catch (SQLException | TransactionException e) {
+            logger.log(Level.WARN, "Failed to add entity to database");
+            success = false;
+            throw new DAOException(e);
+        } finally {
+            try {
+                manager.returnConnection(success);       // If not in a transaction then commit or rollback
+            } catch (Exception e) {
+                if (success) throw new DAOException(e);  // Do not override original exception if any
+            }
+        }
+    }
+
+    @Override
+    public List<TransactionEntity> readAccountTransactions(long accountId, long offset, long count)
+            throws DAOException{
+        String sql = "SELECT * FROM `transaction` WHERE `bank_account_id` = ?" +
+                " ORDER BY `transaction_id` DESC LIMIT ?, ?";
+        List<TransactionEntity> results = new ArrayList<>();
+        Connection cn;
+        PreparedStatement ps;
+        ResultSet rs, rsLeaf;
+        boolean success = true;
+        try {
+            cn = manager.getConnection();
+            ps = cn.prepareStatement(sql);
+            ps.setLong(1, accountId);
+            ps.setLong(2,offset);
+            ps.setLong(3,count);
+            rs = ps.executeQuery();
+            while (rs.next()) {
+                TransactionEntity baseTransaction;
+                TransactionType type = TransactionType.valueOf(rs.getString("transaction_type"));
+                long id = rs.getLong("transaction_id");
+                switch (type) {
+                    case TRANSFER_TO:
+                        ToTransactionEntity toTransaction = new ToTransactionEntity();
+                        baseTransaction = toTransaction;
+                        String sqlTo = "SELECT * FROM `transfer_to_transaction`" +
+                                " WHERE `transaction_id` = ?";
+                        ps = cn.prepareStatement(sqlTo);
+                        ps.setLong(1, id);
+                        rsLeaf = ps.executeQuery();
+                        if (rsLeaf.next()) {
+                            toTransaction.setSenderNumber(rsLeaf.getString("sender_account_number"));
+                        } else {
+                            logger.log(Level.ERROR, "No matching entity subtype for base entity");
+                            return null;
+                        }
+                        break;
+                    case TRANSFER_FROM:
+                        FromTransactionEntity fromTransaction = new FromTransactionEntity();
+                        baseTransaction = fromTransaction;
+                        String sqlFrom = "SELECT * FROM `transfer_from_transaction`" +
+                                " WHERE `transaction_id` = ?";
+                        ps = cn.prepareStatement(sqlFrom);
+                        ps.setLong(1, id);
+                        rsLeaf = ps.executeQuery();
+                        if (rsLeaf.next()) {
+                            fromTransaction.setReceiverNumber(rsLeaf.getString("receiver_account_number"));
+                        } else {
+                            logger.log(Level.ERROR, "No matching entity subtype for base entity");
+                            return null;
+                        }
+                        break;
+                    case PAYMENT:
+                        PaymentTransactionEntity paymentTransaction = new PaymentTransactionEntity();
+                        baseTransaction = paymentTransaction;
+                        String sqlPayment = "SELECT * FROM `payment_transaction`" +
+                                " WHERE `transaction_id` = ?";
+                        ps = cn.prepareStatement(sqlPayment);
+                        ps.setLong(1, id);
+                        rsLeaf = ps.executeQuery();
+                        if (rsLeaf.next()) {
+                            paymentTransaction.setPaymentNumber(rsLeaf.getString("payment_number"));
+                        } else {
+                            logger.log(Level.ERROR, "No matching entity subtype for base entity");
+                            return null;
+                        }
+                        break;
+                    default:
+                        success = false;
+                        String message = "The DAO does not support the entity subtype";
+                        logger.log(Level.ERROR, message);
+                        throw new DAOException(message);
+                }
+                baseTransaction.setId(id);
+                baseTransaction.setType(type);
+                baseTransaction.setTimeStamp(rs.getTimestamp("time_stamp"));
+                baseTransaction.setBalanceChange(rs.getDouble("balance_change"));
+                baseTransaction.setBankFee(rs.getDouble("bank_fee"));
+                baseTransaction.setAccountId(accountId);
+                baseTransaction.setPairId(rs.getObject("pair_transaction_id", Long.class));
+
+                results.add(baseTransaction);
+            }
+            return results;
+        } catch (SQLException | TransactionException e) {
+            logger.log(Level.WARN, "Failed to read entity from database");
+            logger.log(Level.DEBUG, e.getMessage());
+            success = false;
+            throw new DAOException(e);
+        } finally {
+            try {
+                manager.returnConnection(success);       // If not in a transaction then commit or rollback
+            } catch (Exception e) {
+                if (success) throw new DAOException(e);  // Do not override original exception if any
+            }
+        }
+    }
+
+    @Override
+    public long getAccountTransactionsCount(long accountId) throws DAOException{
+        String sql = "SELECT COUNT(*) AS total FROM `transaction` WHERE `bank_account_id` = ?";
+        Connection cn;
+        PreparedStatement ps;
+        ResultSet rs;
+        boolean success = true;
+        try {
+            cn = manager.getConnection();
+            ps = cn.prepareStatement(sql);
+            ps.setLong(1,accountId);
+            rs = ps.executeQuery();
+            if (rs.next()) {
+                return rs.getInt("total");
+            }
+            return 0;
+        } catch (SQLException | TransactionException e) {
+            logger.log(Level.WARN, "Failed to read from database");
             success = false;
             throw new DAOException(e);
         } finally {

@@ -1,0 +1,6 @@
+external\letiuka\service\RealTimeProviderTest.class
+external\letiuka\service\BankAccountServiceTest.class
+external\letiuka\service\TimeProviderTest.class
+external\letiuka\persistence\transaction\TransactionManagerTest.class
+external\letiuka\service\DefaultBankAccountServiceTest.class
+external\letiuka\persistence\transaction\DefaultTransactionManagerTest.class

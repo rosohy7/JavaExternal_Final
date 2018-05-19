@@ -1,6 +1,6 @@
 package external.letiuka.service;
 
-import external.letiuka.mvc.model.dto.UserDTO;
+import external.letiuka.modelviewcontroller.model.dto.UserDTO;
 import external.letiuka.persistence.dal.DAOException;
 import external.letiuka.persistence.dal.dao.UserDAO;
 import external.letiuka.persistence.entities.UserEntity;
@@ -8,7 +8,6 @@ import external.letiuka.persistence.transaction.TransactionManager;
 
 import external.letiuka.security.PasswordHasher;
 import external.letiuka.security.Role;
-import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.log4j.Logger;
 
 
