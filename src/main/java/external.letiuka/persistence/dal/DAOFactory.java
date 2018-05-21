@@ -1,13 +1,32 @@
 package external.letiuka.persistence.dal;
 
-import external.letiuka.persistence.dal.dao.BankAccountDAO;
-import external.letiuka.persistence.dal.dao.ScheduledDAO;
-import external.letiuka.persistence.dal.dao.TransactionDAO;
-import external.letiuka.persistence.dal.dao.UserDAO;
+import external.letiuka.persistence.dal.dao.*;
+import external.letiuka.persistence.transaction.TransactionManager;
 
-public interface DAOFactory {
-    UserDAO getUserDAO();
-    BankAccountDAO getBankAccountDAO();
-    TransactionDAO getTransactionDAO();
-    ScheduledDAO getScheduledDAO();
+/**
+ * Provides instances of DAO-classes and injects them with transaction manager.
+ * Only to be used by lifecycle manager.
+ */
+public class DAOFactory {
+    private final TransactionManager manager;
+
+    public DAOFactory(TransactionManager manager) {
+        this.manager = manager;
+    }
+
+    public UserDAO getUserDAO() {
+        return new DefaultUserDAO(manager);
+    }
+
+    public BankAccountDAO getBankAccountDAO() {
+        return new DefaultBankAccountDAO(manager);
+    }
+
+    public TransactionDAO getTransactionDAO() {
+        return new DefaultTransactionDAO(manager);
+    }
+
+    public ScheduledDAO getScheduledDAO() {
+        return new DefaultScheduledDAO(manager);
+    }
 }

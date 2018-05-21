@@ -1,15 +1,17 @@
 package external.letiuka.modelviewcontroller.model.dto;
 
 import java.io.Serializable;
-import java.sql.Date;
+import java.util.Date;
 
+/**
+ * DTO for transfering bank account data.
+ */
 public abstract class BankAccountDTO implements Serializable {
     protected Date expires;
     protected String accountNumber;
     protected String type;
     protected double accountBalance;
     protected boolean confirmed;
-    protected Date latestUpdate;
     protected String holder;
     protected TransactionListDTO history;
 
@@ -56,14 +58,6 @@ public abstract class BankAccountDTO implements Serializable {
 
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
-    }
-
-    public Date getLatestUpdate() {
-        return latestUpdate;
-    }
-
-    public void setLatestUpdate(Date latestUpdate) {
-        this.latestUpdate = latestUpdate;
     }
 
     public String getHolder() {

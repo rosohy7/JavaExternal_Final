@@ -97,5 +97,6 @@ CREATE TABLE IF NOT EXISTS `payment_transaction`(
         ON UPDATE CASCADE ON DELETE CASCADE
 );
 INSERT INTO `user`(`login`,`password_hash`,`role`) 
-VALUES ('root', '4813494D137E1631BBA301D5ACAB6E7BB7AA74CE1185D456565EF51D737677B2',
+VALUES ('root', '4813494d137e1631bba301d5acab6e7bb7aa74ce1185d456565ef51d737677b2',
 'ADMIN');
+select * from `bank_account` left join `credit_bank_account` left join `deposit_bank_account`;

@@ -4,14 +4,17 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AccountListDTO implements Serializable{
+/**
+ * DTO for transfering bank account lists with pagination data.
+ */
+public class AccountListDTO implements Serializable {
     private List<BankAccountDTO> accounts;
     private PaginationDTO pagination;
 
     public AccountListDTO() {
 
         accounts = new ArrayList<>();
-        pagination=new PaginationDTO();
+        pagination = new PaginationDTO();
     }
 
     public List<BankAccountDTO> getAccounts() {

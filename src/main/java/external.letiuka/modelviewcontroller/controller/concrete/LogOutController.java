@@ -8,6 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Controller responsible for logging out.
+ */
 public class LogOutController  implements HttpController {
     private static final Logger logger = Logger.getLogger(LogOutController.class);
 
@@ -18,6 +21,11 @@ public class LogOutController  implements HttpController {
             resp.sendRedirect("/bankapp/");
         } catch (IOException e) {
             logger.log(Level.ERROR, "Could not redirect to index page after log out");
+            logger.log(Level.DEBUG, e.getStackTrace());
+            try {
+                resp.sendError(404);
+            } catch (IOException e1) {
+            }
         }
     }
 }

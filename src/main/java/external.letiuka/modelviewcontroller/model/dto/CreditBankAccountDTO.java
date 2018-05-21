@@ -1,5 +1,8 @@
 package external.letiuka.modelviewcontroller.model.dto;
 
+/**
+ * DTO for transfering credit bank account data.
+ */
 public class CreditBankAccountDTO extends BankAccountDTO {
     protected double creditLimit;
     protected double interestRate;

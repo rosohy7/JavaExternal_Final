@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Controller responsible for setting UI language.
+ */
 public class SetLanguageController implements HttpController {
     private static final Logger logger = Logger.getLogger(SetLanguageController.class);
 

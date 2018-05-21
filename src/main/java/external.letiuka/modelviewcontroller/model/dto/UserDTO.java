@@ -4,6 +4,9 @@ import external.letiuka.security.Role;
 
 import java.io.Serializable;
 
+/**
+ * DTO for representing a user.
+ */
 public class UserDTO implements Serializable {
     private String login;
     private String password;

@@ -4,6 +4,9 @@ import external.letiuka.modelviewcontroller.model.AccountType;
 
 import java.sql.Date;
 
+/**
+ * Represents bank account table in a database.
+ */
 public abstract class BankAccountEntity extends BaseEntity {
     protected Date expires;
     protected String accountNumber;

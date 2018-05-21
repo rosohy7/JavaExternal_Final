@@ -5,6 +5,9 @@ import external.letiuka.persistence.entities.TransactionEntity;
 
 import java.util.List;
 
+/**
+ * Provides interface for accessing bank transactions in a database
+ */
 public interface TransactionDAO {
     void insertTransaction(TransactionEntity transaction) throws DAOException;
 

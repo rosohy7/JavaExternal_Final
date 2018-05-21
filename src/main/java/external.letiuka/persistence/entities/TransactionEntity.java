@@ -3,7 +3,9 @@ package external.letiuka.persistence.entities;
 import external.letiuka.modelviewcontroller.model.TransactionType;
 
 import java.sql.Timestamp;
-
+/**
+ * Responsible for bank transaction table in a database.
+ */
 public abstract class TransactionEntity extends BaseEntity {
     protected Timestamp timeStamp;
     protected double balanceChange;
@@ -59,7 +61,7 @@ public abstract class TransactionEntity extends BaseEntity {
         return pairId;
     }
 
-    public void setPairId(long pairId) {
+    public void setPairId(Long pairId) {
         this.pairId = pairId;
     }
 }

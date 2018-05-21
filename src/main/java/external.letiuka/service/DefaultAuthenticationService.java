@@ -8,6 +8,7 @@ import external.letiuka.persistence.transaction.TransactionManager;
 
 import external.letiuka.security.PasswordHasher;
 import external.letiuka.security.Role;
+import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 
 

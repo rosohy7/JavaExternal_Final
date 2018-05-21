@@ -2,6 +2,9 @@ package external.letiuka.persistence.entities;
 
 import external.letiuka.security.Role;
 
+/**
+ * Responsible for user table in a database.
+ */
 public class UserEntity extends BaseEntity{
     protected Role role;
     protected String login;

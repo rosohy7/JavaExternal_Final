@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Controller responsible for signing up.
+ */
 public class SignUpController implements HttpController {
     private final AuthenticationService authService;
     private static final Logger logger = Logger.getLogger(SignUpController.class);
@@ -84,6 +87,11 @@ public class SignUpController implements HttpController {
         }
         catch(IOException e){
             logger.log(Level.ERROR,"Could not redirect back to sign up page after failed validation");
+            logger.log(Level.DEBUG, e.getStackTrace());
+            try {
+                resp.sendError(404);
+            } catch (IOException e1) {
+            }
         }
     }
 }

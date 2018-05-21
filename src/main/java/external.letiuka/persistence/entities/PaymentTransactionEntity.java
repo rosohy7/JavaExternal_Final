@@ -1,5 +1,8 @@
 package external.letiuka.persistence.entities;
 
+/**
+ * Represents payment_transaction table in a database.
+ */
 public class PaymentTransactionEntity extends TransactionEntity {
     protected String paymentNumber;
 

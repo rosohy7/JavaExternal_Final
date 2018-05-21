@@ -3,7 +3,7 @@ package external.letiuka.modelviewcontroller.controller.concrete;
 import external.letiuka.modelviewcontroller.controller.HttpController;
 import external.letiuka.modelviewcontroller.model.dto.CreditBankAccountDTO;
 import external.letiuka.modelviewcontroller.model.dto.DepositBankAccountDTO;
-import external.letiuka.service.BankAccountService;
+import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -13,11 +13,14 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Controller responsible for requesting new bank accounts to be created.
+ */
 public class RegisterBankAccountController implements HttpController {
     private static final Logger logger = Logger.getLogger(RegisterBankAccountController.class);
-    private final BankAccountService accountService;
+    private final BankOperationsService accountService;
 
-    public RegisterBankAccountController(BankAccountService accountService) {
+    public RegisterBankAccountController(BankOperationsService accountService) {
         this.accountService = accountService;
     }
 
@@ -26,16 +29,8 @@ public class RegisterBankAccountController implements HttpController {
         logger.log(Level.TRACE, "Entered " + this.getClass().getName());
 
         String type = null;
-        try {
             type = req.getParameter("type");
-        } catch (IllegalArgumentException e) {
-            try {
-                resp.sendError(404);
-            } finally {
-                return;
-            }
 
-        }
 
         switch (type) {
             case "CREDIT":
@@ -54,10 +49,13 @@ public class RegisterBankAccountController implements HttpController {
 
     private void registerCredit(HttpServletRequest req, HttpServletResponse resp) {
         double limit = 0;
+
         try {
             limit = Double.valueOf(req.getParameter("limit"));
-        } catch (NumberFormatException e) {
+            if(limit<0) throw new IllegalArgumentException("Credit limit can not be negative");
+        } catch (IllegalArgumentException e) {
             try {
+                req.getSession().setAttribute("message","Illegal value");
                 resp.sendError(404);
             } finally {
                 return;
@@ -87,6 +85,7 @@ public class RegisterBankAccountController implements HttpController {
         try {
             accountService.registerBankAccount(accountDTO);
         } catch (ServiceException e) {
+            logger.log(Level.DEBUG, e.getStackTrace());
             try {
                 resp.sendError(404);
             } finally {

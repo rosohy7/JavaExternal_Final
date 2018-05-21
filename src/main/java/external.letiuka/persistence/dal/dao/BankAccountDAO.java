@@ -6,6 +6,9 @@ import external.letiuka.persistence.entities.BankAccountEntity;
 import java.sql.Date;
 import java.util.List;
 
+/**
+ * Provides interface for accessing bank accounts in a database
+ */
 public interface BankAccountDAO {
     void insertAccount(BankAccountEntity account) throws DAOException;
     BankAccountEntity readAccount(long id) throws DAOException;

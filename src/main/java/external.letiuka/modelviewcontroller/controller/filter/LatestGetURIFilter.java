@@ -9,6 +9,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Web filter that remembers last get request used by user for future redirects.
+ */
 @WebFilter("/*")
 public class LatestGetURIFilter implements Filter {
     private static final Logger logger = Logger.getLogger(LatestGetURIFilter.class);

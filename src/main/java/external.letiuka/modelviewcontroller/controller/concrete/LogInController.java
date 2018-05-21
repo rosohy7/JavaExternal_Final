@@ -13,6 +13,9 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Controller responsible for logging in.
+ */
 public class LogInController implements HttpController {
     private final AuthenticationService authService;
     private static final Logger logger = Logger.getLogger(LogInController.class);
@@ -76,6 +79,11 @@ public class LogInController implements HttpController {
             resp.sendRedirect("/bankapp/auth/log-in.jsp");
         } catch (IOException e) {
             logger.log(Level.ERROR, "Could not redirect back to log in page after failed input validation");
+            logger.log(Level.DEBUG, e.getStackTrace());
+            try {
+                resp.sendError(404);
+            } catch (IOException e1) {
+            }
         }
     }
 }

@@ -13,7 +13,13 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-
+/**
+ * Implements front controller pattern.
+ * Responsible for sending requests to regular controllers
+ * if the user is authorized for the request.
+ * Only supports DO and GET http requests.
+ * Should be registered in server container at runtime in lifecycle manager
+ */
 public final class FrontController extends HttpServlet {
     private final ControllerMapper controllerMapper;
     private final AuthorizationManager authorizationManager;

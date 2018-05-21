@@ -3,7 +3,7 @@ package external.letiuka.modelviewcontroller.controller.concrete;
 import external.letiuka.modelviewcontroller.controller.HttpController;
 import external.letiuka.modelviewcontroller.model.dto.BankAccountDTO;
 import external.letiuka.modelviewcontroller.model.dto.PaginationDTO;
-import external.letiuka.service.BankAccountService;
+import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -15,13 +15,16 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Controller responsible for showing account information.
+ */
 public class AccountInfoController implements HttpController{
     private static final Logger logger= Logger.getLogger(AccountInfoController.class);
     private final long PER_PAGE=5;
 
-    private final BankAccountService service;
+    private final BankOperationsService service;
 
-    public AccountInfoController(BankAccountService service) {
+    public AccountInfoController(BankOperationsService service) {
         this.service = service;
     }
 
@@ -54,8 +57,11 @@ public class AccountInfoController implements HttpController{
                 resp.sendError(405,"You can not view another user`s bank account information");
             }
         } catch (IOException | ServiceException | ServletException e) {
-            e.printStackTrace();
-            logger.log(Level.ERROR, "Failed");
+            logger.log(Level.DEBUG, e.getStackTrace());
+        session.setAttribute("message","Request failed");
+        try {
+        resp.sendError(404);
+        } catch (IOException e1) {}
         }
-    }
-}
+        }
+        }

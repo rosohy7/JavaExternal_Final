@@ -1,5 +1,8 @@
 package external.letiuka.persistence.entities;
 
+/**
+ * Represents credit bank account table in a database.
+ */
 public class CreditBankAccountEntity extends BankAccountEntity {
     protected double creditLimit;
     protected double interestRate;

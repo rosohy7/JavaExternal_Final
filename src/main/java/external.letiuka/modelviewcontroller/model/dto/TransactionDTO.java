@@ -1,11 +1,16 @@
 package external.letiuka.modelviewcontroller.model.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
+/**
+ * DTO for representing bank transactions in account history.
+ */
 public abstract class TransactionDTO implements Serializable {
     protected double balanceChange;
     protected double bankFee;
     protected String type;
+    protected Date timestamp;
 
     public TransactionDTO() {
     }
@@ -32,5 +37,13 @@ public abstract class TransactionDTO implements Serializable {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }

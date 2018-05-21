@@ -6,7 +6,9 @@ import org.apache.tomcat.jdbc.pool.PoolProperties;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-
+/**
+ * Tomcat connection poool with configuration in constructor
+ */
 public class TomcatConnectionPool implements ConnectionPool {
 
     private final DataSource ds;

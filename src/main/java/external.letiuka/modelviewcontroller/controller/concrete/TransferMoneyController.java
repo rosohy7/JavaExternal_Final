@@ -1,7 +1,7 @@
 package external.letiuka.modelviewcontroller.controller.concrete;
 
 import external.letiuka.modelviewcontroller.controller.HttpController;
-import external.letiuka.service.BankAccountService;
+import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -11,12 +11,15 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * Controller transferring money between accounts.
+ */
 public class TransferMoneyController implements HttpController {
     private static final Logger logger = Logger.getLogger(TransferMoneyController.class);
 
-    private final BankAccountService accountService;
+    private final BankOperationsService accountService;
 
-    public TransferMoneyController(BankAccountService accountService) {
+    public TransferMoneyController(BankOperationsService accountService) {
         this.accountService = accountService;
     }
 
@@ -27,8 +30,11 @@ public class TransferMoneyController implements HttpController {
         HttpSession session = req.getSession();
         String login = (String) session.getAttribute("login");
         String holder;
-        double amount = Double.valueOf(req.getParameter("amount"));
+
+        String uri = (String)session.getAttribute("latest-get-uri");
         try {
+            double amount = Double.valueOf(req.getParameter("amount"));
+            if(amount<0) throw new IllegalArgumentException("Amount can not be negative");
             holder = accountService.getAccountHolder(fromNumber);
             if (login == null || !login.equals(holder)) {
                 logger.log(Level.WARN, login + " attempted to transfer money from " + holder + "`s card");
@@ -39,10 +45,17 @@ public class TransferMoneyController implements HttpController {
                 return;
             }
             accountService.transferMoney(fromNumber, toNumber, amount);
-            String uri = (String)session.getAttribute("latest-get-uri");
+
             resp.sendRedirect((uri==null)? "/bankapp/" : uri);
-        } catch (IOException | ServiceException e) {
+        } catch (IOException | ServiceException | IllegalArgumentException e) {
             logger.log(Level.WARN, "Failed to transfer money");
+            String message = "failed to transfer money";
+            session.setAttribute("message",message);
+            try {
+                resp.sendRedirect((uri==null)? "/bankapp/" : uri);
+            } catch (IOException e1) {
+
+            }
         }
     }
 }

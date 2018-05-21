@@ -1,5 +1,8 @@
 package external.letiuka.persistence.entities;
 
+/**
+ * Represents deposit bank account table in a database.
+ */
 public class DepositBankAccountEntity extends BankAccountEntity {
     protected double interestRate;
     protected double accruedInterest;

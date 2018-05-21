@@ -3,7 +3,7 @@ package external.letiuka.modelviewcontroller.controller.concrete;
 import external.letiuka.modelviewcontroller.controller.HttpController;
 import external.letiuka.modelviewcontroller.model.dto.AccountListDTO;
 import external.letiuka.modelviewcontroller.model.dto.PaginationDTO;
-import external.letiuka.service.BankAccountService;
+import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
@@ -14,12 +14,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
+/**
+ * Controller responsible for listing bank accounts requested by users to be confirmed.
+ */
 public class ListUnconfirmedController implements HttpController {
     private static final Logger logger = Logger.getLogger(ListUnconfirmedController.class);
     private static final long PER_PAGE=10;
-    private final BankAccountService service;
+    private final BankOperationsService service;
 
-    public ListUnconfirmedController(BankAccountService service) {
+    public ListUnconfirmedController(BankOperationsService service) {
         this.service = service;
     }
 
@@ -32,23 +35,24 @@ public class ListUnconfirmedController implements HttpController {
             targetPage=Long.valueOf(req.getParameter("page"));
 
         }
-        catch(Exception e){
+        catch(NumberFormatException e){
             logger.log(Level.DEBUG,"Pagination request without page number (setting 1)");
         }
         pagination.setPerPage(PER_PAGE);
         pagination.setTargetPage(targetPage);
         try{
             AccountListDTO accountList = service.getUnconfirmedAccounts(pagination);
-            logger.log(Level.DEBUG, accountList.toString());
-            logger.log(Level.DEBUG, accountList.getPagination().toString());
-            logger.log(Level.DEBUG, accountList.getAccounts().toString());
             req.setAttribute("accountList",accountList);
             RequestDispatcher disp = req.getRequestDispatcher("/WEB-INF/unconfirmed-accounts.jsp");
+
             disp.forward(req,resp);
 
         } catch (IOException | ServiceException | ServletException e) {
-            e.printStackTrace();
-            logger.log(Level.ERROR, "Could not redirect to home page");
+            logger.log(Level.DEBUG, e.getStackTrace());
+            try {
+                resp.sendError(404);
+            } catch (IOException e1) {
+            }
         }
     }
 }

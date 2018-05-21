@@ -4,6 +4,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * DTO for representing account history.
+ */
 public class TransactionListDTO implements Serializable {
     private List<TransactionDTO> transactions;
     private PaginationDTO pagination;

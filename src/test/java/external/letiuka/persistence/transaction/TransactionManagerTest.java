@@ -31,7 +31,7 @@ public abstract class TransactionManagerTest {
     }
 
 
-    @Test(timeout = 1000)
+    @Test(timeout = 10000)
     public void commitsImplicitTransactions() throws SQLException, TransactionException {
         Mockito.when(pool.getConnection()).thenReturn(
                 cona).thenReturn(conb);
@@ -55,7 +55,7 @@ public abstract class TransactionManagerTest {
         Mockito.verify(cn1).rollback();
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 10000)
     public void commitsExplicitTransactions() throws SQLException, TransactionException {
         Mockito.when(pool.getConnection()).thenReturn(
                 cona).thenReturn(conb);
@@ -71,7 +71,7 @@ public abstract class TransactionManagerTest {
         Mockito.verify(cn1,never()).rollback();
     }
 
-    @Test(timeout = 1000)
+    @Test(timeout = 10000)
     public void rollsBackExplicitTransactions() throws SQLException, TransactionException {
         Mockito.when(pool.getConnection()).thenReturn(
                 cona).thenReturn(conb);
@@ -85,7 +85,7 @@ public abstract class TransactionManagerTest {
         Mockito.verify(cn1,never()).commit();
         Mockito.verify(cn1).rollback();
     }
-    @Test(timeout = 1000)
+    @Test(timeout = 10000)
     public void startsNewExplicitTransactions() throws SQLException, TransactionException {
         Mockito.when(pool.getConnection()).thenReturn(
                 cona).thenReturn(conb);
@@ -100,7 +100,7 @@ public abstract class TransactionManagerTest {
         assertThat(cn1, is(not(cn2)));
 
     }
-    @Test(timeout = 1000)
+    @Test(timeout = 10000)
     public void startsNewImplicitTransactions() throws SQLException, TransactionException {
         Mockito.when(pool.getConnection()).thenReturn(
                 cona).thenReturn(conb);
