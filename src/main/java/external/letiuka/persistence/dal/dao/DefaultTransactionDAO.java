@@ -31,7 +31,7 @@ public class DefaultTransactionDAO implements TransactionDAO {
         Session session = manager.getSession();
         return session
                 .createQuery("FROM Transaction transaction" +
-                        " WHERE transaction.bankAccount.id = :accountId ORDER BY transaction.id")
+                        " WHERE transaction.bankAccount.id = :accountId ORDER BY transaction.id DESC")
                 .setMaxResults((int)count)
                 .setFirstResult((int)offset)
                 .setParameter("accountId", accountId)

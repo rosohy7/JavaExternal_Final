@@ -340,6 +340,10 @@ public class DefaultBankOperationsService implements BankOperationsService {
             manager.beginTransaction();
             Session session = manager.getSession();
             accountFrom = accountDAO.readAccount(numberFrom);
+            if(amount<0.01){
+                manager.rollback();
+                throw new ServiceException("Cannot send less than 0.01");
+            }
             if (accountFrom == null) {
                 manager.rollback();
                 throw new ServiceException("Sender account does not exist");
@@ -374,6 +378,7 @@ public class DefaultBankOperationsService implements BankOperationsService {
                 throw new ServiceException("Not enough money for transfer");
             }
             fee = feeProvider.getSenderFee() * amount / 100.0;
+            fee = Math.max(fee, 0.01);
             resultAmount = amount - fee;
             accountFrom.setAccountBalance(accountFrom.getAccountBalance() - amount);
             accountTo.setAccountBalance(accountTo.getAccountBalance() + resultAmount);

@@ -17,13 +17,6 @@ import external.letiuka.modelviewcontroller.controller.concrete.SignUpController
 import external.letiuka.modelviewcontroller.controller.concrete.TransferMoneyController;
 import external.letiuka.modelviewcontroller.controller.concrete.WithdrawController;
 import external.letiuka.modelviewcontroller.controller.mapping.ControllerMapper;
-import external.letiuka.modelviewcontroller.controller.mapping.DefaultControllerMapper;
-import external.letiuka.persistence.connectionpool.ConnectionPool;
-import external.letiuka.persistence.dal.DAOFactory;
-import external.letiuka.persistence.dal.dao.BankAccountDAO;
-import external.letiuka.persistence.dal.dao.ScheduledDAO;
-import external.letiuka.persistence.dal.dao.TransactionDAO;
-import external.letiuka.persistence.dal.dao.UserDAO;
 import external.letiuka.persistence.entities.BankAccountEntity;
 import external.letiuka.persistence.entities.CreditBankAccountEntity;
 import external.letiuka.persistence.entities.DepositBankAccountEntity;
@@ -36,31 +29,16 @@ import external.letiuka.persistence.ormconverter.AccountTypeOrmConverter;
 import external.letiuka.persistence.ormconverter.RoleOrmConverter;
 import external.letiuka.persistence.ormconverter.TransactionTypeOrmConverter;
 import external.letiuka.persistence.transaction.TransactionManager;
-import external.letiuka.security.PasswordHasher;
 import external.letiuka.security.Role;
-import external.letiuka.security.SHA256HexApacheHasher;
 import external.letiuka.security.authorization.AuthorizationManager;
-import external.letiuka.service.AuthenticationService;
-import external.letiuka.service.BankOperationsService;
-import external.letiuka.service.ServiceFactory;
-import external.letiuka.service.domain.AccountNumberGenerator;
-import external.letiuka.service.domain.ConstantInterestRateProvider;
-import external.letiuka.service.domain.ConstantTransactionFeeProvider;
-import external.letiuka.service.domain.InterestRateProvider;
-import external.letiuka.service.domain.RealTimeProvider;
-import external.letiuka.service.domain.TimeProvider;
-import external.letiuka.service.domain.TransactionFeeProvider;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
-import org.quartz.Scheduler;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Scope;
-import org.springframework.http.HttpRequest;
-import org.springframework.stereotype.Controller;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
@@ -68,45 +46,14 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
-import java.util.Set;
 
 @Configuration
 @ComponentScan(basePackages = "external.letiuka")
+@EnableScheduling
 public class RootSpringConfig {
 
     @Autowired
     TransactionManager transactionManager;
-
-
-
-    @Autowired
-    private UserDAO userDAO;
-    @Autowired
-    private BankAccountDAO accountDAO;
-    @Autowired
-    private TransactionDAO transactionDAO;
-    @Autowired
-    private ScheduledDAO scheduledDAO;
-
-    @Autowired
-    private AuthenticationService authService;
-    @Autowired
-    private BankOperationsService accountService;
-
-    @Autowired
-    private PasswordHasher passwordHasher = new SHA256HexApacheHasher();
-    @Autowired
-    private TimeProvider timeProvider = new RealTimeProvider();
-    @Bean(name="interestRateProvider")
-    public InterestRateProvider getInterestRateProvider(){
-        return new ConstantInterestRateProvider(25,15);
-    }
-    @Bean(name="transactionFeeProvider")
-    public TransactionFeeProvider getTransactionFeeProvider(){
-        return new ConstantTransactionFeeProvider(1.0,2.0);
-    }
-    @Autowired
-    private AccountNumberGenerator numberGenerator;
 
     @Autowired
     private SignUpController signUpController;
@@ -142,8 +89,6 @@ public class RootSpringConfig {
     @Autowired
     @Qualifier("servletContext")
     private ServletContext servletContext;
-
-    protected Scheduler scheduler;
 
     @Bean(name = "authorizationMap")
     public Map<String, HashSet<Role>> getAuthorizationMap() {

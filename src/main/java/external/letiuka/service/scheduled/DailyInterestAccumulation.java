@@ -8,28 +8,35 @@ import org.apache.log4j.Logger;
 import org.quartz.Job;
 import org.quartz.JobExecutionContext;
 import org.quartz.JobExecutionException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Component;
 
+import javax.persistence.PersistenceException;
+
 @Component
-public class DailyInterestAccumulation implements Job {
+public class DailyInterestAccumulation{
     private static Logger logger = Logger.getLogger(DailyInterestAccumulation.class);
     private final TransactionManager manager;
 
-    public DailyInterestAccumulation(TransactionManager manager) {
+    private ScheduledDAO scheduledDAO;
+
+    @Autowired
+    public DailyInterestAccumulation(TransactionManager manager, ScheduledDAO scheduledDAO) {
         this.manager = manager;
+        this.scheduledDAO = scheduledDAO;
     }
 
-    @Override
-    public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
+    @Scheduled(cron = "0 * * * * *") // Daily 1:00 a. m. "0 0 1 1/1 * ? *" // Every minute "0 0/1 * 1/1 * ? *"
+    public void execute() {
         try{
             manager.beginTransaction();
             logger.log(Level.INFO, "Starting daily interest accumulation job");
-            ScheduledDAO dao = (ScheduledDAO)jobExecutionContext.getScheduler().getContext().get("ScheduledDAO");
-            dao.accumulateInterest();
+            scheduledDAO.accumulateInterest();
             manager.commit();
-        } catch(Exception e){
+        } catch(PersistenceException e){
             manager.rollback();
-            throw new JobExecutionException(e);
+            logger.log(Level.ERROR, "Failed daily interest accumulation job");
         }
 
     }
