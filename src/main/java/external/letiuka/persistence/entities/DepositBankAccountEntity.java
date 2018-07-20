@@ -10,7 +10,6 @@ import javax.persistence.Table;
  */
 @Entity(name = "DepositBankAccount")
 @Table(name = "deposit_bank_account")
-@PrimaryKeyJoinColumn(name = "bank_account_id", referencedColumnName = "bank_account_id")
 public class DepositBankAccountEntity extends BankAccountEntity {
     @Column(name = "interest_rate")
     protected double interestRate;

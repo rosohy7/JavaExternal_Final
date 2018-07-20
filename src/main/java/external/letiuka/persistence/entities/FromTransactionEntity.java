@@ -12,7 +12,6 @@ import javax.persistence.Table;
 
 @Entity(name = "FromTransaction")
 @Table(name = "transfer_from_transaction")
-@PrimaryKeyJoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")
 public class FromTransactionEntity extends TransactionEntity {
     @Column(name = "receiver_account_number")
     protected String receiverNumber;

@@ -10,7 +10,6 @@ import javax.persistence.Table;
  */
 @Entity(name = "PaymentTransaction")
 @Table(name = "payment_transaction")
-@PrimaryKeyJoinColumn(name = "transaction_id", referencedColumnName = "transaction_id")
 public class PaymentTransactionEntity extends TransactionEntity {
     @Column(name = "payment_number")
     protected String paymentNumber;
