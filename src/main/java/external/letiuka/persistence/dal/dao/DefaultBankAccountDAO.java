@@ -6,12 +6,13 @@ import external.letiuka.persistence.entities.BankAccountEntity;
 import external.letiuka.persistence.entities.CreditBankAccountEntity;
 import external.letiuka.persistence.entities.DepositBankAccountEntity;
 import external.letiuka.persistence.entities.UserEntity;
-import external.letiuka.persistence.transaction.TransactionException;
-import external.letiuka.persistence.transaction.TransactionManager;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.PlatformTransactionManager;
 
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
@@ -21,17 +22,18 @@ import java.util.List;
 
 @Repository
 public class DefaultBankAccountDAO implements BankAccountDAO {
-    private final TransactionManager manager;
+    private final SessionFactory sessionFactory;
     private static final Logger logger = Logger.getLogger(DefaultBankAccountDAO.class);
 
-    public DefaultBankAccountDAO(TransactionManager manager) {
-        this.manager = manager;
+    @Autowired
+    public DefaultBankAccountDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
 
     @Override
     public BankAccountEntity readAccount(String accountNumber) {
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
 
             return (BankAccountEntity) session
@@ -45,7 +47,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
 
     @Override
     public List<BankAccountEntity> readUserAccounts(long userId, long offset, long count) {
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         try {
             return session
                     .createQuery("FROM BankAccount account" +
@@ -61,7 +63,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
 
     @Override
     public List<BankAccountEntity> readUserAccounts(String login, long offset, long count) {
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         return session
                 .createQuery("FROM BankAccount account" +
                         " WHERE account.user.login = :login AND account.confirmed = TRUE ORDER BY account.id")
@@ -75,7 +77,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
     @Override
     public List<BankAccountEntity> readUnconfirmedAccounts
             (long offset, long count) {
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         return session
                 .createQuery("FROM BankAccount account" +
                         " WHERE account.confirmed = FALSE ORDER BY account.id")
@@ -86,7 +88,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
 
     @Override
     public long getUnconfirmedAccountCount() {
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         return (Long) session
                 .createQuery("SELECT COUNT(*) FROM BankAccount account" +
                         " WHERE account.confirmed = FALSE")
@@ -95,7 +97,7 @@ public class DefaultBankAccountDAO implements BankAccountDAO {
 
     @Override
     public long getUserAccountCount(String login) {
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         return (Long) session
                 .createQuery("SELECT COUNT(*) FROM BankAccount account" +
                         " WHERE account.confirmed = TRUE AND account.user.login = :login")

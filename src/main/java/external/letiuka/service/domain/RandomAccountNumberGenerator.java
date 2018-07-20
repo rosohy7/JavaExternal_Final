@@ -10,7 +10,6 @@ import org.springframework.stereotype.Component;
  * Generates random account numbers and checks with database if they are taken
  */
 
-@Component
 public class RandomAccountNumberGenerator implements AccountNumberGenerator {
     private static final Logger logger = Logger.getLogger(RandomAccountNumberGenerator.class);
     private final BankAccountDAO accountDAO;
@@ -20,6 +19,7 @@ public class RandomAccountNumberGenerator implements AccountNumberGenerator {
     }
 
     @Override
+
     public String getNewAccountNumber() {
         String accountNumber = null;
         StringBuilder builder = null;
@@ -35,7 +35,7 @@ public class RandomAccountNumberGenerator implements AccountNumberGenerator {
             BankAccountEntity account = accountDAO.readAccount(accountNumber);
             if (account == null) success = true;
             else {
-                logger.log(Level.WARN, "Colllision happened when generating card number " + accountNumber);
+                logger.log(Level.WARN, "Collision happened when generating card number " + accountNumber);
             }
         }
         logger.log(Level.INFO, "Generated new card number " + accountNumber);

@@ -6,11 +6,10 @@ import external.letiuka.persistence.entities.FromTransactionEntity;
 import external.letiuka.persistence.entities.PaymentTransactionEntity;
 import external.letiuka.persistence.entities.ToTransactionEntity;
 import external.letiuka.persistence.entities.TransactionEntity;
-import external.letiuka.persistence.transaction.TransactionException;
-import external.letiuka.persistence.transaction.TransactionManager;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import javax.persistence.PersistenceException;
@@ -20,15 +19,15 @@ import java.util.List;
 
 @Repository
 public class DefaultTransactionDAO implements TransactionDAO {
-    private final TransactionManager manager;
+    private final SessionFactory sessionFactory;
     private static final Logger logger = Logger.getLogger(DefaultTransactionDAO.class);
 
-    public DefaultTransactionDAO(TransactionManager manager) {
-        this.manager = manager;
+    public DefaultTransactionDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
     @Override
     public List<TransactionEntity> readAccountTransactions(long accountId, long offset, long count){
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         return session
                 .createQuery("FROM Transaction transaction" +
                         " WHERE transaction.bankAccount.id = :accountId ORDER BY transaction.id DESC")
@@ -40,7 +39,7 @@ public class DefaultTransactionDAO implements TransactionDAO {
 
     @Override
     public long getAccountTransactionsCount(long accountId){
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         return (Long) session
                 .createQuery("SELECT COUNT(*) FROM Transaction transaction" +
                         " WHERE transaction.bankAccount.id = :accountId")

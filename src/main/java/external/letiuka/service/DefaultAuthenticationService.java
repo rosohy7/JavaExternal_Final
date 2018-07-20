@@ -3,28 +3,31 @@ package external.letiuka.service;
 import external.letiuka.modelviewcontroller.model.dto.UserDTO;
 import external.letiuka.persistence.dal.dao.UserDAO;
 import external.letiuka.persistence.entities.UserEntity;
-import external.letiuka.persistence.transaction.TransactionManager;
 
 import external.letiuka.security.PasswordHasher;
 import external.letiuka.security.Role;
 import org.apache.log4j.Logger;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class DefaultAuthenticationService implements AuthenticationService {
-    private final TransactionManager manager;
     private final UserDAO userDAO;
     private final PasswordHasher hasher;
+    private final SessionFactory sessionFactory;
     private static final Logger logger = Logger.getLogger(DefaultAuthenticationService.class);
 
-    public DefaultAuthenticationService(TransactionManager manager, UserDAO userDAO, PasswordHasher hasher) {
-        this.manager = manager;
+    public DefaultAuthenticationService(SessionFactory sessionFactory,  UserDAO userDAO, PasswordHasher hasher) {
+        this.sessionFactory = sessionFactory;
         this.userDAO = userDAO;
         this.hasher = hasher;
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void register(UserDTO userDTO) throws ServiceException// TODO
     {
         UserEntity userEntity = new UserEntity();
@@ -33,36 +36,17 @@ public class DefaultAuthenticationService implements AuthenticationService {
         userEntity.setRole(userDTO.getRole());
 
         userEntity.setPasswordHash(hasher.getHash(userDTO.getPassword()));
-
-        try {
-            manager.beginTransaction();
-            manager.getSession().save(userEntity);
-            manager.commit();
-        } catch (Exception e) {
-
-            manager.rollback();
-
-            throw new ServiceException(e);
-        }
+        sessionFactory.getCurrentSession().save(userEntity);
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public Role logIn(UserDTO user) throws ServiceException {
-        UserEntity userEntity;
-
-        try {
-            manager.beginTransaction();
-            userEntity = userDAO.readUser(user.getLogin());
-            String correctHash = userEntity.getPasswordHash();
-            if (!correctHash.equals(hasher.getHash(user.getPassword())))
-                throw new ServiceException("Wrong password");
-            Role role = userEntity.getRole();
-            manager.commit();
-            return role;
-
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
-        }
+        UserEntity userEntity = userDAO.readUser(user.getLogin());
+        String correctHash = userEntity.getPasswordHash();
+        if (!correctHash.equals(hasher.getHash(user.getPassword())))
+            throw new ServiceException("Wrong password");
+        Role role = userEntity.getRole();
+        return role;
     }
 }

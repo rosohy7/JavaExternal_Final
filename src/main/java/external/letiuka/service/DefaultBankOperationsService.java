@@ -8,8 +8,6 @@ import external.letiuka.persistence.dal.dao.BankAccountDAO;
 import external.letiuka.persistence.dal.dao.TransactionDAO;
 import external.letiuka.persistence.dal.dao.UserDAO;
 import external.letiuka.persistence.entities.*;
-import external.letiuka.persistence.transaction.TransactionException;
-import external.letiuka.persistence.transaction.TransactionManager;
 import external.letiuka.service.domain.AccountNumberGenerator;
 import external.letiuka.service.domain.InterestRateProvider;
 import external.letiuka.service.domain.TimeProvider;
@@ -17,11 +15,13 @@ import external.letiuka.service.domain.TransactionFeeProvider;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import javax.persistence.Persistence;
 import javax.persistence.PersistenceException;
+import javax.transaction.Transactional;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -31,7 +31,7 @@ import java.util.List;
 public class DefaultBankOperationsService implements BankOperationsService {
     private static final Logger logger = Logger.getLogger(DefaultBankOperationsService.class);
 
-    private final TransactionManager manager;
+    private final SessionFactory sessionFactory;
     private final TimeProvider timeProvider;
     private final InterestRateProvider interestRateProvider;
     private final AccountNumberGenerator numberGenerator;
@@ -42,11 +42,11 @@ public class DefaultBankOperationsService implements BankOperationsService {
 
 
     public DefaultBankOperationsService(
-            TransactionManager manager, TimeProvider timeProvider,
+            SessionFactory sessionFactory, TimeProvider timeProvider,
             InterestRateProvider interestRateProvider, AccountNumberGenerator numberGenerator,
             UserDAO userDAO, BankAccountDAO accountDAO, TransactionFeeProvider feeProvider,
             TransactionDAO transactionDAO) {
-        this.manager = manager;
+        this.sessionFactory = sessionFactory;
         this.timeProvider = timeProvider;
         this.interestRateProvider = interestRateProvider;
         this.numberGenerator = numberGenerator;
@@ -58,6 +58,7 @@ public class DefaultBankOperationsService implements BankOperationsService {
 
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void registerBankAccount(BankAccountDTO accountDTO) throws ServiceException {
         BankAccountEntity entity = null;
         logger.log(Level.TRACE, "Trying to register bank account");
@@ -83,33 +84,30 @@ public class DefaultBankOperationsService implements BankOperationsService {
         entity.setExpires(new Date(timeProvider.getMillisDaysLater(365)));
         entity.setLatestUpdate(new Date(timeProvider.getCurrentMillis()));
         String holder = accountDTO.getHolder();
-        try {
-            logger.log(Level.TRACE, "Inserting new bank account into database");
-            manager.beginTransaction();
-            entity.setAccountNumber(numberGenerator.getNewAccountNumber());
-            UserEntity user = userDAO.readUser(holder);
-            if (user == null) throw new ServiceException("Cannot find card holder");
-            entity.setUser(user);
-            switch (accountDTO.getType()) {
-                case "CREDIT":
-                    ((CreditBankAccountEntity) entity).setInterestRate(
-                            interestRateProvider.getCreditInterestRate(user.getId()));
-                    break;
-                case "DEPOSIT":
-                    ((DepositBankAccountEntity) entity).setInterestRate(
-                            interestRateProvider.getDepositInterestRate(user.getId()));
-                    break;
-            }
-            manager.getSession().save(entity);
-            manager.commit();
-            logger.log(Level.TRACE, "Successfully inserted new bank account into database");
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
+
+
+        logger.log(Level.TRACE, "Inserting new bank account into database");
+        entity.setAccountNumber(numberGenerator.getNewAccountNumber());
+        UserEntity user = userDAO.readUser(holder);
+        if (user == null) throw new ServiceException("Cannot find card holder");
+        entity.setUser(user);
+        switch (accountDTO.getType()) {
+            case "CREDIT":
+                ((CreditBankAccountEntity) entity).setInterestRate(
+                        interestRateProvider.getCreditInterestRate(user.getId()));
+                break;
+            case "DEPOSIT":
+                ((DepositBankAccountEntity) entity).setInterestRate(
+                        interestRateProvider.getDepositInterestRate(user.getId()));
+                break;
         }
+        sessionFactory.getCurrentSession().save(entity);
+        logger.log(Level.TRACE, "Successfully inserted new bank account into database");
+
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public AccountListDTO getUnconfirmedAccounts
             (PaginationDTO paginationDTO) throws ServiceException {
         long entryCount, lastPage;
@@ -120,28 +118,23 @@ public class DefaultBankOperationsService implements BankOperationsService {
         AccountListDTO accountList = new AccountListDTO();
         accountList.setPagination(paginationDTO);
 
-        try {
-            manager.getSession();
-            entryCount = accountDAO.getUnconfirmedAccountCount();
-            lastPage = (entryCount - 1) / perPage + 1;
-            accountList.getPagination().setLastPage(lastPage);
-            if (targetPage <= lastPage) {
-                accountEntityList = accountDAO.readUnconfirmedAccounts(
-                        perPage * (targetPage - 1), perPage);
-                for (BankAccountEntity entity : accountEntityList) {
-                    accountDTOList.add(accountEntityToDTO(entity));
-                }
-            } else throw new ServiceException("Page " + targetPage + " does not exist");
-            accountList.setAccounts(accountDTOList);
-            manager.commit();
-            return accountList;
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
-        }
+        entryCount = accountDAO.getUnconfirmedAccountCount();
+        lastPage = (entryCount - 1) / perPage + 1;
+        accountList.getPagination().setLastPage(lastPage);
+        if (targetPage <= lastPage) {
+            accountEntityList = accountDAO.readUnconfirmedAccounts(
+                    perPage * (targetPage - 1), perPage);
+            for (BankAccountEntity entity : accountEntityList) {
+                accountDTOList.add(accountEntityToDTO(entity));
+            }
+        } else throw new ServiceException("Page " + targetPage + " does not exist");
+        accountList.setAccounts(accountDTOList);
+
+        return accountList;
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public AccountListDTO getUserAccounts
             (String login, PaginationDTO paginationDTO) throws ServiceException {
         long entryCount, lastPage;
@@ -151,31 +144,26 @@ public class DefaultBankOperationsService implements BankOperationsService {
         List<BankAccountEntity> accountEntityList;
         AccountListDTO accountList = new AccountListDTO();
         accountList.setPagination(paginationDTO);
-        try {
-            manager.beginTransaction();
-            entryCount = accountDAO.getUserAccountCount(login);
-            lastPage = (entryCount - 1) / perPage + 1;
-            accountList.getPagination().setLastPage(lastPage);
-            if (targetPage <= lastPage) {
-                accountEntityList = accountDAO.readUserAccounts(
-                        login, perPage * (targetPage - 1), perPage);
-                for (BankAccountEntity entity : accountEntityList) {
-                    BankAccountDTO dto = accountEntityToDTO(entity);
-                    dto.setHolder(login);
-                    accountDTOList.add(dto);
-                }
-            } else throw new ServiceException("Page " + targetPage + " does not exist");
-            accountList.setAccounts(accountDTOList);
-            manager.commit();
-            return accountList;
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
-        }
+
+        entryCount = accountDAO.getUserAccountCount(login);
+        lastPage = (entryCount - 1) / perPage + 1;
+        accountList.getPagination().setLastPage(lastPage);
+        if (targetPage <= lastPage) {
+            accountEntityList = accountDAO.readUserAccounts(
+                    login, perPage * (targetPage - 1), perPage);
+            for (BankAccountEntity entity : accountEntityList) {
+                BankAccountDTO dto = accountEntityToDTO(entity);
+                dto.setHolder(login);
+                accountDTOList.add(dto);
+            }
+        } else throw new ServiceException("Page " + targetPage + " does not exist");
+        accountList.setAccounts(accountDTOList);
+        return accountList;
 
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public BankAccountDTO getAccount(String accountNumber, PaginationDTO pagination) throws ServiceException {
         BankAccountDTO accountDTO;
         BankAccountEntity accountEntity;
@@ -188,71 +176,53 @@ public class DefaultBankOperationsService implements BankOperationsService {
         List<TransactionEntity> transactionsList;
         List<TransactionDTO> transactionsDTOList = new ArrayList<>();
 
-        try {
-            manager.beginTransaction();
-            Session session = manager.getSession();
-            accountEntity = accountDAO.readAccount(accountNumber);
-            accountDTO = accountEntityToDTO(accountEntity);
-            accountId = accountEntity.getId();
-            transactionCount = transactionDAO.getAccountTransactionsCount(accountId);
-            lastPage = (transactionCount - 1) / perPage + 1;
-            pagination.setLastPage(lastPage);
-            if (targetPage <= lastPage) {
-                transactionsList = transactionDAO.readAccountTransactions(accountId,
-                        perPage * (targetPage - 1), perPage);
-                for (TransactionEntity tr : transactionsList) {
-                    transactionsDTOList.add(transactionEntityToDTO(tr));
-                }
+        Session session = sessionFactory.getCurrentSession();
+        accountEntity = accountDAO.readAccount(accountNumber);
+        accountDTO = accountEntityToDTO(accountEntity);
+        accountId = accountEntity.getId();
+        transactionCount = transactionDAO.getAccountTransactionsCount(accountId);
+        lastPage = (transactionCount - 1) / perPage + 1;
+        pagination.setLastPage(lastPage);
+        if (targetPage <= lastPage) {
+            transactionsList = transactionDAO.readAccountTransactions(accountId,
+                    perPage * (targetPage - 1), perPage);
+            for (TransactionEntity tr : transactionsList) {
+                transactionsDTOList.add(transactionEntityToDTO(tr));
             }
-            accountDTO.getHistory().setPagination(pagination);
-            accountDTO.getHistory().setTransactions(transactionsDTOList);
-            user = session.get(UserEntity.class, accountEntity.getUser().getId());
-            accountDTO.setHolder(user.getLogin());
-            manager.commit();
-            return accountDTO;
-
-
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
         }
+        accountDTO.getHistory().setPagination(pagination);
+        accountDTO.getHistory().setTransactions(transactionsDTOList);
+        user = session.get(UserEntity.class, accountEntity.getUser().getId());
+        accountDTO.setHolder(user.getLogin());
+        return accountDTO;
+
+
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void confirmAccount(String accountNumber) throws ServiceException {
         Date expires = new Date(timeProvider.getMillisDaysLater(365));
-        try {
-            manager.beginTransaction();
-            BankAccountEntity accountEntity = accountDAO.readAccount(accountNumber);
-            accountEntity.setExpires(expires);
-            accountEntity.setConfirmed(true);
-            if(accountEntity!=null)
-            manager.getSession().update(accountEntity);
-            manager.commit();
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
-        }
+        BankAccountEntity accountEntity = accountDAO.readAccount(accountNumber);
+        accountEntity.setExpires(expires);
+        accountEntity.setConfirmed(true);
+        if (accountEntity != null)
+            sessionFactory.getCurrentSession().update(accountEntity);
+
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void denyAccount(String accountNumber) throws ServiceException {
         BankAccountEntity account;
         long id;
-        try {
-            manager.beginTransaction();
-            account = accountDAO.readAccount(accountNumber);
+        account = accountDAO.readAccount(accountNumber);
 
-            if (account.isConfirmed()) {
-                logger.log(Level.WARN, "Tried to deny account that is already confirmed");
-            }
-            if(account!=null)
-            manager.getSession().delete(account);
-            manager.commit();
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
+        if (account.isConfirmed()) {
+            logger.log(Level.WARN, "Tried to deny account that is already confirmed");
         }
+        if (account != null)
+            sessionFactory.getCurrentSession().delete(account);
     }
 
     private BankAccountDTO accountEntityToDTO(BankAccountEntity entity) {
@@ -310,22 +280,17 @@ public class DefaultBankOperationsService implements BankOperationsService {
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public String getAccountHolder(String accountNumber) throws ServiceException {
         BankAccountEntity accountEntity;
         UserEntity user;
-        try {
-            manager.beginTransaction();
-            accountEntity = accountDAO.readAccount(accountNumber);
-            String login = accountEntity.getUser().getLogin();
-            manager.commit();
-            return login;
-        } catch (Exception e) {
-            manager.rollback();
-            throw new ServiceException(e);
-        }
+        accountEntity = accountDAO.readAccount(accountNumber);
+        String login = accountEntity.getUser().getLogin();
+        return login;
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void transferMoney(String numberFrom, String numberTo, double amount) throws ServiceException {
         BankAccountEntity accountFrom, accountTo;
         ToTransactionEntity transactionTo;
@@ -336,159 +301,122 @@ public class DefaultBankOperationsService implements BankOperationsService {
         Timestamp now = timeProvider.getCurrentTimestamp();
 
         UserEntity user;
-        try {
-            manager.beginTransaction();
-            Session session = manager.getSession();
-            accountFrom = accountDAO.readAccount(numberFrom);
-            if(amount<0.01){
-                manager.rollback();
-                throw new ServiceException("Cannot send less than 0.01");
-            }
-            if (accountFrom == null) {
-                manager.rollback();
-                throw new ServiceException("Sender account does not exist");
-            }
-            if (accountFrom.getExpires().before(now)) {
-                manager.rollback();
-                throw new ServiceException("Sender account is expired");
-            }
-            if (!accountFrom.isConfirmed()) {
-                manager.rollback();
-                throw new ServiceException("Sender account is not confirmed");
-            }
-            accountTo = accountDAO.readAccount(numberTo);
-
-            if (accountTo == null) {
-                manager.rollback();
-                throw new ServiceException("Receiver account does not exist");
-            }
-            if (accountTo.getExpires().before(now)) {
-                manager.rollback();
-                throw new ServiceException("Receiver account is expired");
-            }
-            if (!accountTo.isConfirmed()) {
-                manager.rollback();
-                throw new ServiceException("Receiver account is not confirmed");
-            }
-            availableMoney = accountFrom.getAccountBalance();
-            if (accountFrom.getType() == AccountType.CREDIT)
-                availableMoney += ((CreditBankAccountEntity) accountFrom).getCreditLimit();
-            if (availableMoney < amount) {
-                manager.rollback();
-                throw new ServiceException("Not enough money for transfer");
-            }
-            fee = feeProvider.getSenderFee() * amount / 100.0;
-            fee = Math.max(fee, 0.01);
-            resultAmount = amount - fee;
-            accountFrom.setAccountBalance(accountFrom.getAccountBalance() - amount);
-            accountTo.setAccountBalance(accountTo.getAccountBalance() + resultAmount);
-
-            transactionFrom = new FromTransactionEntity();
-            transactionFrom.setReceiverNumber(numberTo);
-            transactionFrom.setBankAccount(accountFrom);
-            transactionFrom.setBalanceChange(-amount);
-            transactionFrom.setBankFee(fee);
-            transactionFrom.setType(TransactionType.TRANSFER_FROM);
-            transactionFrom.setTimeStamp(now);
-
-            transactionTo = new ToTransactionEntity();
-            transactionTo.setSenderNumber(numberFrom);
-            transactionTo.setBankAccount(accountTo);
-            transactionTo.setBalanceChange(resultAmount);
-            transactionTo.setBankFee(fee);
-            transactionTo.setType(TransactionType.TRANSFER_TO);
-            transactionTo.setTimeStamp(now);
-
-            session.update(accountFrom);
-            session.update(accountTo);
-            transactionFrom.setPair(transactionTo);
-            transactionTo.setPair(transactionFrom);
-            session.save(transactionFrom);
-            session.save(transactionTo);
-
-
-            manager.commit();
-
-
-        } catch (PersistenceException e) {
-            manager.rollback();
-            throw new ServiceException(e);
+        Session session = sessionFactory.getCurrentSession();
+        accountFrom = accountDAO.readAccount(numberFrom);
+        if (amount < 0.01) {
+            throw new ServiceException("Cannot send less than 0.01");
         }
+        if (accountFrom == null) {
+            throw new ServiceException("Sender account does not exist");
+        }
+        if (accountFrom.getExpires().before(now)) {
+            throw new ServiceException("Sender account is expired");
+        }
+        if (!accountFrom.isConfirmed()) {
+            throw new ServiceException("Sender account is not confirmed");
+        }
+        accountTo = accountDAO.readAccount(numberTo);
+
+        if (accountTo == null) {
+            throw new ServiceException("Receiver account does not exist");
+        }
+        if (accountTo.getExpires().before(now)) {
+            throw new ServiceException("Receiver account is expired");
+        }
+        if (!accountTo.isConfirmed()) {
+            throw new ServiceException("Receiver account is not confirmed");
+        }
+        availableMoney = accountFrom.getAccountBalance();
+        if (accountFrom.getType() == AccountType.CREDIT)
+            availableMoney += ((CreditBankAccountEntity) accountFrom).getCreditLimit();
+        if (availableMoney < amount) {
+            throw new ServiceException("Not enough money for transfer");
+        }
+        fee = feeProvider.getSenderFee() * amount / 100.0;
+        fee = Math.max(fee, 0.01);
+        resultAmount = amount - fee;
+        accountFrom.setAccountBalance(accountFrom.getAccountBalance() - amount);
+        accountTo.setAccountBalance(accountTo.getAccountBalance() + resultAmount);
+
+        transactionFrom = new FromTransactionEntity();
+        transactionFrom.setReceiverNumber(numberTo);
+        transactionFrom.setBankAccount(accountFrom);
+        transactionFrom.setBalanceChange(-amount);
+        transactionFrom.setBankFee(fee);
+        transactionFrom.setType(TransactionType.TRANSFER_FROM);
+        transactionFrom.setTimeStamp(now);
+
+        transactionTo = new ToTransactionEntity();
+        transactionTo.setSenderNumber(numberFrom);
+        transactionTo.setBankAccount(accountTo);
+        transactionTo.setBalanceChange(resultAmount);
+        transactionTo.setBankFee(fee);
+        transactionTo.setType(TransactionType.TRANSFER_TO);
+        transactionTo.setTimeStamp(now);
+
+        session.update(accountFrom);
+        session.update(accountTo);
+        transactionFrom.setPair(transactionTo);
+        transactionTo.setPair(transactionFrom);
+        session.save(transactionFrom);
+        session.save(transactionTo);
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void withdrawMoney(String accountNumber, double amount) throws ServiceException {
         BankAccountEntity accountEntity;
         double availableMoney, fee;
         FromTransactionEntity transaction = new FromTransactionEntity();
         fee = feeProvider.getWithdrawalFee() * amount / 100.0;
-        try {
-            manager.beginTransaction();
-            Session session = manager.getSession();
-            accountEntity = accountDAO.readAccount(accountNumber);
-            if (accountEntity == null) {
-                manager.rollback();
-                throw new ServiceException("Account does not exist");
-            }
-            if (!accountEntity.isConfirmed()) {
-                manager.rollback();
-                throw new ServiceException("Account is not confirmed");
-            }
-            availableMoney = accountEntity.getAccountBalance();
-            if (accountEntity.getType() == AccountType.CREDIT)
-                availableMoney += ((CreditBankAccountEntity) accountEntity).getCreditLimit();
-            if (availableMoney < amount + fee) {
-                manager.rollback();
-                throw new ServiceException("Not enough money on account");
-            }
-            accountEntity.setAccountBalance(accountEntity.getAccountBalance() - amount - fee);
-            session.update(accountEntity);
-            transaction.setTimeStamp(timeProvider.getCurrentTimestamp());
-            transaction.setType(TransactionType.TRANSFER_FROM);
-            transaction.setBankFee(fee);
-            transaction.setBalanceChange(-amount - fee);
-            transaction.setBankAccount(accountEntity);
-            session.save(transaction);
-            manager.commit();
-        } catch (PersistenceException e) {
-            manager.rollback();
-            throw new ServiceException(e);
+        Session session = sessionFactory.getCurrentSession();
+        accountEntity = accountDAO.readAccount(accountNumber);
+        if (accountEntity == null) {
+            throw new ServiceException("Account does not exist");
         }
+        if (!accountEntity.isConfirmed()) {
+            throw new ServiceException("Account is not confirmed");
+        }
+        availableMoney = accountEntity.getAccountBalance();
+        if (accountEntity.getType() == AccountType.CREDIT)
+            availableMoney += ((CreditBankAccountEntity) accountEntity).getCreditLimit();
+        if (availableMoney < amount + fee) {
+            throw new ServiceException("Not enough money on account");
+        }
+        accountEntity.setAccountBalance(accountEntity.getAccountBalance() - amount - fee);
+        session.update(accountEntity);
+        transaction.setTimeStamp(timeProvider.getCurrentTimestamp());
+        transaction.setType(TransactionType.TRANSFER_FROM);
+        transaction.setBankFee(fee);
+        transaction.setBalanceChange(-amount - fee);
+        transaction.setBankAccount(accountEntity);
+        session.save(transaction);
     }
 
     @Override
+    @Transactional(rollbackOn = Exception.class)
     public void depositMoney(String accountNumber, double amount) throws ServiceException {
         ToTransactionEntity transaction = new ToTransactionEntity();
         Timestamp now = timeProvider.getCurrentTimestamp();
         BankAccountEntity accountEntity;
-        try {
-            manager.beginTransaction();
-            Session session = manager.getSession();
-            accountEntity = accountDAO.readAccount(accountNumber);
-            if (accountEntity == null) {
-                manager.rollback();
-                throw new ServiceException("Account does not exist");
-            }
-            if (accountEntity.getExpires().before(now)) {
-                manager.rollback();
-                throw new ServiceException("Account is expired");
-            }
-            if (!accountEntity.isConfirmed()) {
-                manager.rollback();
-                throw new ServiceException("Account is not confirmed");
-            }
-            accountEntity.setAccountBalance(accountEntity.getAccountBalance() + amount);
-            session.update(accountEntity);
-            transaction.setTimeStamp(now);
-            transaction.setBalanceChange(amount);
-            transaction.setBankAccount(accountEntity);
-            transaction.setBankFee(0);
-            transaction.setType(TransactionType.TRANSFER_TO);
-            session.save(transaction);
-            manager.commit();
-        }catch (PersistenceException e) {
-            manager.rollback();
-            throw new ServiceException(e);
+        Session session = sessionFactory.getCurrentSession();
+        accountEntity = accountDAO.readAccount(accountNumber);
+        if (accountEntity == null) {
+            throw new ServiceException("Account does not exist");
         }
+        if (accountEntity.getExpires().before(now)) {
+            throw new ServiceException("Account is expired");
+        }
+        if (!accountEntity.isConfirmed()) {
+            throw new ServiceException("Account is not confirmed");
+        }
+        accountEntity.setAccountBalance(accountEntity.getAccountBalance() + amount);
+        session.update(accountEntity);
+        transaction.setTimeStamp(now);
+        transaction.setBalanceChange(amount);
+        transaction.setBankAccount(accountEntity);
+        transaction.setBankFee(0);
+        transaction.setType(TransactionType.TRANSFER_TO);
+        session.save(transaction);
     }
 }

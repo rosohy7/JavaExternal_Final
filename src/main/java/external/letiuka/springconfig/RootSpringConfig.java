@@ -28,9 +28,9 @@ import external.letiuka.persistence.entities.UserEntity;
 import external.letiuka.persistence.ormconverter.AccountTypeOrmConverter;
 import external.letiuka.persistence.ormconverter.RoleOrmConverter;
 import external.letiuka.persistence.ormconverter.TransactionTypeOrmConverter;
-import external.letiuka.persistence.transaction.TransactionManager;
 import external.letiuka.security.Role;
 import external.letiuka.security.authorization.AuthorizationManager;
+import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +38,11 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.orm.hibernate5.HibernateTransactionManager;
+import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
 import org.springframework.scheduling.annotation.EnableScheduling;
+import org.springframework.transaction.PlatformTransactionManager;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
@@ -50,10 +54,8 @@ import java.util.Properties;
 @Configuration
 @ComponentScan(basePackages = "external.letiuka")
 @EnableScheduling
+@EnableTransactionManagement
 public class RootSpringConfig {
-
-    @Autowired
-    TransactionManager transactionManager;
 
     @Autowired
     private SignUpController signUpController;
@@ -89,6 +91,7 @@ public class RootSpringConfig {
     @Autowired
     @Qualifier("servletContext")
     private ServletContext servletContext;
+
 
     @Bean(name = "authorizationMap")
     public Map<String, HashSet<Role>> getAuthorizationMap() {
@@ -232,7 +235,22 @@ public class RootSpringConfig {
     }
 
     @Bean(name = "sessionFactory")
-    public SessionFactory getSessionFactory(){
+    @Autowired
+    public SessionFactory getSessionFactory(LocalSessionFactoryBean localSessionFactoryBean){
+        return localSessionFactoryBean.getObject();
+    }
+
+    @Bean(name = "platformTransactionManager")
+    @Autowired
+    public PlatformTransactionManager getPlatformTransactionManager(SessionFactory sessionFactory){
+        HibernateTransactionManager transactionManager = new HibernateTransactionManager();
+        transactionManager.setSessionFactory(sessionFactory);
+        transactionManager.setAutodetectDataSource(false);
+        return transactionManager;
+    }
+
+    @Bean(name = "localSessionFactoryBean")
+    public LocalSessionFactoryBean getLocalSessionFactoryBean(){
         Properties hibProps = new Properties();
         hibProps.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
         hibProps.put(Environment.USER, "bankapp");
@@ -241,20 +259,10 @@ public class RootSpringConfig {
         hibProps.put(Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
         hibProps.put(Environment.HBM2DDL_AUTO, "none");
 
-        return new org.hibernate.cfg.Configuration()
-                .addProperties(hibProps)
-                .addAnnotatedClass(UserEntity.class)
-                .addAnnotatedClass(BankAccountEntity.class)
-                .addAnnotatedClass(CreditBankAccountEntity.class)
-                .addAnnotatedClass(DepositBankAccountEntity.class)
-                .addAnnotatedClass(TransactionEntity.class)
-                .addAnnotatedClass(ToTransactionEntity.class)
-                .addAnnotatedClass(FromTransactionEntity.class)
-                .addAnnotatedClass(PaymentTransactionEntity.class)
-                .addAnnotatedClass(RoleOrmConverter.class)
-                .addAnnotatedClass(AccountTypeOrmConverter.class)
-                .addAnnotatedClass(TransactionTypeOrmConverter.class)
-                .buildSessionFactory();
+        LocalSessionFactoryBean sessionFactoryBean = new LocalSessionFactoryBean();
+        sessionFactoryBean.setHibernateProperties(hibProps);
+        sessionFactoryBean.setPackagesToScan("external.letiuka");
+        return sessionFactoryBean;
     }
 }
 

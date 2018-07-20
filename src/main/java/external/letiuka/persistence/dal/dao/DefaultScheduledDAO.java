@@ -1,11 +1,10 @@
 package external.letiuka.persistence.dal.dao;
 
 import external.letiuka.persistence.dal.DAOException;
-import external.letiuka.persistence.transaction.TransactionException;
-import external.letiuka.persistence.transaction.TransactionManager;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.stereotype.Repository;
 
 import java.sql.Connection;
@@ -14,11 +13,11 @@ import java.sql.Statement;
 
 @Repository
 public class DefaultScheduledDAO implements ScheduledDAO {
-    private final TransactionManager manager;
+    private final SessionFactory sessionFactory;
     private static final Logger logger = Logger.getLogger(DefaultScheduledDAO.class);
 
-    public DefaultScheduledDAO(TransactionManager manager) {
-        this.manager = manager;
+    public DefaultScheduledDAO(SessionFactory sessionFactory) {
+        this.sessionFactory = sessionFactory;
     }
 
     @Override
@@ -39,7 +38,7 @@ public class DefaultScheduledDAO implements ScheduledDAO {
                 "    `deposit_bank_account`.`accrued_interest` + \n" +
                 "    `bank_account`.`balance`*`deposit_bank_account`.`interest_rate`/(100.0*365)\n" +
                 "WHERE `bank_account`.`bank_account_id` > 0";
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         session.createSQLQuery(sqlCredit).executeUpdate();
         session.createSQLQuery(sqlDeposit).executeUpdate();
     }
@@ -59,7 +58,7 @@ public class DefaultScheduledDAO implements ScheduledDAO {
                 "    `bank_account`.`balance`+`deposit_bank_account`.`accrued_interest`, " +
                 "    `deposit_bank_account`.`accrued_interest` = 0 " +
                 "WHERE `bank_account`.`bank_account_id` > 0";
-        Session session = manager.getSession();
+        Session session = sessionFactory.getCurrentSession();
         session.createSQLQuery(sqlCredit).executeUpdate();
         session.createSQLQuery(sqlDeposit).executeUpdate();
     }
