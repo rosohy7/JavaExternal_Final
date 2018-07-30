@@ -8,6 +8,8 @@ import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +30,7 @@ public class SignUpController implements HttpController {
 
 
     @Override
+    @RequestMapping(value = "dispatcher",params = "action=sign-up", method = RequestMethod.POST)
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {
         logger.log(Level.TRACE,"Attempting to register user");
         UserDTO user = new UserDTO();

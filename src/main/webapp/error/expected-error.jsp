@@ -6,7 +6,7 @@
 
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="${contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css">
 </head>
 <body>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>

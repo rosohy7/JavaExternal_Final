@@ -4,6 +4,8 @@ import external.letiuka.modelviewcontroller.controller.HttpController;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +20,7 @@ public class SetLanguageController implements HttpController {
     private static final Logger logger = Logger.getLogger(SetLanguageController.class);
 
     @Override
+    @RequestMapping(value = "dispatcher",params = "action=set-language", method = RequestMethod.POST)
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {
         String lang = req.getParameter("lang");
         HttpSession session = req.getSession();

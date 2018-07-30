@@ -4,7 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <html>
 <head>
-    <link rel="stylesheet" type="text/css" href="${contextPath}/css/style.css">
+    <link rel="stylesheet" type="text/css" href="${contextPath}/resources/css/style.css"/>
 </head>
 <body>
 <%@ include file="../WEB-INF/util/header.jsp" %>

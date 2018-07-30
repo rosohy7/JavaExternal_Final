@@ -28,7 +28,7 @@ public class PlainJavaApplicationLifecycleManager implements ApplicationLifecycl
     @Override
     public final void build() {
         try {
-            setupSpring();
+            //setupSpring();
             logger.log(Level.TRACE, "Successfully scheduled jobs");
         } catch (Exception e) {
             String message = "Failed to build application object graph. ";
@@ -49,6 +49,6 @@ public class PlainJavaApplicationLifecycleManager implements ApplicationLifecycl
 
     @Override
     public void shutdown() {
-        springContext.close();
+//        springContext.close();
     }
 }

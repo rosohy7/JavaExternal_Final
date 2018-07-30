@@ -1,5 +1,6 @@
 package external.letiuka.springconfig;
 
+import com.mchange.v2.c3p0.DriverManagerDataSource;
 import external.letiuka.modelviewcontroller.controller.FrontController;
 import external.letiuka.modelviewcontroller.controller.HttpController;
 import external.letiuka.modelviewcontroller.controller.HttpMethod;
@@ -30,67 +31,62 @@ import external.letiuka.persistence.ormconverter.RoleOrmConverter;
 import external.letiuka.persistence.ormconverter.TransactionTypeOrmConverter;
 import external.letiuka.security.Role;
 import external.letiuka.security.authorization.AuthorizationManager;
+import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.cfg.Environment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.config.PropertyPlaceholderConfigurer;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
+import org.springframework.context.annotation.Primary;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
+import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.datasource.DataSourceTransactionManager;
 import org.springframework.orm.hibernate5.HibernateTransactionManager;
 import org.springframework.orm.hibernate5.LocalSessionFactoryBean;
+import org.springframework.orm.jpa.JpaTransactionManager;
+import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.transaction.PlatformTransactionManager;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
+import org.springframework.web.servlet.HandlerMapping;
+import org.springframework.web.servlet.ViewResolver;
+import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletRegistration;
+import javax.sql.DataSource;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Properties;
 
 @Configuration
-@ComponentScan(basePackages = "external.letiuka")
+@ComponentScan(basePackages = {"external.letiuka.lifecycle",
+        "external.letiuka.persistence",
+        "external.letiuka.security",
+        "external.letiuka.service",
+        "external.letiuka.springconfig"})
 @EnableScheduling
+
 @EnableTransactionManagement
 public class RootSpringConfig {
 
-    @Autowired
-    private SignUpController signUpController;
-    @Autowired
-    private LogInController logInController;
-    @Autowired
-    private LogOutController logOutController;
-    @Autowired
-    private RegisterBankAccountController registerBankAccountController;
-    @Autowired
-    private ListUnconfirmedController listUnconfirmedController;
-    @Autowired
-    private ListUserAccountsController listUserAccountsController;
-    @Autowired
-    private ConfirmAccountController confirmAccountController;
-    @Autowired
-    private DenyAccountController denyAccountController;
-    @Autowired
-    private AccountInfoController accountInfoController;
-    @Autowired
-    private TransferMoneyController transferMoneyController;
-    @Autowired
-    private SetLanguageController setLanguageController;
-    @Autowired
-    private DepositController depositController;
-    @Autowired
-    private WithdrawController withdrawController;
-
-    @Autowired
-    private ControllerMapper controllerMapper;
     @Autowired
     private AuthorizationManager authorizationManager;
     @Autowired
     @Qualifier("servletContext")
     private ServletContext servletContext;
+
 
 
     @Bean(name = "authorizationMap")
@@ -161,78 +157,6 @@ public class RootSpringConfig {
         return actionRoleTable;
     }
 
-    @Bean(name = "frontController")
-    public FrontController getFrontController() {
-        FrontController frontController = new FrontController(
-                controllerMapper,
-                authorizationManager);
-
-        ServletRegistration.Dynamic regDyn =
-                servletContext.addServlet("dispatcher", frontController);
-        regDyn.addMapping("/dispatcher");
-        regDyn.setLoadOnStartup(1);
-        return frontController;
-    }
-
-    @Bean(name = "controllerMap")
-    public Map<String, HashMap<HttpMethod, HttpController>> getControllerMap() {
-        HashMap<String, HashMap<HttpMethod, HttpController>> actionRoleTable = new HashMap<>();
-        HashMap<HttpMethod, HttpController> methodMap;
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, signUpController);
-        actionRoleTable.put("sign-up", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, logInController);
-        actionRoleTable.put("log-in", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, logOutController);
-        actionRoleTable.put("log-out", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, registerBankAccountController);
-        actionRoleTable.put("register-account", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.GET, listUnconfirmedController);
-        actionRoleTable.put("list-unconfirmed", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.GET, listUserAccountsController);
-        actionRoleTable.put("list-accounts", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, confirmAccountController);
-        actionRoleTable.put("confirm-account", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, denyAccountController);
-        actionRoleTable.put("deny-account", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.GET, accountInfoController);
-        actionRoleTable.put("account-page", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, transferMoneyController);
-        actionRoleTable.put("transfer-money", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, setLanguageController);
-        actionRoleTable.put("set-language", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, depositController);
-        actionRoleTable.put("deposit", methodMap);
-
-        methodMap = new HashMap<>();
-        methodMap.put(HttpMethod.POST, withdrawController);
-        actionRoleTable.put("withdraw", methodMap);
-
-        return actionRoleTable;
-    }
 
     @Bean(name = "sessionFactory")
     @Autowired
@@ -240,13 +164,18 @@ public class RootSpringConfig {
         return localSessionFactoryBean.getObject();
     }
 
-    @Bean(name = "platformTransactionManager")
+    @Bean
     @Autowired
-    public PlatformTransactionManager getPlatformTransactionManager(SessionFactory sessionFactory){
+    @Primary
+    public PlatformTransactionManager transactionManager(SessionFactory sessionFactory,EntityManagerFactory entityManagerFactoryBean){
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory);
         transactionManager.setAutodetectDataSource(false);
         return transactionManager;
+
+//        JpaTransactionManager jpaTransactionManager = new JpaTransactionManager();
+//        jpaTransactionManager.setEntityManagerFactory(entityManagerFactoryBean);
+//        return jpaTransactionManager;
     }
 
     @Bean(name = "localSessionFactoryBean")
@@ -263,6 +192,70 @@ public class RootSpringConfig {
         sessionFactoryBean.setHibernateProperties(hibProps);
         sessionFactoryBean.setPackagesToScan("external.letiuka");
         return sessionFactoryBean;
+    }
+    @Bean
+    @Autowired
+    public EntityManagerFactory entityManagerFactory(LocalContainerEntityManagerFactoryBean bean){
+        return bean.getObject();
+    }
+
+    @Bean
+    @Autowired
+    @Lazy
+    public JdbcTemplate jdbcTemplate(DataSource dataSource){
+        return new JdbcTemplate(dataSource);
+    }
+    @Bean
+    @Autowired
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
+        LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
+        entityManagerFactoryBean.setPackagesToScan("external.letiuka.persistence");
+        entityManagerFactoryBean.setJpaProperties(jpaProps());
+        entityManagerFactoryBean.setDataSource(dataSource);
+        entityManagerFactoryBean.setJpaVendorAdapter(new HibernateJpaVendorAdapter());
+
+        return entityManagerFactoryBean;
+    }
+
+    private Properties jpaProps() {
+        Properties jpaProps = new Properties();
+        jpaProps.put(org.hibernate.cfg.Environment.DRIVER, "com.mysql.jdbc.Driver");
+        jpaProps.put(org.hibernate.cfg.Environment.DIALECT, "org.hibernate.dialect.MySQLDialect");
+        jpaProps.put(org.hibernate.cfg.Environment.URL, "jdbc:mysql://localhost:3306/bankapp?useSSL=false&characterEncoding=utf8");
+        jpaProps.put(org.hibernate.cfg.Environment.USER, "bankapp");
+        jpaProps.put(org.hibernate.cfg.Environment.PASS, "bankapp");
+        jpaProps.put(org.hibernate.cfg.Environment.HBM2DDL_AUTO, "none");
+        jpaProps.put(org.hibernate.cfg.Environment.SHOW_SQL, true);
+
+        return jpaProps;
+    }
+
+    @Bean
+    @Autowired
+    public PlatformTransactionManager jdbcPlatformTransactionManager(DataSource dataSource) {
+        DataSourceTransactionManager transactionManager = new DataSourceTransactionManager();
+        transactionManager.setDataSource(dataSource);
+
+        return transactionManager;
+    }
+    
+
+
+
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer propertySourcesPlaceholderConfigurer() {
+        return new PropertySourcesPlaceholderConfigurer();
+    }
+
+
+    @Bean
+    public DataSource dataSource(){
+        DriverManagerDataSource dataSource = new DriverManagerDataSource();
+        dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/bankapp?useSSL=false&characterEncoding=utf8");
+        dataSource.setUser("bankapp");
+        dataSource.setPassword("bankapp");
+        dataSource.setDriverClass("com.mysql.jdbc.Driver");
+        return dataSource;
     }
 }
 

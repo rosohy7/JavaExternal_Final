@@ -8,6 +8,8 @@ import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -19,7 +21,7 @@ import java.io.IOException;
  * Controller responsible for listing bank accounts requested by users to be confirmed.
  */
 @Controller
-public class ListUnconfirmedController implements HttpController {
+public class ListUnconfirmedController{
     private static final Logger logger = Logger.getLogger(ListUnconfirmedController.class);
     private static final long PER_PAGE=10;
     private final BankOperationsService service;
@@ -28,8 +30,9 @@ public class ListUnconfirmedController implements HttpController {
         this.service = service;
     }
 
-    @Override
+    @RequestMapping(value = "dispatcher", params = "action=list-unconfirmed", method = RequestMethod.GET)
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {
+
         long targetPage=1;
         long lastPage;
         PaginationDTO pagination = new PaginationDTO();

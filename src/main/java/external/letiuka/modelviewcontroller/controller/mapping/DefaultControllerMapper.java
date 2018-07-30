@@ -11,7 +11,7 @@ import javax.annotation.Resource;
 import java.util.Collections;
 import java.util.Map;
 
-@Component
+//@Component
 public class DefaultControllerMapper implements ControllerMapper {
 
     private final Map<String, ? extends Map<HttpMethod, HttpController>> controllerMap;

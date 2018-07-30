@@ -9,6 +9,8 @@ import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -30,6 +32,7 @@ public class ListUserAccountsController implements HttpController {
     }
 
     @Override
+    @RequestMapping(value = "dispatcher",params = "action=list-accounts", method = RequestMethod.GET)
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {
         long targetPage=1;
         String role= (String)req.getSession().getAttribute("role");
