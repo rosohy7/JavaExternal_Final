@@ -11,6 +11,5 @@
     <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
     </bean>
     <bean class = "org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerMapping"/>
-    <bean class="external.letiuka.springconfig.SecurityConfig" />
     <!--<mvc:default-servlet-ahndler/>-->
 </beans>

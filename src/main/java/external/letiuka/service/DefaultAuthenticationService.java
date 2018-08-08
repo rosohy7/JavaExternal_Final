@@ -8,11 +8,6 @@ import external.letiuka.security.PasswordHasher;
 import external.letiuka.security.Role;
 import org.apache.log4j.Logger;
 import org.hibernate.SessionFactory;
-import org.springframework.security.authentication.AuthenticationCredentialsNotFoundException;
-import org.springframework.security.authentication.AuthenticationProvider;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.AuthenticationException;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -20,7 +15,7 @@ import org.springframework.transaction.annotation.Propagation;
 import javax.transaction.Transactional;
 
 @Service
-public class DefaultAuthenticationService implements AuthenticationService, AuthenticationProvider {
+public class DefaultAuthenticationService implements AuthenticationService{
     private final UserDAO userDAO;
     private final PasswordHasher hasher;
     private final SessionFactory sessionFactory;
@@ -56,27 +51,4 @@ public class DefaultAuthenticationService implements AuthenticationService, Auth
         return role;
     }
 
-    @Override
-    public Authentication authenticate(Authentication authentication) throws AuthenticationException {
-        UsernamePasswordAuthenticationToken usernamePasswordAuthentication = (UsernamePasswordAuthenticationToken) authentication;
-        String username = usernamePasswordAuthentication.getPrincipal().toString();
-        String password = usernamePasswordAuthentication.getCredentials().toString();
-        UserDTO user = new UserDTO();
-        user.setLogin(username);
-        user.setPassword(password);
-        Role role;
-        try{
-            role =logIn(user);
-        } catch (ServiceException e){
-            throw new AuthenticationCredentialsNotFoundException("Wrong username or password",e);
-        }
-        usernamePasswordAuthentication.setAuthenticated(true);
-        usernamePasswordAuthentication.eraseCredentials();
-        return usernamePasswordAuthentication;
-    }
-
-    @Override
-    public boolean supports(Class<?> authentication) {
-        return authentication == UsernamePasswordAuthenticationToken.class;
-    }
 }

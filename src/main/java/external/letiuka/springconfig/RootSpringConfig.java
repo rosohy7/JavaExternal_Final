@@ -82,8 +82,6 @@ import java.util.Properties;
 public class RootSpringConfig {
 
     @Autowired
-    private AuthorizationManager authorizationManager;
-    @Autowired
     @Qualifier("servletContext")
     private ServletContext servletContext;
 
