@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: external.letiuka.service.DefaultBankAccountServiceTest
--------------------------------------------------------------------------------
-Tests run: 1, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.901 s - in external.letiuka.service.DefaultBankAccountServiceTest
