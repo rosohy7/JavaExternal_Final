@@ -5,9 +5,13 @@ import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -26,21 +30,23 @@ public class DenyAccountController implements HttpController {
         this.service = service;
     }
 
-    @Override
     @RequestMapping(value = "dispatcher",params = "action=deny-account", method = RequestMethod.POST)
-    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
-
-        HttpSession session = req.getSession();
-        String accountNumber=req.getParameter("account-number");
+    public ModelAndView denyAccount(@RequestParam("account-number") String accountNumber){
+        ModelAndView mav = new ModelAndView();
         try{
             service.denyAccount(accountNumber);
-            String uri = (String)session.getAttribute("latest-get-uri");
-            resp.sendRedirect((uri==null)? "/bankapp/" : uri);
-
-        } catch (IOException | ServiceException e) {
-            logger.log(Level.DEBUG, e.getStackTrace());
-            try{resp.sendError(404);} catch(IOException e1) {}
-            logger.log(Level.ERROR, "Failed to confirm account",e);
         }
+        catch (ServiceException e){
+            mav.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            logger.log(Level.ERROR, "Failed to deny account",e);
+            return mav;
+        }
+        mav.setViewName("redirect:/dispatcher?action=list-unconfirmed");
+        return mav;
+    }
+
+    @Override
+    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
+        //Stub
     }
 }

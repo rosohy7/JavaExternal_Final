@@ -7,9 +7,12 @@ import external.letiuka.service.AuthenticationService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -29,37 +32,40 @@ public class LogInController implements HttpController {
     }
 
 
-    @Override
-    @RequestMapping(value = "dispatcher",params = "action=log-in", method = RequestMethod.POST)
-    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
+    @RequestMapping(value = "dispatcher", params = "action=log-in", method = RequestMethod.POST)
+    public ModelAndView login(@RequestParam String login,
+                              @RequestParam String password,
+                              HttpSession session) {
+        ModelAndView mav = new ModelAndView();
         UserDTO user = new UserDTO();
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
         Role role;
         if (!validateLogin(login)) {
-            redirectBack(req, resp, "Login should only include latin symbols, number and underscore");
-            return;
+            session.setAttribute("message", "Login should only include latin symbols, number and underscore");
+            mav.setViewName("redirect:/auth/log-in.jsp");
+            return mav;
         }
         if (!validatePassword(password)) {
-            redirectBack(req, resp, "Password should only include latin symbols, number and underscore");
-            return;
+            session.setAttribute("message", "Password should only include latin symbols, number and underscore");
+            mav.setViewName("redirect:/auth/log-in.jsp");
+            return mav;
         }
         user.setLogin(login);
         user.setPassword(password);
         try {
             role = authService.logIn(user);
         } catch (ServiceException e) {
-            redirectBack(req, resp, "Wrong login or password");
-            return;
+            mav.setStatus(HttpStatus.BAD_REQUEST);
+            return mav;
         }
-        HttpSession session = req.getSession();
-        session.setAttribute("role",role.toString());
-        session.setAttribute("login",login);
-        try {
-            resp.sendRedirect("/bankapp/main/home.jsp");
-        } catch (IOException e) {
-            logger.log(Level.ERROR, "Could not redirect to home page after successful log in");
-        }
+        session.setAttribute("role", role.toString());
+        session.setAttribute("login", login);
+        mav.setViewName("redirect:/main/home.jsp");
+        return mav;
+    }
+
+    @Override
+    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
+        // stub to keep the interface
     }
 
     private boolean validatePassword(String password) {
@@ -74,21 +80,5 @@ public class LogInController implements HttpController {
         return true;
     }
 
-    private void redirectBack(HttpServletRequest req, HttpServletResponse resp, String message) {
 
-        logger.log(Level.DEBUG, "User failed to log in due to failed input validation." +
-                " Sent message to user: " + message);
-        HttpSession session = req.getSession();
-        session.setAttribute("message", message);
-        try {
-            resp.sendRedirect("/bankapp/auth/log-in.jsp");
-        } catch (IOException e) {
-            logger.log(Level.ERROR, "Could not redirect back to log in page after failed input validation");
-            logger.log(Level.DEBUG, e.getStackTrace());
-            try {
-                resp.sendError(404);
-            } catch (IOException e1) {
-            }
-        }
-    }
 }

@@ -6,31 +6,31 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
 /**
  * Controller responsible for logging out.
  */
 @Controller
-public class LogOutController  implements HttpController {
+public class LogOutController implements HttpController {
     private static final Logger logger = Logger.getLogger(LogOutController.class);
 
+    @RequestMapping(value = "dispatcher", params = "action=log-out", method = RequestMethod.POST)
+    public ModelAndView logOut(HttpSession session) {
+        ModelAndView mav = new ModelAndView();
+        session.invalidate();
+        mav.setViewName("redirect:/");
+        return mav;
+
+    }
+
     @Override
-    @RequestMapping(value = "dispatcher",params = "action=log-out", method = RequestMethod.POST)
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {
-        req.getSession().invalidate();
-        try {
-            resp.sendRedirect("/bankapp/");
-        } catch (IOException e) {
-            logger.log(Level.ERROR, "Could not redirect to index page after log out");
-            logger.log(Level.DEBUG, e.getStackTrace());
-            try {
-                resp.sendError(404);
-            } catch (IOException e1) {
-            }
-        }
+        // Stub
     }
 }

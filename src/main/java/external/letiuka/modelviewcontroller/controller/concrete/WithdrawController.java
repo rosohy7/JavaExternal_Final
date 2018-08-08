@@ -5,9 +5,14 @@ import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,26 +33,29 @@ public class WithdrawController implements HttpController {
         this.accountService = accountService;
     }
 
-    @Override
-    @RequestMapping(value = "dispatcher",params = "action=withdraw", method = RequestMethod.POST)
-    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
 
-        String accountNumber = req.getParameter("account-number");
-        HttpSession session = req.getSession();
-
-        try {
-            double amount = Double.valueOf(req.getParameter("amount"));
-            if(amount<0) throw new IllegalArgumentException("Amount can not be negative");
-            accountService.withdrawMoney(accountNumber,amount);
-            String uri = (String)session.getAttribute("latest-get-uri");
-            resp.sendRedirect((uri==null)? "/bankapp/" : uri);
-        } catch (IOException | ServiceException | IllegalArgumentException e) {
-            logger.log(Level.WARN, "Failed to withdraw money");
-            try {
-                resp.sendError(404);
-            } catch (IOException e1) {
-            }
-
+    @RequestMapping(value = "dispatcher", params = "action=withdraw", method = RequestMethod.POST)
+    public ModelAndView withdraw(@RequestParam("account-number") String accountNumber,
+                                 @RequestParam double amount,
+                                 @SessionAttribute("latest-get-uri") String latestGetUri) {
+        ModelAndView mav = new ModelAndView();
+        if (amount < 0) {
+            mav.setStatus(HttpStatus.BAD_REQUEST);
+            return mav;
         }
+        try {
+            accountService.withdrawMoney(accountNumber, amount);
+        } catch (ServiceException e) {
+            logger.log(Level.WARN, "Failed to withdraw money");
+            mav.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            return mav;
+        }
+        mav.setView(new RedirectView(latestGetUri));
+        return mav;
+    }
+
+    @Override
+    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
+        // Stub
     }
 }

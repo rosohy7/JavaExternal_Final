@@ -13,6 +13,5 @@
 <fmt:bundle basename="${bundle}" prefix="index.">
     <h2><fmt:message key="title"/></h2>
 </fmt:bundle>
-Hello!
 </body>
 </html>

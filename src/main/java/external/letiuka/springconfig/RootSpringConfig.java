@@ -58,6 +58,7 @@ import org.springframework.web.servlet.HandlerMapping;
 import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.handler.SimpleUrlHandlerMapping;
+import org.springframework.web.servlet.view.ContentNegotiatingViewResolver;
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import javax.persistence.EntityManager;
@@ -77,7 +78,6 @@ import java.util.Properties;
         "external.letiuka.service",
         "external.letiuka.springconfig"})
 @EnableScheduling
-
 @EnableTransactionManagement
 public class RootSpringConfig {
 
@@ -86,7 +86,6 @@ public class RootSpringConfig {
     @Autowired
     @Qualifier("servletContext")
     private ServletContext servletContext;
-
 
 
     @Bean(name = "authorizationMap")
@@ -160,14 +159,14 @@ public class RootSpringConfig {
 
     @Bean(name = "sessionFactory")
     @Autowired
-    public SessionFactory getSessionFactory(LocalSessionFactoryBean localSessionFactoryBean){
+    public SessionFactory getSessionFactory(LocalSessionFactoryBean localSessionFactoryBean) {
         return localSessionFactoryBean.getObject();
     }
 
     @Bean
     @Autowired
     @Primary
-    public PlatformTransactionManager transactionManager(SessionFactory sessionFactory,EntityManagerFactory entityManagerFactoryBean){
+    public PlatformTransactionManager transactionManager(SessionFactory sessionFactory, EntityManagerFactory entityManagerFactoryBean) {
         HibernateTransactionManager transactionManager = new HibernateTransactionManager();
         transactionManager.setSessionFactory(sessionFactory);
         transactionManager.setAutodetectDataSource(false);
@@ -179,7 +178,7 @@ public class RootSpringConfig {
     }
 
     @Bean(name = "localSessionFactoryBean")
-    public LocalSessionFactoryBean getLocalSessionFactoryBean(){
+    public LocalSessionFactoryBean getLocalSessionFactoryBean() {
         Properties hibProps = new Properties();
         hibProps.put(Environment.DRIVER, "com.mysql.jdbc.Driver");
         hibProps.put(Environment.USER, "bankapp");
@@ -193,19 +192,22 @@ public class RootSpringConfig {
         sessionFactoryBean.setPackagesToScan("external.letiuka");
         return sessionFactoryBean;
     }
+
     @Bean
     @Autowired
-    public EntityManagerFactory entityManagerFactory(LocalContainerEntityManagerFactoryBean bean){
+    public EntityManagerFactory entityManagerFactory(LocalContainerEntityManagerFactoryBean bean) {
         return bean.getObject();
     }
 
     @Bean
     @Autowired
     @Lazy
-    public JdbcTemplate jdbcTemplate(DataSource dataSource){
+    public JdbcTemplate jdbcTemplate(DataSource dataSource) {
         return new JdbcTemplate(dataSource);
     }
+
     @Bean
+    @Primary
     @Autowired
     public LocalContainerEntityManagerFactoryBean entityManagerFactoryBean(DataSource dataSource) {
         LocalContainerEntityManagerFactoryBean entityManagerFactoryBean = new LocalContainerEntityManagerFactoryBean();
@@ -238,8 +240,6 @@ public class RootSpringConfig {
 
         return transactionManager;
     }
-    
-
 
 
     @Bean
@@ -249,7 +249,7 @@ public class RootSpringConfig {
 
 
     @Bean
-    public DataSource dataSource(){
+    public DataSource dataSource() {
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setJdbcUrl("jdbc:mysql://localhost:3306/bankapp?useSSL=false&characterEncoding=utf8");
         dataSource.setUser("bankapp");

@@ -7,9 +7,16 @@ import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.server.ServerErrorException;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -22,9 +29,9 @@ import java.io.IOException;
  * Controller responsible for showing account information.
  */
 @Controller
-public class AccountInfoController implements HttpController{
-    private static final Logger logger= Logger.getLogger(AccountInfoController.class);
-    private final long PER_PAGE=5;
+public class AccountInfoController implements HttpController {
+    private static final Logger logger = Logger.getLogger(AccountInfoController.class);
+    private final long PER_PAGE = 5;
 
     private final BankOperationsService service;
 
@@ -33,41 +40,40 @@ public class AccountInfoController implements HttpController{
     }
 
     @Override
-    @RequestMapping(value = "dispatcher",params = "action=account-page", method = RequestMethod.GET)
     public void invoke(HttpServletRequest req, HttpServletResponse resp) {
-        long targetPage;
-        try{
-            targetPage=Long.valueOf(req.getParameter("page"));
-        }
-        catch(Exception e){
-            targetPage=1;
-        }
-        String accountNumber = req.getParameter("account-number");
-        HttpSession session = req.getSession();
-        String login = (String) session.getAttribute("login");
-        String role = (String) session.getAttribute("role");
+        // I am a stub to keep interface
+    }
+
+    @RequestMapping(value = "dispatcher", params = "action=account-page", method = RequestMethod.GET)
+    public ModelAndView getAccountInfo(@RequestParam(value = "page", defaultValue = "1") long targetPage,
+                                                   @RequestParam("account-number") String accountNumber,
+                                                   HttpSession session,
+                                                   @SessionAttribute String login,
+                                                   @SessionAttribute String role) {
+        ModelAndView mav = new ModelAndView();
         PaginationDTO pagination = new PaginationDTO();
         pagination.setPerPage(PER_PAGE);
         pagination.setTargetPage(targetPage);
-        try{
+        try {
 
             BankAccountDTO account = service.getAccount(accountNumber, pagination);
-            if(role == "ADMIN" || account.getHolder().equals(login)){
-                req.setAttribute("account",account);
-                RequestDispatcher disp = req.getRequestDispatcher("/WEB-INF/account-page.jsp");
-                disp.forward(req,resp);
+            if (role == "ADMIN" || account.getHolder().equals(login)) {
+                mav.addObject("account", account);
+                mav.setViewName("/WEB-INF/account-page.jsp");
+                return mav;
+            } else {
+                logger.log(Level.WARN, login + " tried to see "
+                        + account.getHolder() + "`s bank account information");
+                mav.setStatus(HttpStatus.FORBIDDEN);
+                return mav;
+
             }
-            else{
-                logger.log(Level.WARN,login+" tried to see "
-                        +account.getHolder()+"`s bank account information");
-                resp.sendError(405,"You can not view another user`s bank account information");
-            }
-        } catch (IOException | ServiceException | ServletException e) {
-            logger.log(Level.DEBUG, "Exception",e);
-        session.setAttribute("message","Request failed");
-        try {
-        resp.sendError(404);
-        } catch (IOException e1) {}
+        } catch (ServiceException e) {
+            logger.log(Level.DEBUG, e);
+            session.setAttribute("message", "Request failed");
+            mav.setStatus(HttpStatus.INTERNAL_SERVER_ERROR);
+            return mav;
+
         }
-        }
-        }
+    }
+}

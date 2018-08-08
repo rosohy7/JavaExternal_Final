@@ -11,13 +11,17 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceException;
 import java.sql.*;
 
 @Repository
 public class DefaultUserDAO implements UserDAO {
     private final SessionFactory sessionFactory;
+
     private static final Logger logger = Logger.getLogger(DefaultUserDAO.class);
 
     @Autowired

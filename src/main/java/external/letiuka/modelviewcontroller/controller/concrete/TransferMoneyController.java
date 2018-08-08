@@ -5,10 +5,16 @@ import external.letiuka.service.BankOperationsService;
 import external.letiuka.service.ServiceException;
 import org.apache.log4j.Level;
 import org.apache.log4j.Logger;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -27,40 +33,40 @@ public class TransferMoneyController implements HttpController {
         this.accountService = accountService;
     }
 
-    @Override
-    @RequestMapping(value = "dispatcher",params = "action=transfer-money", method = RequestMethod.POST)
-    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
-        String fromNumber = req.getParameter("from");
-        String toNumber = req.getParameter("to");
-        HttpSession session = req.getSession();
-        String login = (String) session.getAttribute("login");
+    @RequestMapping(value = "dispatcher", params = "action=transfer-money", method = RequestMethod.POST)
+    public ModelAndView transferMoney(@RequestParam("from") String fromNumber,
+                                      @RequestParam("to") String toNumber,
+                                      @RequestParam double amount,
+                                      HttpSession session,
+                                      @SessionAttribute String login,
+                                      @SessionAttribute("latest-get-uri") String latestGetUri) {
+        ModelAndView mav = new ModelAndView();
+        if (amount < 0) {
+            mav.setStatus(HttpStatus.BAD_REQUEST);
+            return mav;
+        }
         String holder;
-
-        String uri = (String)session.getAttribute("latest-get-uri");
         try {
-            double amount = Double.valueOf(req.getParameter("amount"));
-            if(amount<0) throw new IllegalArgumentException("Amount can not be negative");
             holder = accountService.getAccountHolder(fromNumber);
             if (login == null || !login.equals(holder)) {
                 logger.log(Level.WARN, login + " attempted to transfer money from " + holder + "`s card");
-                try {
-                    resp.sendError(405,"Cannot transfer money from somebody else`s card");
-                } catch (IOException e) {
-                }
-                return;
+                mav.setStatus(HttpStatus.METHOD_NOT_ALLOWED);
+                return mav;
             }
             accountService.transferMoney(fromNumber, toNumber, amount);
+            mav.setView(new RedirectView(latestGetUri));
+            return mav;
+        } catch (ServiceException e) {
+            logger.log(Level.WARN, "Failed to transfer money", e);
+            session.setAttribute("message", "failed to transfer money");
+            mav.setView(new RedirectView(latestGetUri));
+            return mav;
+        }
 
-            resp.sendRedirect((uri==null)? "/bankapp/" : uri);
-        } catch (IOException | ServiceException | IllegalArgumentException e) {
-            logger.log(Level.WARN, "Failed to transfer money",e);
-            String message = "failed to transfer money";
-            session.setAttribute("message",message);
-            try {
-                resp.sendRedirect((uri==null)? "/bankapp/" : uri);
-            } catch (IOException e1) {
-
-            }
     }
+
+    @Override
+    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
+        // Stub
     }
 }

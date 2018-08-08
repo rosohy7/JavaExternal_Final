@@ -10,7 +10,11 @@ import org.apache.log4j.Logger;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttribute;
+import org.springframework.web.servlet.ModelAndView;
 
+import javax.jws.WebParam;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -23,51 +27,56 @@ import java.io.IOException;
 public class SignUpController implements HttpController {
     private final AuthenticationService authService;
     private static final Logger logger = Logger.getLogger(SignUpController.class);
+    private static final String SIGN_UP_FORM_PATH = "/auth/sign-up.jsp";
+    private static final String LOG_IN_FORM_PATH = "/auth/log-in.jsp";
 
     public SignUpController(AuthenticationService authService) {
         this.authService = authService;
     }
 
 
-    @Override
     @RequestMapping(value = "dispatcher",params = "action=sign-up", method = RequestMethod.POST)
-    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
-        logger.log(Level.TRACE,"Attempting to register user");
-        UserDTO user = new UserDTO();
-        String login = req.getParameter("login");
-        String password = req.getParameter("password");
-        String repassword = req.getParameter("repassword");
-        Role role = Role.USER;
+    public ModelAndView signUp(@RequestParam String login,
+                               @RequestParam String password,
+                               @RequestParam String repassword,
+                               HttpSession session){
+        ModelAndView mav = new ModelAndView();
+
         if (!validateLogin(login)) {
-            redirectBack(req,resp,"Login should be at least 3 symbols long");
-            return;
+            session.setAttribute("message","Login should be at least 3 symbols long");
+            mav.setViewName("redirect:/"+SIGN_UP_FORM_PATH);
+            return mav;
         }
         if (!validatePassword(password)) {
-            redirectBack(req,resp,"Password should be at least 3 symbols long");
-            return;
+            session.setAttribute("message","Password should be at least 3 symbols long");
+            mav.setViewName("redirect:/"+SIGN_UP_FORM_PATH);
+            return mav;
         }
         if (!password.equals(repassword)) {
-            redirectBack(req,resp,"Passwords should match");
-            return;
+            session.setAttribute("message","Passwords should match");
+            mav.setViewName("redirect:/"+SIGN_UP_FORM_PATH);
+            return mav;
 
         }
+        UserDTO user = new UserDTO();
         user.setLogin(login);
         user.setPassword(password);
         user.setRole(Role.USER);
-        try {
+        try{
             authService.register(user);
-            logger.log(Level.INFO,login + " has signed up.");
-        } catch (ServiceException e) {
-            logger.log(Level.DEBUG,"User failed to sign-up due to failed validation." +
-                    " Sent message to user: ",e);
-            redirectBack(req,resp,"Failed to sign-up");
-            return;
+        } catch(ServiceException e){
+            logger.log(Level.DEBUG,"User failed to sign-up with login " + login,e);
+            session.setAttribute("message","Failed to sign up");
+            mav.setViewName("redirect:/"+SIGN_UP_FORM_PATH);
+            return mav;
         }
-        try {
-            resp.sendRedirect("/bankapp/auth/log-in.jsp");
-        } catch (IOException e) {
-            logger.log(Level.ERROR,"Could not redirect to log in page after successful registration");
-        }
+        logger.log(Level.INFO,login + " has signed up.");
+        mav.setViewName("redirect:/"+LOG_IN_FORM_PATH);
+        return mav;
+    }
+    @Override
+    public void invoke(HttpServletRequest req, HttpServletResponse resp) {
+        // Stub
     }
 
     private boolean validatePassword(String password) {
@@ -82,22 +91,5 @@ public class SignUpController implements HttpController {
         if(!login.matches("\\w*")) return false;
         if (login.length() < 3) return false;
         return true;
-    }
-    private void redirectBack(HttpServletRequest req, HttpServletResponse resp, String message){
-
-
-        HttpSession session = req.getSession();
-        session.setAttribute("message", message);
-        try {
-            resp.sendRedirect("/bankapp/auth/sign-up.jsp");
-        }
-        catch(IOException e){
-            logger.log(Level.ERROR,"Could not redirect back to sign up page after failed validation");
-            logger.log(Level.DEBUG, e.getStackTrace());
-            try {
-                resp.sendError(404);
-            } catch (IOException e1) {
-            }
-        }
     }
 }
